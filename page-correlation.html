@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Corrélation</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:390px;min-height:100%;background:#232323;display:flex;flex-direction:column}
+
+.sbar{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:relative;z-index:10}
+.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
+.sbar-icons{display:flex;align-items:center;gap:6px}
+.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
+.sig b{display:block;width:3px;background:#fff;border-radius:1px}
+.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
+.wifi-icon{position:relative;width:15px;height:11px}
+.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
+.wifi-icon::before{width:15px;height:8px;bottom:2px}
+.wifi-icon::after{width:9px;height:5px;bottom:2px}
+.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
+.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+.topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);line-height:1;user-select:none;transition:background .15s}
+.back-btn:hover{background:rgba(255,255,255,.11)}
+.topbar-title{flex:1;font-size:16px;font-weight:700;color:#f4f2ed}
+
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 16px 36px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* Hero */
+.hero{
+  background:
+    radial-gradient(ellipse 180px 130px at 90% 20%, rgba(255,80,80,.22) 0%, transparent 65%),
+    radial-gradient(ellipse 130px 100px at 5% 80%, rgba(255,150,50,.14) 0%, transparent 65%),
+    linear-gradient(155deg,rgba(80,40,40,.3) 0%,rgba(200,50,50,.2) 100%);
+  border:1px solid rgba(255,80,80,.2);border-radius:22px;padding:20px;
+  margin-bottom:12px;display:flex;gap:16px;align-items:center;overflow:hidden;position:relative;
+}
+.hero-emoji{font-size:50px;width:80px;height:80px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.2);border-radius:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero-info{flex:1}
+.hero-food{font-size:22px;font-weight:700;color:#f4f2ed;letter-spacing:-.3px}
+.hero-arrow{font-size:14px;color:rgba(255,255,255,.4);margin:2px 0}
+.hero-symptom{font-size:14px;color:rgba(255,255,255,.6)}
+.hero-pct{font-size:40px;font-weight:700;color:#ff5050;letter-spacing:-1px;line-height:1;margin-top:6px}
+.hero-pct-lbl{font-size:12px;color:rgba(255,255,255,.4)}
+
+/* Risk banner */
+.risk-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;margin-bottom:12px;overflow:hidden;position:relative}
+.risk-banner.high{background:radial-gradient(ellipse 200px 60px at 50% 50%,rgba(255,80,80,.16) 0%,transparent 70%),rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.22)}
+.risk-icon{font-size:22px;flex-shrink:0}
+.risk-body{flex:1}
+.risk-title{font-size:13px;font-weight:700;color:#ff5050}
+.risk-text{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.4}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.stat-tile{border-radius:18px;padding:14px;overflow:hidden;position:relative;border:none;display:flex;flex-direction:column;gap:0}
+.stat-n{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.8px;line-height:1}
+.stat-label{font-size:9px;color:rgba(255,255,255,.65);margin-bottom:7px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.stat-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:4px}
+
+/* Confidence bar */
+.conf-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;margin-bottom:12px;overflow:hidden;position:relative}
+.conf-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 140px 80px at 102% 50%,rgba(255,80,80,.14) 0%,transparent 65%);pointer-events:none}
+.conf-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.conf-title{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.conf-pct{font-size:20px;font-weight:700;color:#ff5050}
+.conf-bar-bg{height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.conf-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#ff5050,rgba(255,150,50,.7))}
+.conf-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.4}
+
+/* Timeline */
+.section-title{font-size:15px;font-weight:700;color:#f4f2ed;margin:16px 0 10px}
+.timeline{display:flex;flex-direction:column;gap:0}
+.incident{display:flex;gap:12px;margin-bottom:6px}
+.inc-time-col{display:flex;flex-direction:column;align-items:center;width:50px;flex-shrink:0}
+.inc-date{font-size:10px;color:rgba(255,255,255,.35);font-weight:600;text-align:center;white-space:nowrap}
+.inc-line{flex:1;width:1px;background:rgba(255,255,255,.08);margin-top:5px;min-height:16px}
+.inc-card{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:11px 13px;margin-bottom:0;overflow:hidden;position:relative}
+.inc-card::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:0 2px 2px 0;background:#ff5050}
+.inc-food{font-size:13px;font-weight:600;color:#f4f2ed}
+.inc-detail{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+.inc-symp{display:flex;gap:5px;margin-top:6px}
+.inc-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.2);color:#ff7070}
+
+/* Recommendations */
+.reco{display:flex;gap:12px;padding:14px;border-radius:16px;margin-bottom:8px}
+.reco.avoid{background:radial-gradient(ellipse 180px 70px at 100% 50%,rgba(255,80,80,.12) 0%,transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(255,80,80,.15)}
+.reco.alt{background:radial-gradient(ellipse 180px 70px at 100% 50%,rgba(26,255,170,.1) 0%,transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(26,255,170,.12)}
+.reco-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.reco-body{flex:1}
+.reco-title{font-size:13px;font-weight:700;color:#f4f2ed;margin-bottom:3px}
+.reco-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+
+/* CTA */
+.cta-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.cta-sec{height:46px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;font-size:13px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;transition:background .15s}
+.cta-sec:hover{background:rgba(255,255,255,.1)}
+.cta-main{height:46px;background:linear-gradient(135deg,rgba(255,80,80,.8),rgba(255,130,50,.7));border:none;border-radius:14px;font-size:13px;font-weight:700;color:#fff;cursor:pointer;transition:opacity .2s}
+.cta-main:hover{opacity:.9}
+
+.tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
+.tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}
+.tip-green{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.2)}
+.tip-blue{background:rgba(74,176,255,.07);border-color:rgba(74,176,255,.2)}
+.tip-purple{background:rgba(180,60,255,.07);border-color:rgba(180,60,255,.2)}
+.tip .tip-i{font-size:15px;flex-shrink:0;margin-top:1px;line-height:1}
+.tip .tip-b{flex:1;min-width:0}
+.tip .tip-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.tip-amber .tip-tag{color:rgba(255,180,0,.85)}
+.tip-green .tip-tag{color:rgba(26,255,170,.85)}
+.tip-blue .tip-tag{color:rgba(74,176,255,.85)}
+.tip-purple .tip-tag{color:rgba(180,60,255,.85)}
+.tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
+    <div class="sbar-icons">
+      <div class="sig"><b></b><b></b><b></b><b></b></div>
+      <div class="wifi-icon"><div class="wifi-dot"></div></div>
+      <div class="batt-icon"><div class="batt-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <span class="topbar-title">Corrélation détectée</span>
+  </div>
+
+  <div class="content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-emoji">🧅</div>
+      <div class="hero-info">
+        <div class="hero-food">Oignon</div>
+        <div class="hero-arrow">↓ déclenche</div>
+        <div class="hero-symptom">Ballonnements sévères</div>
+        <div class="hero-pct">91%<span style="font-size:16px;font-weight:400;color:rgba(255,255,255,.4)"> corrél.</span></div>
+      </div>
+    </div>
+
+    <!-- Risk banner -->
+    <div class="risk-banner high">
+      <div class="risk-icon">🚨</div>
+      <div class="risk-body">
+        <div class="risk-title">Risque élevé — Phase Élimination</div>
+        <div class="risk-text">L'oignon contient des fructanes en très haute concentration. À éviter totalement durant votre phase actuelle.</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-tile" style="background:radial-gradient(ellipse 120px 100px at 22% 30%, rgba(255,50,80,.9) 0%, transparent 65%),radial-gradient(ellipse 100px 90px at 80% 72%, rgba(255,20,50,.8) 0%, transparent 60%),#1f0810;box-shadow:0 5px 20px rgba(255,40,60,.22)">
+        <div class="stat-label">Incidents détectés</div>
+        <div class="stat-n">5×</div>
+        <div class="stat-sub">sur 30 jours</div>
+      </div>
+      <div class="stat-tile" style="background:radial-gradient(ellipse 120px 100px at 22% 30%, rgba(255,160,40,.9) 0%, transparent 65%),radial-gradient(ellipse 100px 90px at 80% 70%, rgba(255,100,20,.8) 0%, transparent 60%),#1f1208;box-shadow:0 5px 20px rgba(255,120,30,.22)">
+        <div class="stat-label">Délai moyen</div>
+        <div class="stat-n">~1h30</div>
+        <div class="stat-sub">après ingestion</div>
+      </div>
+      <div class="stat-tile" style="background:radial-gradient(ellipse 120px 100px at 22% 30%, rgba(160,60,255,.9) 0%, transparent 65%),radial-gradient(ellipse 100px 90px at 80% 70%, rgba(80,40,255,.8) 0%, transparent 60%),#15082a;box-shadow:0 5px 20px rgba(140,50,255,.22)">
+        <div class="stat-label">Intensité moy.</div>
+        <div class="stat-n">7.2</div>
+        <div class="stat-sub">sur 10</div>
+      </div>
+      <div class="stat-tile" style="background:radial-gradient(ellipse 120px 100px at 22% 30%, rgba(0,200,200,.88) 0%, transparent 65%),radial-gradient(ellipse 100px 90px at 80% 70%, rgba(0,150,255,.82) 0%, transparent 60%),#081a2a;box-shadow:0 5px 20px rgba(0,180,220,.22)">
+        <div class="stat-label">Durée symptôme</div>
+        <div class="stat-n">4h</div>
+        <div class="stat-sub">en moyenne</div>
+      </div>
+    </div>
+
+    <!-- Confidence -->
+    <div class="conf-card">
+      <div class="conf-header">
+        <div class="conf-title">Niveau de confiance</div>
+        <div class="conf-pct">91%</div>
+      </div>
+      <div class="conf-bar-bg"><div class="conf-bar-fill" style="width:91%"></div></div>
+      <div class="conf-desc">Basé sur 5 incidents consécutifs avec une corrélation temporelle très forte. Seuil de confirmation atteint.</div>
+    </div>
+
+    <!-- Incident timeline -->
+    <div class="section-title">Historique des incidents</div>
+    <div class="timeline">
+
+      <div class="incident">
+        <div class="inc-time-col">
+          <div class="inc-date">8 mai</div>
+          <div class="inc-line"></div>
+        </div>
+        <div class="inc-card">
+          <div class="inc-food">Soupe à l'oignon · dîner</div>
+          <div class="inc-detail">Ballonnements intenses 1h45 après</div>
+          <div class="inc-symp"><div class="inc-tag">8/10</div><div class="inc-tag">Crampes</div></div>
+        </div>
+      </div>
+
+      <div class="incident">
+        <div class="inc-time-col">
+          <div class="inc-date">2 mai</div>
+          <div class="inc-line"></div>
+        </div>
+        <div class="inc-card">
+          <div class="inc-food">Tarte à l'oignon · déjeuner</div>
+          <div class="inc-detail">Ballonnements modérés 1h20 après</div>
+          <div class="inc-symp"><div class="inc-tag">6/10</div></div>
+        </div>
+      </div>
+
+      <div class="incident">
+        <div class="inc-time-col">
+          <div class="inc-date">24 avr</div>
+          <div class="inc-line"></div>
+        </div>
+        <div class="inc-card">
+          <div class="inc-food">Oignon rouge cru · salade</div>
+          <div class="inc-detail">Ballonnements sévères 1h10 après</div>
+          <div class="inc-symp"><div class="inc-tag">9/10</div><div class="inc-tag">Douleurs</div></div>
+        </div>
+      </div>
+
+      <div class="incident">
+        <div class="inc-time-col">
+          <div class="inc-date">18 avr</div>
+          <div class="inc-line"></div>
+        </div>
+        <div class="inc-card">
+          <div class="inc-food">Bouillon oignon · dîner</div>
+          <div class="inc-detail">Ballonnements légers 2h après</div>
+          <div class="inc-symp"><div class="inc-tag">5/10</div></div>
+        </div>
+      </div>
+
+      <div class="incident">
+        <div class="inc-time-col">
+          <div class="inc-date">12 avr</div>
+        </div>
+        <div class="inc-card">
+          <div class="inc-food">Oignon poêlé · déjeuner</div>
+          <div class="inc-detail">Ballonnements intenses 1h30 après</div>
+          <div class="inc-symp"><div class="inc-tag">8/10</div><div class="inc-tag">Crampes</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tip corrélation -->
+    <div class="tip tip-amber">
+      <div class="tip-i">💡</div>
+      <div class="tip-b">
+        <div class="tip-tag">Comment ça marche</div>
+        <div class="tip-t">La corrélation est calculée sur les 6 heures suivant chaque consommation. Un délai plus long peut indiquer une fermentation colique plutôt qu'une réaction directe.</div>
+      </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="section-title">Recommandations</div>
+    <div class="reco avoid">
+      <div class="reco-icon">🚫</div>
+      <div class="reco-body">
+        <div class="reco-title">Éviter en phase Élimination</div>
+        <div class="reco-text">Oignon cru, cuit, en poudre et en bouillon. Les fructanes ne disparaissent pas à la cuisson.</div>
+      </div>
+    </div>
+    <div class="reco alt">
+      <div class="reco-icon">✅</div>
+      <div class="reco-body">
+        <div class="reco-title">Alternatives sans FODMAPs</div>
+        <div class="reco-text">Ciboulette, partie verte des oignons nouveaux, huile infusée à l'oignon (filtrée) pour les arômes.</div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <button class="cta-sec" onclick="history.back()">Ignorer</button>
+      <button class="cta-main">Marquer évité ✓</button>
+    </div>
+
+  </div>
+</div>
+<script>
+(function tick(){
+  const d=new Date(),el=document.getElementById('clock');
+  if(el) el.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  setTimeout(tick,15000);
+})();
+</script>
+</body>
+</html>

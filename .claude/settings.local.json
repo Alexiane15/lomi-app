@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__9aed3341-b84b-4597-a408-3d0f4bc81bcd__get_metadata",
+      "Bash(python3 -c ' *)",
+      "mcp__9aed3341-b84b-4597-a408-3d0f4bc81bcd__get_screenshot",
+      "Bash(curl -s -o /tmp/screen1.png \"https://www.figma.com/api/mcp/asset/09fc8732-5dad-4fe7-ae72-65f3e85fe369\")",
+      "Bash(curl -s -o /tmp/screen2.png \"https://www.figma.com/api/mcp/asset/f971f24a-5b73-4f4d-872f-dd49d543fb0a\")",
+      "mcp__9aed3341-b84b-4597-a408-3d0f4bc81bcd__get_design_context",
+      "Bash(mkdir -p /Users/alexiane/lomi-app/assets)",
+      "Bash(curl -s -o ellipse15.png \"https://www.figma.com/api/mcp/asset/3835b20f-f693-4ee6-bcfc-636593e06a3a\")",
+      "Bash(curl -s -o vector_green_area.png \"https://www.figma.com/api/mcp/asset/b68fbd6e-d8b7-42d0-ba3c-83cc88f6ecdf\")",
+      "Bash(curl -s -o vector_green_line.png \"https://www.figma.com/api/mcp/asset/ee75835f-7145-4e7f-915b-9f0fda227c12\")",
+      "Bash(curl -s -o vector_purple_area.png \"https://www.figma.com/api/mcp/asset/6d786945-d137-42fc-be17-3f67b7f586e0\")",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(curl -s -o /tmp/figma_canvas.png \"https://www.figma.com/api/mcp/asset/5b5078a7-64a7-4e4b-8187-12aac2100b11\")",
+      "Bash(curl -s -o /tmp/figma_stats.png \"https://www.figma.com/api/mcp/asset/9d5b9e76-edbb-45cf-a840-a68a1aaae35e\")",
+      "Bash(curl -s \"https://www.figma.com/api/mcp/asset/20802182-745e-41f1-9d7a-832666831eaf\" -o /tmp/figma_new_style.png)",
+      "Bash(ipconfig getifaddr *)",
+      "Bash(npm --version)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

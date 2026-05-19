@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Bienvenue</title>
+<style>
+/* ── Reset ── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{
+  height:100%;background:#1a1a1a;
+  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  display:flex;justify-content:center;
+}
+.app{
+  width:100%;max-width:390px;height:100%;
+  background:#232323;
+  display:flex;flex-direction:column;overflow:hidden;position:relative;
+}
+
+/* ── Status bar ── */
+.sbar{
+  height:54px;flex-shrink:0;background:#232323;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;position:relative;z-index:10;
+}
+.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
+.sbar-icons{display:flex;align-items:center;gap:6px}
+.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
+.sig b{display:block;width:3px;background:#fff;border-radius:1px}
+.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
+.wifi-icon{position:relative;width:15px;height:11px}
+.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
+.wifi-icon::before{width:15px;height:8px;bottom:2px}
+.wifi-icon::after{width:9px;height:5px;bottom:2px}
+.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
+.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+/* ══════════════════════════════
+   ONBOARDING SHELL
+══════════════════════════════ */
+.ob{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* Top bar */
+.ob-top{
+  height:48px;flex-shrink:0;
+  display:flex;align-items:center;
+  padding:0 16px;gap:12px;
+  transition:opacity .2s;
+}
+.ob-back{
+  width:34px;height:34px;flex-shrink:0;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:11px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:18px;color:rgba(255,255,255,.7);
+  transition:background .15s;user-select:none;
+}
+.ob-back:hover{background:rgba(255,255,255,.11)}
+.ob-step-label{
+  flex:1;font-size:11px;font-weight:700;letter-spacing:.4px;
+  color:rgba(255,255,255,.35);
+}
+.ob-skip{
+  font-size:12px;color:rgba(255,255,255,.28);cursor:pointer;
+  padding:6px 0;transition:color .15s;user-select:none;
+}
+.ob-skip:hover{color:rgba(255,255,255,.5)}
+
+/* Progress bar */
+.ob-prog-wrap{
+  height:2px;flex-shrink:0;
+  background:rgba(255,255,255,.07);
+  margin:0 16px;border-radius:1px;
+}
+.ob-prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,#1affaa,rgba(74,176,255,.85));
+  border-radius:1px;
+  transition:width .42s cubic-bezier(.4,0,.2,1);
+  width:0%;
+}
+
+/* Slides */
+.ob-slides{flex:1;position:relative;overflow:hidden}
+.ob-slide{
+  position:absolute;inset:0;
+  opacity:0;pointer-events:none;
+  overflow-y:auto;overflow-x:hidden;
+  scrollbar-width:none;
+  padding:22px 16px 12px;
+}
+.ob-slide::-webkit-scrollbar{display:none}
+.ob-slide.active{opacity:1;pointer-events:all}
+
+/* Footer */
+.ob-foot{padding:10px 16px 30px;flex-shrink:0}
+.ob-btn{
+  width:100%;height:56px;
+  background:#1affaa;color:#0a120a;
+  font-size:15px;font-weight:700;
+  border:none;border-radius:16px;cursor:pointer;
+  font-family:inherit;letter-spacing:-.2px;
+  transition:opacity .2s,transform .1s,background .2s;
+}
+.ob-btn:active{transform:scale(.98);opacity:.88}
+.ob-btn:disabled{background:rgba(255,255,255,.08);color:rgba(255,255,255,.22);cursor:not-allowed;transform:none}
+
+/* ══════════════════════════════
+   STEP HEADER
+══════════════════════════════ */
+.ob-icon{font-size:42px;line-height:1;margin-bottom:14px}
+.ob-title{font-size:24px;font-weight:700;color:#f4f2ed;line-height:1.15;margin-bottom:6px;letter-spacing:-.4px}
+.ob-subtitle{font-size:13px;color:rgba(255,255,255,.4);line-height:1.5;margin-bottom:24px}
+
+/* Section heading */
+.ob-sect{
+  font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;
+  color:rgba(255,255,255,.32);margin-bottom:10px;
+}
+.ob-sect+.ob-sect{margin-top:22px}
+
+/* ══════════════════════════════
+   WELCOME SCREEN (step 0)
+══════════════════════════════ */
+.welcome-wrap{
+  min-height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px 8px 0;text-align:center;
+}
+.welcome-logo{
+  font-size:54px;font-weight:800;color:#f4f2ed;
+  letter-spacing:-3.5px;line-height:1;margin-bottom:10px;
+}
+.welcome-logo span{color:#1affaa}
+.welcome-tag{
+  font-size:14px;color:rgba(244,242,237,.42);line-height:1.55;
+  margin-bottom:36px;max-width:250px;
+}
+.welcome-features{
+  display:flex;flex-direction:column;gap:9px;
+  width:100%;margin-bottom:10px;
+}
+.wf{
+  display:flex;align-items:center;gap:13px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;padding:13px 15px;text-align:left;
+}
+.wf-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center}
+.wf-label{font-size:13px;font-weight:600;color:#f4f2ed;display:block;margin-bottom:2px}
+.wf-desc{font-size:11px;color:rgba(244,242,237,.38)}
+
+/* ══════════════════════════════
+   3-OPTION HORIZONTAL (diag / cook)
+══════════════════════════════ */
+.tri-row{display:flex;gap:8px}
+.tri-card{
+  flex:1;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:14px 6px;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  cursor:pointer;transition:all .18s;user-select:none;
+}
+.tri-card:hover{background:rgba(255,255,255,.07)}
+.tri-card.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.42)}
+.tri-emoji{font-size:22px;line-height:1}
+.tri-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);text-align:center;line-height:1.3}
+.tri-card.sel .tri-label{color:#1affaa}
+
+/* ══════════════════════════════
+   RED FLAG CHECKBOXES
+══════════════════════════════ */
+.cb-list{display:flex;flex-direction:column;gap:7px}
+.cb-item{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:13px;padding:12px 14px;cursor:pointer;
+  transition:all .18s;user-select:none;
+}
+.cb-item:hover{background:rgba(255,255,255,.06)}
+.cb-item.checked:not(.cb-none){background:rgba(255,50,50,.05);border-color:rgba(255,50,50,.18)}
+.cb-item.cb-none.checked{background:rgba(26,255,170,.05);border-color:rgba(26,255,170,.18)}
+.cb-box{
+  width:20px;height:20px;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.22);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;
+}
+.cb-item.checked:not(.cb-none) .cb-box{background:#ff5050;border-color:#ff5050}
+.cb-item.cb-none.checked .cb-box{background:#1affaa;border-color:#1affaa}
+.cb-tick{color:#fff;font-size:11px;font-weight:700;display:none}
+.cb-item.checked .cb-tick{display:block}
+.cb-text{font-size:13px;color:rgba(244,242,237,.65);line-height:1.3}
+.cb-item.cb-none .cb-text{color:rgba(244,242,237,.4)}
+
+/* Alert card */
+.rf-alert{
+  margin-top:12px;display:none;
+  background:rgba(255,50,50,.07);border:1px solid rgba(255,50,50,.22);
+  border-radius:14px;padding:14px;
+  flex-direction:row;align-items:flex-start;gap:10px;
+}
+.rf-alert.show{display:flex}
+.rf-alert-icon{font-size:19px;flex-shrink:0;margin-top:1px}
+.rf-alert-head{font-size:12px;font-weight:700;color:#ff7070;margin-bottom:4px}
+.rf-alert-body{font-size:11px;color:rgba(255,150,150,.85);line-height:1.5}
+
+/* ══════════════════════════════
+   SII TYPE CARDS
+══════════════════════════════ */
+.type-cards{display:flex;flex-direction:column;gap:8px}
+.type-card{
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:16px;padding:14px 16px;
+  display:flex;align-items:center;gap:13px;
+  cursor:pointer;transition:all .18s;user-select:none;
+}
+.type-card:hover{background:rgba(255,255,255,.07)}
+.type-card.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.4)}
+.type-badge{
+  font-size:10px;font-weight:800;letter-spacing:.6px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  border-radius:7px;padding:4px 8px;min-width:50px;text-align:center;
+  color:rgba(244,242,237,.55);flex-shrink:0;transition:all .18s;
+}
+.type-card.sel .type-badge{background:rgba(26,255,170,.12);border-color:rgba(26,255,170,.3);color:#1affaa}
+.type-info{flex:1;min-width:0}
+.type-name{font-size:13px;font-weight:600;color:#f4f2ed;margin-bottom:2px}
+.type-desc{font-size:11px;color:rgba(244,242,237,.38);line-height:1.35}
+.radio{
+  width:20px;height:20px;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.2);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .18s;
+}
+.radio-dot{
+  width:8px;height:8px;background:#1affaa;border-radius:50%;
+  transform:scale(0);transition:transform .2s cubic-bezier(.34,1.56,.64,1);
+}
+.type-card.sel .radio{border-color:#1affaa}
+.type-card.sel .radio-dot{transform:scale(1)}
+
+/* ══════════════════════════════
+   SLIDERS
+══════════════════════════════ */
+.slider-section{display:flex;flex-direction:column;gap:20px}
+.slider-row{display:flex;flex-direction:column;gap:9px}
+.slider-header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.slider-name{font-size:13px;font-weight:600;color:#f4f2ed}
+.slider-val{font-size:20px;font-weight:700;color:#1affaa;line-height:1}
+.slider-val-sub{font-size:11px;font-weight:400;color:rgba(255,255,255,.3)}
+.slider-track-wrap{position:relative;height:22px;display:flex;align-items:center}
+.slider-track{
+  position:absolute;left:0;right:0;height:6px;
+  background:rgba(255,255,255,.1);border-radius:3px;
+}
+.slider-fill{
+  position:absolute;left:0;height:100%;border-radius:3px;
+  background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.55));
+  pointer-events:none;
+}
+input[type=range].ob-range{
+  -webkit-appearance:none;appearance:none;
+  position:absolute;left:0;right:0;width:100%;height:22px;
+  background:transparent;margin:0;cursor:pointer;
+}
+input[type=range].ob-range::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:24px;height:24px;border-radius:50%;
+  background:#1affaa;cursor:pointer;
+  box-shadow:0 0 12px rgba(26,255,170,.45),0 0 0 3px rgba(26,255,170,.15);
+  transition:box-shadow .15s;
+}
+input[type=range].ob-range::-webkit-slider-thumb:hover{
+  box-shadow:0 0 16px rgba(26,255,170,.6),0 0 0 5px rgba(26,255,170,.12);
+}
+input[type=range].ob-range::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;border:none;
+  background:#1affaa;cursor:pointer;
+  box-shadow:0 0 12px rgba(26,255,170,.45);
+}
+.slider-labels{display:flex;justify-content:space-between}
+.slider-min,.slider-max{font-size:9px;color:rgba(255,255,255,.22)}
+
+/* Slider color helper — set via JS */
+.slider-row[data-level="low"] .slider-fill{background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.5))}
+.slider-row[data-level="mid"] .slider-fill{background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.5))}
+.slider-row[data-level="high"] .slider-fill{background:linear-gradient(90deg,#ff5050,rgba(255,80,80,.5))}
+
+/* ══════════════════════════════
+   CHIPS MULTISELECT
+══════════════════════════════ */
+.ob-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.ob-chip{
+  height:32px;padding:0 14px;border-radius:20px;
+  font-size:11px;font-weight:600;white-space:nowrap;
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.55);cursor:pointer;
+  transition:all .18s;user-select:none;
+}
+.ob-chip:hover{background:rgba(255,255,255,.09)}
+.ob-chip.on{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.4);color:#1affaa}
+.chip-tick{display:none;font-size:10px}
+.ob-chip.on .chip-tick{display:inline}
+
+/* ══════════════════════════════
+   FODMAP LEVEL CARDS
+══════════════════════════════ */
+.level-cards{display:flex;flex-direction:column;gap:9px}
+.level-card{
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:15px 16px;
+  display:flex;align-items:center;gap:13px;
+  cursor:pointer;transition:all .18s;user-select:none;
+}
+.level-card:hover{background:rgba(255,255,255,.07)}
+.level-card.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.4)}
+.level-emoji-box{
+  width:48px;height:48px;flex-shrink:0;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;transition:all .18s;
+}
+.level-card.sel .level-emoji-box{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.25)}
+.level-body{flex:1;min-width:0}
+.level-title{font-size:14px;font-weight:700;color:#f4f2ed;margin-bottom:3px}
+.level-desc{font-size:11px;color:rgba(244,242,237,.38);line-height:1.4}
+.level-card.sel .radio{border-color:#1affaa}
+.level-card.sel .radio-dot{transform:scale(1)}
+
+/* ══════════════════════════════
+   STRESS SCALE
+══════════════════════════════ */
+.stress-row{display:flex;gap:7px}
+.stress-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:11px 4px;cursor:pointer;
+  transition:all .18s;user-select:none;
+}
+.stress-btn:hover{background:rgba(255,255,255,.07)}
+.stress-btn.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.38)}
+.stress-face{font-size:22px;line-height:1}
+.stress-label{font-size:9px;color:rgba(255,255,255,.3);text-align:center;line-height:1.3}
+.stress-btn.sel .stress-label{color:rgba(26,255,170,.7)}
+
+/* ══════════════════════════════
+   DONE SCREEN (step 7)
+══════════════════════════════ */
+.done-wrap{
+  min-height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px 8px 0;text-align:center;
+}
+.done-ring{
+  width:86px;height:86px;border-radius:50%;
+  background:rgba(26,255,170,.09);
+  border:1.5px solid rgba(26,255,170,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:38px;margin-bottom:20px;
+  animation:ringPop .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes ringPop{
+  0%{transform:scale(.7);opacity:0}
+  100%{transform:scale(1);opacity:1}
+}
+.done-title{font-size:26px;font-weight:700;color:#f4f2ed;margin-bottom:8px;letter-spacing:-.5px}
+.done-sub{font-size:13px;color:rgba(255,255,255,.38);line-height:1.5;margin-bottom:28px;max-width:270px}
+.done-list{display:flex;flex-direction:column;gap:8px;width:100%;margin-bottom:10px}
+.done-row{
+  display:flex;align-items:center;gap:11px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:13px;padding:11px 14px;text-align:left;
+}
+.done-dot{width:7px;height:7px;background:#1affaa;border-radius:50%;flex-shrink:0}
+.done-text{font-size:12px;color:rgba(244,242,237,.6)}
+
+/* ══════════════════════════════
+   UTILITY
+══════════════════════════════ */
+.spacer{height:18px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Status Bar -->
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
+    <div class="sbar-icons">
+      <div class="sig"><b></b><b></b><b></b><b></b></div>
+      <div class="wifi-icon"><div class="wifi-dot"></div></div>
+      <div class="batt-icon"><div class="batt-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Onboarding -->
+  <div class="ob">
+
+    <!-- Top bar -->
+    <div class="ob-top" id="ob-top" style="opacity:0;pointer-events:none">
+      <div class="ob-back" id="ob-back">‹</div>
+      <div class="ob-step-label" id="ob-step-label">Étape 1 sur 6</div>
+      <div class="ob-skip" id="ob-skip">Passer</div>
+    </div>
+    <div class="ob-prog-wrap" id="ob-prog-wrap" style="opacity:0">
+      <div class="ob-prog-fill" id="ob-prog-fill"></div>
+    </div>
+
+    <!-- Slides -->
+    <div class="ob-slides">
+
+      <!-- ── SLIDE 0 : WELCOME ── -->
+      <div class="ob-slide active" id="slide-0">
+        <div class="welcome-wrap">
+          <div class="welcome-logo">lo<span>mi</span></div>
+          <div class="welcome-tag">Votre compagnon intelligent pour le protocole Low FODMAP</div>
+          <div class="welcome-features">
+            <div class="wf">
+              <div class="wf-icon">🎯</div>
+              <div>
+                <span class="wf-label">Protocole personnalisé</span>
+                <span class="wf-desc">Adapté à votre profil, vos symptômes et votre phase</span>
+              </div>
+            </div>
+            <div class="wf">
+              <div class="wf-icon">📊</div>
+              <div>
+                <span class="wf-label">Suivi des symptômes</span>
+                <span class="wf-desc">Mesurez votre progression semaine après semaine</span>
+              </div>
+            </div>
+            <div class="wf">
+              <div class="wf-icon">🍽️</div>
+              <div>
+                <span class="wf-label">Base FODMAP complète</span>
+                <span class="wf-desc">65+ aliments avec statut par phase de traitement</span>
+              </div>
+            </div>
+          </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE 1 : DIAGNOSTIC & SÉCURITÉ ── -->
+      <div class="ob-slide" id="slide-1">
+        <div class="ob-icon">🏥</div>
+        <div class="ob-title">Votre diagnostic</div>
+        <div class="ob-subtitle">Confirmons que lomi est bien adapté à votre situation.</div>
+
+        <div class="ob-sect">Avez-vous un diagnostic de SII par un médecin ?</div>
+        <div class="tri-row" id="diag-row">
+          <div class="tri-card" data-val="yes" onclick="pickTri('diag',this)">
+            <div class="tri-emoji">✅</div>
+            <div class="tri-label">Oui</div>
+          </div>
+          <div class="tri-card" data-val="ongoing" onclick="pickTri('diag',this)">
+            <div class="tri-emoji">⏳</div>
+            <div class="tri-label">En cours</div>
+          </div>
+          <div class="tri-card" data-val="no" onclick="pickTri('diag',this)">
+            <div class="tri-emoji">❌</div>
+            <div class="tri-label">Non</div>
+          </div>
+        </div>
+
+        <div class="ob-sect" style="margin-top:22px">
+          Présentez-vous l'un de ces symptômes ?
+          <span style="color:rgba(255,80,80,.6);font-size:9px;letter-spacing:0;text-transform:none;font-weight:500"> (signaux d'alerte)</span>
+        </div>
+        <div class="cb-list" id="rf-list">
+          <div class="cb-item" onclick="toggleCb(this,'rf')">
+            <div class="cb-box"><div class="cb-tick">✓</div></div>
+            <div class="cb-text">Saignements inexpliqués</div>
+          </div>
+          <div class="cb-item" onclick="toggleCb(this,'rf')">
+            <div class="cb-box"><div class="cb-tick">✓</div></div>
+            <div class="cb-text">Perte de poids soudaine</div>
+          </div>
+          <div class="cb-item" onclick="toggleCb(this,'rf')">
+            <div class="cb-box"><div class="cb-tick">✓</div></div>
+            <div class="cb-text">Fièvre nocturne</div>
+          </div>
+          <div class="cb-item" onclick="toggleCb(this,'rf')">
+            <div class="cb-box"><div class="cb-tick">✓</div></div>
+            <div class="cb-text">Anémie</div>
+          </div>
+          <div class="cb-item cb-none" onclick="toggleCb(this,'rf')">
+            <div class="cb-box"><div class="cb-tick">✓</div></div>
+            <div class="cb-text">Aucun de ces symptômes</div>
+          </div>
+        </div>
+
+        <div class="rf-alert" id="rf-alert">
+          <div class="rf-alert-icon">⚠️</div>
+          <div>
+            <div class="rf-alert-head">Consultation médicale recommandée</div>
+            <div class="rf-alert-body">Ces symptômes nécessitent une évaluation médicale urgente avant de commencer tout protocole alimentaire. Veuillez consulter votre médecin.</div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ── SLIDE 2 : PROFIL SII ── -->
+      <div class="ob-slide" id="slide-2">
+        <div class="ob-icon">💡</div>
+        <div class="ob-title">Votre profil de SII</div>
+        <div class="ob-subtitle">Chaque type de SII a des besoins spécifiques — les recommandations seront adaptées.</div>
+
+        <div class="type-cards" id="type-cards">
+          <div class="type-card" data-val="D" onclick="pickType(this)">
+            <div class="type-badge">SII-D</div>
+            <div class="type-info">
+              <div class="type-name">Diarrhée dominante</div>
+              <div class="type-desc">Selles molles ou liquides fréquentes, urgences défécatoires</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+          <div class="type-card" data-val="C" onclick="pickType(this)">
+            <div class="type-badge">SII-C</div>
+            <div class="type-info">
+              <div class="type-name">Constipation dominante</div>
+              <div class="type-desc">Selles rares et dures, sensation d'évacuation incomplète</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+          <div class="type-card" data-val="M" onclick="pickType(this)">
+            <div class="type-badge">SII-M</div>
+            <div class="type-info">
+              <div class="type-name">Mixte / Alternance</div>
+              <div class="type-desc">Alternance entre diarrhée et constipation</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+          <div class="type-card" data-val="U" onclick="pickType(this)">
+            <div class="type-badge">SII-U</div>
+            <div class="type-info">
+              <div class="type-name">Inclassable</div>
+              <div class="type-desc">Transit ne correspond pas clairement aux autres profils</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ── SLIDE 3 : SYMPTÔMES BASELINE ── -->
+      <div class="ob-slide" id="slide-3">
+        <div class="ob-icon">📊</div>
+        <div class="ob-title">Votre état de base</div>
+        <div class="ob-subtitle">Ces données établissent votre point de départ pour mesurer votre progression.</div>
+
+        <div class="slider-section">
+
+          <div class="slider-row" id="row-bloat" data-level="mid">
+            <div class="slider-header">
+              <div class="slider-name">Ballonnements / Gaz</div>
+              <div>
+                <span class="slider-val" id="val-bloat">5</span><span class="slider-val-sub">/10</span>
+              </div>
+            </div>
+            <div class="slider-track-wrap">
+              <div class="slider-track">
+                <div class="slider-fill" id="fill-bloat" style="width:44%"></div>
+              </div>
+              <input type="range" class="ob-range" id="range-bloat" min="1" max="10" value="5"
+                oninput="updateSlider('bloat',this.value)">
+            </div>
+            <div class="slider-labels">
+              <span class="slider-min">Aucun</span>
+              <span class="slider-max">Insupportable</span>
+            </div>
+          </div>
+
+          <div class="slider-row" id="row-pain" data-level="mid">
+            <div class="slider-header">
+              <div class="slider-name">Douleurs abdominales</div>
+              <div>
+                <span class="slider-val" id="val-pain">5</span><span class="slider-val-sub">/10</span>
+              </div>
+            </div>
+            <div class="slider-track-wrap">
+              <div class="slider-track">
+                <div class="slider-fill" id="fill-pain" style="width:44%"></div>
+              </div>
+              <input type="range" class="ob-range" id="range-pain" min="1" max="10" value="5"
+                oninput="updateSlider('pain',this.value)">
+            </div>
+            <div class="slider-labels">
+              <span class="slider-min">Aucune</span>
+              <span class="slider-max">Très intenses</span>
+            </div>
+          </div>
+
+          <div class="slider-row" id="row-urgency" data-level="mid">
+            <div class="slider-header">
+              <div class="slider-name">Urgence défécatoire</div>
+              <div>
+                <span class="slider-val" id="val-urgency">5</span><span class="slider-val-sub">/10</span>
+              </div>
+            </div>
+            <div class="slider-track-wrap">
+              <div class="slider-track">
+                <div class="slider-fill" id="fill-urgency" style="width:44%"></div>
+              </div>
+              <input type="range" class="ob-range" id="range-urgency" min="1" max="10" value="5"
+                oninput="updateSlider('urgency',this.value)">
+            </div>
+            <div class="slider-labels">
+              <span class="slider-min">Jamais</span>
+              <span class="slider-max">Très fréquente</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ── SLIDE 4 : ALIMENTATION ── -->
+      <div class="ob-slide" id="slide-4">
+        <div class="ob-icon">🥗</div>
+        <div class="ob-title">Alimentation</div>
+        <div class="ob-subtitle">Pour filtrer les recommandations et exclure les aliments incompatibles.</div>
+
+        <div class="ob-sect">Régime actuel</div>
+        <div class="ob-chips">
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Végétarien</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Vegan</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Sans Gluten</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Sans Lactose</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Sans Œufs</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Halal</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Kosher</div>
+        </div>
+
+        <div class="ob-sect" style="margin-top:20px">Allergies diagnostiquées</div>
+        <div class="ob-chips">
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Gluten (cœliaque)</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Lactose</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Œufs</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Soja</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Noix / Noisettes</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Arachides</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Poisson</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Crustacés</div>
+          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Aucune</div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ── SLIDE 5 : MATURITÉ FODMAP ── -->
+      <div class="ob-slide" id="slide-5">
+        <div class="ob-icon">🗺️</div>
+        <div class="ob-title">Votre avancement</div>
+        <div class="ob-subtitle">Nous vous placerons directement dans la bonne phase du protocole Low FODMAP.</div>
+
+        <div class="level-cards" id="level-cards">
+          <div class="level-card" data-val="beginner" onclick="pickLevel(this)">
+            <div class="level-emoji-box">🥚</div>
+            <div class="level-body">
+              <div class="level-title">Débutant</div>
+              <div class="level-desc">Je ne connais pas ou je commence tout juste le protocole.</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+          <div class="level-card" data-val="ongoing" onclick="pickLevel(this)">
+            <div class="level-emoji-box">🔍</div>
+            <div class="level-body">
+              <div class="level-title">En cours</div>
+              <div class="level-desc">Je suis déjà en phase d'éviction depuis 2 à 6 semaines.</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+          <div class="level-card" data-val="reintro" onclick="pickLevel(this)">
+            <div class="level-emoji-box">🔄</div>
+            <div class="level-body">
+              <div class="level-title">Réintroduction</div>
+              <div class="level-desc">Mes symptômes ont diminué, je veux tester mes seuils de tolérance.</div>
+            </div>
+            <div class="radio"><div class="radio-dot"></div></div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ── SLIDE 6 : MODE DE VIE ── -->
+      <div class="ob-slide" id="slide-6">
+        <div class="ob-icon">⚡</div>
+        <div class="ob-title">Votre quotidien</div>
+        <div class="ob-subtitle">Pour personnaliser les notifications et les suggestions de repas.</div>
+
+        <div class="ob-sect">Vous cuisinez vos propres repas…</div>
+        <div class="tri-row" id="cook-row">
+          <div class="tri-card" data-val="never" onclick="pickTri('cook',this)">
+            <div class="tri-emoji">🍔</div>
+            <div class="tri-label">Jamais</div>
+          </div>
+          <div class="tri-card" data-val="sometimes" onclick="pickTri('cook',this)">
+            <div class="tri-emoji">🥘</div>
+            <div class="tri-label">Parfois</div>
+          </div>
+          <div class="tri-card" data-val="often" onclick="pickTri('cook',this)">
+            <div class="tri-emoji">👨‍🍳</div>
+            <div class="tri-label">Souvent</div>
+          </div>
+        </div>
+
+        <div class="ob-sect" style="margin-top:22px">
+          Votre niveau de stress actuel
+          <span style="font-size:9px;color:rgba(255,255,255,.25);letter-spacing:0;text-transform:none;font-weight:400"> — le stress amplifie le SII</span>
+        </div>
+        <div class="stress-row" id="stress-row">
+          <div class="stress-btn" data-val="1" onclick="pickStress(this)">
+            <div class="stress-face">😌</div>
+            <div class="stress-label">Très calme</div>
+          </div>
+          <div class="stress-btn" data-val="2" onclick="pickStress(this)">
+            <div class="stress-face">🙂</div>
+            <div class="stress-label">Calme</div>
+          </div>
+          <div class="stress-btn" data-val="3" onclick="pickStress(this)">
+            <div class="stress-face">😐</div>
+            <div class="stress-label">Modéré</div>
+          </div>
+          <div class="stress-btn" data-val="4" onclick="pickStress(this)">
+            <div class="stress-face">😤</div>
+            <div class="stress-label">Élevé</div>
+          </div>
+          <div class="stress-btn" data-val="5" onclick="pickStress(this)">
+            <div class="stress-face">😰</div>
+            <div class="stress-label">Très élevé</div>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div>
+
+      <!-- ── SLIDE 7 : DONE ── -->
+      <div class="ob-slide" id="slide-7">
+        <div class="done-wrap">
+          <div class="done-ring">✨</div>
+          <div class="done-title">Lomi est prêt !</div>
+          <div class="done-sub">Votre protocole Low FODMAP personnalisé commence maintenant.</div>
+          <div class="done-list">
+            <div class="done-row"><div class="done-dot"></div><div class="done-text" id="done-phase">Phase Élimination — 4 à 8 semaines</div></div>
+            <div class="done-row"><div class="done-dot"></div><div class="done-text" id="done-type">Profil SII adapté</div></div>
+            <div class="done-row"><div class="done-dot"></div><div class="done-text">65 aliments référencés disponibles</div></div>
+            <div class="done-row"><div class="done-dot"></div><div class="done-text">Notifications personnalisées activées</div></div>
+          </div>
+          <div class="spacer"></div>
+        </div>
+      </div>
+
+    </div><!-- /ob-slides -->
+
+    <!-- Footer -->
+    <div class="ob-foot">
+      <button class="ob-btn" id="ob-btn">Commencer →</button>
+    </div>
+
+  </div><!-- /ob -->
+</div><!-- /app -->
+
+<script>
+// ════════════════════════════════
+//  STATE
+// ════════════════════════════════
+let step = 0;
+const TOTAL = 6;
+let busy = false;
+
+const state = {
+  diag: null, iisType: null,
+  symptoms: { bloat: 5, pain: 5, urgency: 5 },
+  diets: [], allergies: [],
+  fodmap: null, cooking: null, stress: null
+};
+
+// ════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════
+function goTo(target) {
+  if (busy) return;
+  busy = true;
+
+  const from = document.getElementById('slide-' + step);
+  const to   = document.getElementById('slide-' + target);
+  const fwd  = target > step;
+  const T    = '.26s ease';
+
+  // Start: position 'to' off-screen with no transition
+  to.style.transition = 'none';
+  to.style.opacity    = '0';
+  to.style.transform  = `translateX(${fwd ? 28 : -28}px)`;
+  to.style.pointerEvents = 'none';
+  to.getBoundingClientRect(); // force reflow
+
+  // Animate out 'from'
+  from.style.transition = `opacity ${T},transform ${T}`;
+  from.style.opacity    = '0';
+  from.style.transform  = `translateX(${fwd ? -28 : 28}px)`;
+  from.style.pointerEvents = 'none';
+
+  // Animate in 'to'
+  to.style.transition = `opacity ${T},transform ${T}`;
+  to.style.opacity    = '1';
+  to.style.transform  = 'translateX(0)';
+  to.style.pointerEvents = 'all';
+
+  step = target;
+  updateUI();
+
+  setTimeout(() => {
+    // Clean up: let CSS class take over
+    from.classList.remove('active');
+    from.style.cssText = '';
+    to.classList.add('active');
+    to.style.cssText = '';
+    to.scrollTop = 0;
+    busy = false;
+  }, 290);
+}
+
+function next() {
+  if (step === 0)        goTo(1);
+  else if (step < TOTAL) goTo(step + 1);
+  else if (step === TOTAL) goTo(TOTAL + 1);
+  else window.location.href = 'index.html';
+}
+
+function back() { if (step > 1) goTo(step - 1); }
+
+// ════════════════════════════════
+//  UI UPDATE
+// ════════════════════════════════
+function updateUI() {
+  const top      = document.getElementById('ob-top');
+  const progWrap = document.getElementById('ob-prog-wrap');
+  const fill     = document.getElementById('ob-prog-fill');
+  const label    = document.getElementById('ob-step-label');
+  const backBtn  = document.getElementById('ob-back');
+  const skipBtn  = document.getElementById('ob-skip');
+  const btn      = document.getElementById('ob-btn');
+
+  const isWelcome = step === 0;
+  const isDone    = step === TOTAL + 1;
+  const isStep    = !isWelcome && !isDone;
+
+  // Top bar + progress
+  top.style.cssText      = isStep ? '' : 'opacity:0;pointer-events:none';
+  progWrap.style.cssText = isStep ? '' : 'opacity:0';
+
+  if (isStep) {
+    label.textContent       = `Étape ${step} sur ${TOTAL}`;
+    backBtn.style.visibility = step <= 1 ? 'hidden' : 'visible';
+    fill.style.width         = (step / TOTAL * 100) + '%';
+    const skippable = [1, 3, 4, 6].includes(step);
+    skipBtn.style.visibility = skippable ? 'visible' : 'hidden';
+  }
+
+  // Button
+  if (isWelcome)     { btn.textContent = 'Commencer →'; btn.disabled = false; }
+  else if (isDone)   { btn.textContent = 'Découvrir mon application'; btn.disabled = false; }
+  else if (step === TOTAL) { btn.textContent = 'Terminer'; btn.disabled = false; }
+  else               { btn.textContent = 'Continuer'; btn.disabled = isRequired(); }
+}
+
+function isRequired() {
+  if (step === 2) return !state.iisType;
+  if (step === 5) return !state.fodmap;
+  return false;
+}
+
+// ════════════════════════════════
+//  INTERACTIONS
+// ════════════════════════════════
+function pickTri(group, el) {
+  const row = group === 'diag' ? 'diag-row' : 'cook-row';
+  document.querySelectorAll('#' + row + ' .tri-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  state[group === 'diag' ? 'diag' : 'cooking'] = el.dataset.val;
+}
+
+function toggleCb(el, group) {
+  if (group === 'rf') {
+    const isNone = el.classList.contains('cb-none');
+    if (isNone) {
+      // "Aucun" selected — uncheck all others
+      document.querySelectorAll('#rf-list .cb-item:not(.cb-none)').forEach(c => c.classList.remove('checked'));
+      el.classList.toggle('checked');
+    } else {
+      // Real symptom — uncheck "Aucun"
+      document.querySelector('#rf-list .cb-none').classList.remove('checked');
+      el.classList.toggle('checked');
+    }
+    const anyReal = document.querySelectorAll('#rf-list .cb-item.checked:not(.cb-none)').length > 0;
+    document.getElementById('rf-alert').classList.toggle('show', anyReal);
+  }
+}
+
+function pickType(el) {
+  document.querySelectorAll('#type-cards .type-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  state.iisType = el.dataset.val;
+  document.getElementById('done-type').textContent = `Profil SII-${el.dataset.val} adapté`;
+  updateUI();
+}
+
+function updateSlider(id, v) {
+  const n = parseInt(v);
+  document.getElementById('val-' + id).textContent = n;
+  document.getElementById('fill-' + id).style.width = ((n-1)/9*100) + '%';
+  state.symptoms[id] = n;
+  const row = document.getElementById('row-' + id);
+  row.dataset.level = n <= 3 ? 'low' : n <= 6 ? 'mid' : 'high';
+}
+
+function pickLevel(el) {
+  document.querySelectorAll('#level-cards .level-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  state.fodmap = el.dataset.val;
+  const phases = {
+    beginner: 'Phase Élimination — 4 à 8 semaines',
+    ongoing:  'Phase Élimination en cours',
+    reintro:  'Phase Réintroduction — test des seuils'
+  };
+  document.getElementById('done-phase').textContent = phases[el.dataset.val];
+  updateUI();
+}
+
+function pickStress(el) {
+  document.querySelectorAll('#stress-row .stress-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  state.stress = parseInt(el.dataset.val);
+}
+
+// ════════════════════════════════
+//  INIT
+// ════════════════════════════════
+document.getElementById('ob-btn').addEventListener('click', next);
+document.getElementById('ob-back').addEventListener('click', back);
+document.getElementById('ob-skip').addEventListener('click', next);
+
+// slide-0 already has .active class in HTML
+
+// Clock
+(function tick() {
+  const d = new Date();
+  const el = document.getElementById('clock');
+  if (el) el.textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0');
+  setTimeout(tick, 15000);
+})();
+</script>
+</body>
+</html>

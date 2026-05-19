@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Score Bien-être</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:390px;min-height:100%;background:#232323;display:flex;flex-direction:column}
+
+.sbar{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:relative;z-index:10}
+.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
+.sbar-icons{display:flex;align-items:center;gap:6px}
+.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
+.sig b{display:block;width:3px;background:#fff;border-radius:1px}
+.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
+.wifi-icon{position:relative;width:15px;height:11px}
+.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
+.wifi-icon::before{width:15px;height:8px;bottom:2px}
+.wifi-icon::after{width:9px;height:5px;bottom:2px}
+.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
+.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+.topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);line-height:1;user-select:none;transition:background .15s}
+.back-btn:hover{background:rgba(255,255,255,.11)}
+.topbar-title{flex:1;font-size:16px;font-weight:700;color:#f4f2ed}
+
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 16px 36px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* Hero ring card */
+.hero-card{
+  background:
+    radial-gradient(ellipse 150px 120px at 8% 12%, rgba(26,255,170,.16) 0%, transparent 70%),
+    radial-gradient(ellipse 150px 130px at 92% 88%, rgba(208,48,255,.24) 0%, transparent 70%),
+    linear-gradient(155deg,rgba(80,78,78,.2) 0%,rgba(184,56,230,.28) 100%);
+  border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:24px 20px;
+  margin-bottom:12px;display:flex;flex-direction:column;align-items:center;gap:16px;
+  overflow:hidden;position:relative;
+}
+.ring-wrap{position:relative;width:140px;height:140px}
+.ring-wrap svg{width:140px;height:140px;transform:rotate(-90deg)}
+.score-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
+.score-big{font-size:44px;font-weight:700;color:#fff;letter-spacing:-2px;line-height:1}
+.score-denom{font-size:18px;font-weight:400;color:rgba(255,255,255,.4)}
+.score-label{font-size:13px;color:rgba(255,255,255,.5);margin-top:4px}
+.hero-meta{text-align:center}
+.hero-mood{font-size:20px;font-weight:700;color:#f4f2ed}
+.hero-date{font-size:13px;color:rgba(255,255,255,.4);margin-top:3px}
+.hero-delta{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+
+/* Week strip */
+.week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
+.day-pill{border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:background .15s;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.day-pill:hover{background:rgba(255,255,255,.08)}
+.day-pill.today{background:rgba(26,255,170,.08);border-color:rgba(26,255,170,.3)}
+.dp-name{font-size:9px;color:rgba(255,255,255,.35);font-weight:600;text-transform:uppercase}
+.dp-num{font-size:11px;font-weight:700;color:#f4f2ed}
+.dp-score{font-size:11px;font-weight:700}
+.dp-dot{width:6px;height:6px;border-radius:50%}
+
+/* Score breakdown */
+.breakdown-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;margin-bottom:12px;overflow:hidden;position:relative}
+.section-title{font-size:15px;font-weight:700;color:#f4f2ed;margin:16px 0 10px}
+.factor-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.factor-row:last-child{margin-bottom:0}
+.factor-icon{font-size:20px;width:38px;height:38px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.factor-info{flex:1;min-width:0}
+.factor-name{font-size:13px;font-weight:600;color:#f4f2ed}
+.factor-bar-bg{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:5px}
+.factor-bar-fill{height:100%;border-radius:3px}
+.factor-val{font-size:14px;font-weight:700;width:36px;text-align:right;flex-shrink:0}
+
+/* History list */
+.history-list{display:flex;flex-direction:column;gap:6px}
+.hist-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:14px;cursor:pointer;transition:background .15s}
+.hist-row:hover{background:rgba(255,255,255,.07)}
+.hist-date{font-size:12px;color:rgba(255,255,255,.45);width:70px;flex-shrink:0}
+.hist-bar-bg{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.hist-bar-fill{height:100%;border-radius:3px}
+.hist-score{font-size:13px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
+.hist-mood{font-size:14px;flex-shrink:0}
+
+/* Tips */
+.tip-card{display:flex;gap:12px;padding:14px;border-radius:16px;margin-bottom:8px;overflow:hidden;position:relative;border:none}
+.tip-card.green{background:radial-gradient(ellipse 160px 100px at 90% 50%, rgba(0,230,120,.8) 0%, transparent 65%),radial-gradient(ellipse 100px 80px at 10% 80%, rgba(0,180,200,.5) 0%, transparent 55%),#0d1f18;box-shadow:0 4px 16px rgba(0,180,120,.18)}
+.tip-card.purple{background:radial-gradient(ellipse 160px 100px at 90% 50%, rgba(160,60,255,.75) 0%, transparent 65%),radial-gradient(ellipse 100px 80px at 10% 80%, rgba(80,40,255,.45) 0%, transparent 55%),#15082a;box-shadow:0 4px 16px rgba(140,50,255,.18)}
+.tip-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.tip-body{flex:1}
+.tip-title{font-size:13px;font-weight:700;color:#f4f2ed;margin-bottom:3px}
+.tip-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+
+.tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
+.tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}
+.tip-green{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.2)}
+.tip-blue{background:rgba(74,176,255,.07);border-color:rgba(74,176,255,.2)}
+.tip-purple{background:rgba(180,60,255,.07);border-color:rgba(180,60,255,.2)}
+.tip .tip-i{font-size:15px;flex-shrink:0;margin-top:1px;line-height:1}
+.tip .tip-b{flex:1;min-width:0}
+.tip .tip-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.tip-amber .tip-tag{color:rgba(255,180,0,.85)}
+.tip-green .tip-tag{color:rgba(26,255,170,.85)}
+.tip-blue .tip-tag{color:rgba(74,176,255,.85)}
+.tip-purple .tip-tag{color:rgba(180,60,255,.85)}
+.tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
+    <div class="sbar-icons">
+      <div class="sig"><b></b><b></b><b></b><b></b></div>
+      <div class="wifi-icon"><div class="wifi-dot"></div></div>
+      <div class="batt-icon"><div class="batt-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <span class="topbar-title">Score bien-être</span>
+  </div>
+
+  <div class="content">
+
+    <!-- Hero ring -->
+    <div class="hero-card">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 140 140">
+          <defs>
+            <linearGradient id="rg3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#1affaa"/>
+              <stop offset="100%" stop-color="#4ab0ff"/>
+            </linearGradient>
+          </defs>
+          <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
+          <circle cx="70" cy="70" r="58" fill="none" stroke="url(#rg3)" stroke-width="8"
+            stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="91"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-big">7.2<span class="score-denom">/10</span></div>
+          <div class="score-label">aujourd'hui</div>
+        </div>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-mood">Bonne journée 😊</div>
+        <div class="hero-date">Samedi 10 mai 2025</div>
+        <div class="hero-delta">↑ +0.4 vs hier</div>
+      </div>
+    </div>
+
+    <!-- Week strip -->
+    <div class="week-strip">
+      <div class="day-pill" onclick="location.href='page-day.html'">
+        <div class="dp-name">Lun</div><div class="dp-num">5</div>
+        <div class="dp-dot" style="background:#ffaa00"></div>
+        <div class="dp-score" style="color:#ffaa00">6.1</div>
+      </div>
+      <div class="day-pill" onclick="location.href='page-day.html'">
+        <div class="dp-name">Mar</div><div class="dp-num">6</div>
+        <div class="dp-dot" style="background:#1affaa"></div>
+        <div class="dp-score" style="color:#1affaa">7.4</div>
+      </div>
+      <div class="day-pill" onclick="location.href='page-day.html'">
+        <div class="dp-name">Mer</div><div class="dp-num">7</div>
+        <div class="dp-dot" style="background:#1affaa"></div>
+        <div class="dp-score" style="color:#1affaa">7.8</div>
+      </div>
+      <div class="day-pill" onclick="location.href='page-day.html'">
+        <div class="dp-name">Jeu</div><div class="dp-num">8</div>
+        <div class="dp-dot" style="background:#ff5050"></div>
+        <div class="dp-score" style="color:#ff5050">5.2</div>
+      </div>
+      <div class="day-pill" onclick="location.href='page-day.html'">
+        <div class="dp-name">Ven</div><div class="dp-num">9</div>
+        <div class="dp-dot" style="background:#ffaa00"></div>
+        <div class="dp-score" style="color:#ffaa00">6.8</div>
+      </div>
+      <div class="day-pill today">
+        <div class="dp-name">Sam</div><div class="dp-num">10</div>
+        <div class="dp-dot" style="background:#1affaa"></div>
+        <div class="dp-score" style="color:#1affaa">7.2</div>
+      </div>
+      <div class="day-pill" style="opacity:.35">
+        <div class="dp-name">Dim</div><div class="dp-num">11</div>
+        <div class="dp-dot" style="background:rgba(255,255,255,.15)"></div>
+        <div class="dp-score" style="color:rgba(255,255,255,.3)">—</div>
+      </div>
+    </div>
+
+    <!-- Tip score -->
+    <div class="tip tip-purple">
+      <div class="tip-i">🧠</div>
+      <div class="tip-b">
+        <div class="tip-tag">Comment est calculé votre score</div>
+        <div class="tip-t">Le score combine vos symptômes déclarés, la régularité des repas loggués et l'absence d'aliments déclencheurs identifiés. Il est mis à jour chaque soir.</div>
+      </div>
+    </div>
+
+    <!-- Score breakdown -->
+    <div class="section-title">Facteurs du score</div>
+    <div class="breakdown-card" style="background:radial-gradient(ellipse 130px 90px at 96% 8%,rgba(26,255,170,.12) 0%,transparent 65%),radial-gradient(ellipse 100px 80px at 4% 92%,rgba(208,48,255,.09) 0%,transparent 65%),rgba(255,255,255,.04);border-color:rgba(26,255,170,.09)">
+      <div class="factor-row">
+        <div class="factor-icon">🍽️</div>
+        <div class="factor-info">
+          <div class="factor-name">Alimentation</div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:82%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+        </div>
+        <div class="factor-val" style="color:#1affaa">8.2</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-icon">💊</div>
+        <div class="factor-info">
+          <div class="factor-name">Symptômes</div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:70%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+        </div>
+        <div class="factor-val" style="color:#1affaa">7.0</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-icon">😴</div>
+        <div class="factor-info">
+          <div class="factor-name">Sommeil</div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:65%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.4))"></div></div>
+        </div>
+        <div class="factor-val" style="color:#ffaa00">6.5</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-icon">🏃</div>
+        <div class="factor-info">
+          <div class="factor-name">Activité</div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:75%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+        </div>
+        <div class="factor-val" style="color:#1affaa">7.5</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-icon">🧘</div>
+        <div class="factor-info">
+          <div class="factor-name">Stress</div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:58%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.4))"></div></div>
+        </div>
+        <div class="factor-val" style="color:#ffaa00">5.8</div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="section-title">Historique récent</div>
+    <div class="history-list">
+      <div class="hist-row" onclick="location.href='page-day.html'">
+        <div class="hist-date">Ven 9 mai</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:68%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.3))"></div></div>
+        <div class="hist-score" style="color:#ffaa00">6.8</div>
+        <div class="hist-mood">😐</div>
+      </div>
+      <div class="hist-row" onclick="location.href='page-day.html'">
+        <div class="hist-date">Jeu 8 mai</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:52%;background:linear-gradient(90deg,#ff5050,rgba(255,80,80,.3))"></div></div>
+        <div class="hist-score" style="color:#ff5050">5.2</div>
+        <div class="hist-mood">😟</div>
+      </div>
+      <div class="hist-row" onclick="location.href='page-day.html'">
+        <div class="hist-date">Mer 7 mai</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:78%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.3))"></div></div>
+        <div class="hist-score" style="color:#1affaa">7.8</div>
+        <div class="hist-mood">😊</div>
+      </div>
+      <div class="hist-row" onclick="location.href='page-day.html'">
+        <div class="hist-date">Mar 6 mai</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:74%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.3))"></div></div>
+        <div class="hist-score" style="color:#1affaa">7.4</div>
+        <div class="hist-mood">😊</div>
+      </div>
+      <div class="hist-row" onclick="location.href='page-day.html'">
+        <div class="hist-date">Lun 5 mai</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:61%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.3))"></div></div>
+        <div class="hist-score" style="color:#ffaa00">6.1</div>
+        <div class="hist-mood">😐</div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="section-title">Pour améliorer votre score</div>
+    <div class="tip-card green">
+      <div class="tip-icon">🥗</div>
+      <div class="tip-body">
+        <div class="tip-title">Respectez le plan alimentaire</div>
+        <div class="tip-text">Les 3 derniers jours où vous avez suivi votre plan à 100%, votre score était en moyenne de 8.1.</div>
+      </div>
+    </div>
+    <div class="tip-card purple">
+      <div class="tip-icon">🧘</div>
+      <div class="tip-body">
+        <div class="tip-title">Gérez votre stress</div>
+        <div class="tip-text">Votre score stress est le facteur le plus faible. Les jours de méditation, vos symptômes baissent de 30%.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+(function tick(){
+  const d=new Date(),el=document.getElementById('clock');
+  if(el) el.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  setTimeout(tick,15000);
+})();
+</script>
+</body>
+</html>

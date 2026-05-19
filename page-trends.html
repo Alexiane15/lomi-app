@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Tendances</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:390px;min-height:100%;background:#232323;display:flex;flex-direction:column}
+
+.sbar{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:relative;z-index:10}
+.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
+.sbar-icons{display:flex;align-items:center;gap:6px}
+.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
+.sig b{display:block;width:3px;background:#fff;border-radius:1px}
+.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
+.wifi-icon{position:relative;width:15px;height:11px}
+.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
+.wifi-icon::before{width:15px;height:8px;bottom:2px}
+.wifi-icon::after{width:9px;height:5px;bottom:2px}
+.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
+.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+.topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);line-height:1;user-select:none;transition:background .15s}
+.back-btn:hover{background:rgba(255,255,255,.11)}
+.topbar-title{flex:1;font-size:16px;font-weight:700;color:#f4f2ed}
+
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 16px 36px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* Period selector */
+.period-sel{display:flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px}
+.p-tab{flex:1;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;user-select:none}
+.p-tab.active{background:rgba(255,255,255,.1);color:#f4f2ed}
+
+/* Metric toggle */
+.metric-toggle{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.metric-toggle::-webkit-scrollbar{display:none}
+.mtag{height:28px;padding:0 12px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;display:flex;align-items:center;cursor:pointer;transition:all .2s;flex-shrink:0}
+.mtag.green{background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+.mtag.purple{background:rgba(208,48,255,.1);border:1px solid rgba(208,48,255,.2);color:rgba(208,48,255,.8);opacity:.5}
+.mtag.orange{background:rgba(255,150,50,.1);border:1px solid rgba(255,150,50,.2);color:rgba(255,150,50,.8);opacity:.5}
+.mtag.blue{background:rgba(74,176,255,.1);border:1px solid rgba(74,176,255,.2);color:rgba(74,176,255,.8);opacity:.5}
+.mtag.active{opacity:1}
+
+/* Main chart card */
+.chart-card{
+  background:
+    radial-gradient(ellipse 200px 140px at 75% 25%, rgba(208,48,255,.2) 0%, transparent 65%),
+    radial-gradient(ellipse 160px 120px at 8% 75%, rgba(26,255,170,.14) 0%, transparent 65%),
+    linear-gradient(180deg,rgba(80,78,78,.14) 0%,rgba(208,48,255,.18) 100%);
+  border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;margin-bottom:12px;overflow:hidden;position:relative;
+}
+.chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.chart-score{font-size:38px;font-weight:700;color:#f4f2ed;letter-spacing:-1.5px;line-height:1}
+.chart-score span{font-size:16px;font-weight:400;color:rgba(255,255,255,.4)}
+.chart-delta{font-size:12px;color:#1affaa;font-weight:600;margin-top:4px}
+.chart-period-lbl{font-size:11px;color:rgba(255,255,255,.35);text-align:right}
+.chart-area{width:100%;height:120px;margin-bottom:8px}
+.x-labels{display:flex;justify-content:space-between}
+.xl{font-size:9px;color:rgba(255,255,255,.3)}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.kpi{border-radius:16px;padding:12px;overflow:hidden;position:relative;border:none;display:flex;flex-direction:column;gap:0}
+.kpi-val{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.5px;line-height:1}
+.kpi-label{font-size:9px;color:rgba(255,255,255,.65);margin-bottom:5px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.kpi-delta{font-size:10px;font-weight:600;margin-top:4px;color:rgba(255,255,255,.75)}
+
+/* Week detail */
+.week-bars{display:flex;align-items:flex-end;gap:6px;height:80px;margin-top:10px}
+.wbar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%}
+.wbar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.wbar{width:28px;border-radius:4px 4px 0 0;transition:height .4s ease;min-height:4px}
+.wbar-lbl{font-size:9px;color:rgba(255,255,255,.3)}
+.wbar-val{font-size:9px;font-weight:600;color:rgba(255,255,255,.5)}
+
+/* Insight cards */
+.insight{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;margin-bottom:8px;overflow:hidden;position:relative}
+.insight-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.insight-body{flex:1}
+.insight-title{font-size:13px;font-weight:700;color:#f4f2ed;margin-bottom:3px}
+.insight-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+.insight.green{background:radial-gradient(ellipse 180px 80px at 100% 50%,rgba(26,255,170,.14) 0%,transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(26,255,170,.14)}
+.insight.orange{background:radial-gradient(ellipse 180px 80px at 100% 50%,rgba(255,150,50,.14) 0%,transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(255,150,50,.14)}
+.insight.blue{background:radial-gradient(ellipse 180px 80px at 100% 50%,rgba(74,176,255,.14) 0%,transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(74,176,255,.14)}
+
+/* Section title */
+.section-title{font-size:15px;font-weight:700;color:#f4f2ed;margin:16px 0 10px}
+
+.tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
+.tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}
+.tip-green{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.2)}
+.tip-blue{background:rgba(74,176,255,.07);border-color:rgba(74,176,255,.2)}
+.tip-purple{background:rgba(180,60,255,.07);border-color:rgba(180,60,255,.2)}
+.tip .tip-i{font-size:15px;flex-shrink:0;margin-top:1px;line-height:1}
+.tip .tip-b{flex:1;min-width:0}
+.tip .tip-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.tip-amber .tip-tag{color:rgba(255,180,0,.85)}
+.tip-green .tip-tag{color:rgba(26,255,170,.85)}
+.tip-blue .tip-tag{color:rgba(74,176,255,.85)}
+.tip-purple .tip-tag{color:rgba(180,60,255,.85)}
+.tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
+    <div class="sbar-icons">
+      <div class="sig"><b></b><b></b><b></b><b></b></div>
+      <div class="wifi-icon"><div class="wifi-dot"></div></div>
+      <div class="batt-icon"><div class="batt-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <span class="topbar-title">Tendances</span>
+  </div>
+
+  <div class="content">
+
+    <!-- Period -->
+    <div class="period-sel">
+      <div class="p-tab" onclick="selPeriod(this)">7 jours</div>
+      <div class="p-tab active" onclick="selPeriod(this)">30 jours</div>
+      <div class="p-tab" onclick="selPeriod(this)">3 mois</div>
+      <div class="p-tab" onclick="selPeriod(this)">Phase</div>
+    </div>
+
+    <!-- Metric toggle -->
+    <div class="metric-toggle">
+      <div class="mtag green active" onclick="selMetric(this)">Bien-être</div>
+      <div class="mtag purple active" onclick="selMetric(this)">Ballonnements</div>
+      <div class="mtag orange active" onclick="selMetric(this)">Douleurs</div>
+      <div class="mtag blue" onclick="selMetric(this)">Fatigue</div>
+    </div>
+
+    <!-- Main chart -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <div class="chart-score">7.4<span>/10</span></div>
+          <div class="chart-delta">↑ +0.8 vs période préc.</div>
+        </div>
+        <div class="chart-period-lbl">30 derniers jours<br>12 avr — 10 mai</div>
+      </div>
+      <div class="chart-area">
+        <svg width="100%" height="100%" viewBox="0 0 330 110" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="g-well" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1affaa" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="#1affaa" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="g-bloat" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#d030ff" stop-opacity=".2"/>
+              <stop offset="100%" stop-color="#d030ff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="g-pain" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff9632" stop-opacity=".2"/>
+              <stop offset="100%" stop-color="#ff9632" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- well-being area -->
+          <path d="M0,85 C20,80 40,70 60,65 C80,60 100,55 120,48 C140,42 160,40 180,35 C200,30 220,28 240,25 C260,22 280,20 310,18 L310,110 L0,110 Z" fill="url(#g-well)"/>
+          <path d="M0,85 C20,80 40,70 60,65 C80,60 100,55 120,48 C140,42 160,40 180,35 C200,30 220,28 240,25 C260,22 280,20 310,18" fill="none" stroke="#1affaa" stroke-width="2" stroke-linecap="round"/>
+          <!-- ballonnements area -->
+          <path d="M0,40 C20,45 40,50 60,58 C80,65 100,70 120,65 C140,60 160,55 180,62 C200,68 220,58 240,52 C260,46 280,44 310,42 L310,110 L0,110 Z" fill="url(#g-bloat)"/>
+          <path d="M0,40 C20,45 40,50 60,58 C80,65 100,70 120,65 C140,60 160,55 180,62 C200,68 220,58 240,52 C260,46 280,44 310,42" fill="none" stroke="#d030ff" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0"/>
+          <!-- douleurs -->
+          <path d="M0,50 C20,55 40,65 60,70 C80,75 100,68 120,72 C140,76 160,65 180,60 C200,55 220,62 240,58 C260,54 280,50 310,48" fill="none" stroke="#ff9632" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- current marker -->
+          <circle cx="310" cy="18" r="4" fill="#1affaa"/>
+          <line x1="310" y1="0" x2="310" y2="110" stroke="rgba(26,255,170,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+        </svg>
+      </div>
+      <div class="x-labels">
+        <span class="xl">12 avr</span><span class="xl">19 avr</span><span class="xl">26 avr</span><span class="xl">3 mai</span><span class="xl">10 mai</span>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi" style="background:radial-gradient(ellipse 110px 90px at 20% 28%, rgba(0,230,120,.9) 0%, transparent 65%),radial-gradient(ellipse 90px 80px at 82% 74%, rgba(0,180,200,.8) 0%, transparent 60%),#0d1f18;box-shadow:0 4px 16px rgba(0,180,120,.2)">
+        <div class="kpi-label">Score moyen</div>
+        <div class="kpi-val">7.4</div>
+        <div class="kpi-delta">↑ +0.8</div>
+      </div>
+      <div class="kpi" style="background:radial-gradient(ellipse 110px 90px at 20% 28%, rgba(70,140,255,.9) 0%, transparent 65%),radial-gradient(ellipse 90px 80px at 82% 74%, rgba(120,60,255,.8) 0%, transparent 60%),#0d1020;box-shadow:0 4px 16px rgba(80,100,255,.2)">
+        <div class="kpi-label">Meilleur jour</div>
+        <div class="kpi-val">9.1</div>
+        <div class="kpi-delta">23 avr</div>
+      </div>
+      <div class="kpi" style="background:radial-gradient(ellipse 110px 90px at 22% 30%, rgba(255,108,115,.9) 0%, transparent 65%),radial-gradient(ellipse 90px 80px at 80% 72%, rgba(255,135,40,.82) 0%, transparent 60%),#1e1525;box-shadow:0 4px 16px rgba(255,80,100,.2)">
+        <div class="kpi-label">Jour difficile</div>
+        <div class="kpi-val">4.2</div>
+        <div class="kpi-delta">14 avr</div>
+      </div>
+    </div>
+
+    <!-- Tip tendances -->
+    <div class="tip tip-blue">
+      <div class="tip-i">📈</div>
+      <div class="tip-b">
+        <div class="tip-tag">À savoir</div>
+        <div class="tip-t">Une amélioration du score bien-être en semaine 3–4 est souvent liée à la réduction de l'inflammation intestinale. C'est un signal positif.</div>
+      </div>
+    </div>
+
+    <!-- Weekly breakdown -->
+    <div class="section-title">Évolution semaine par semaine</div>
+    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;margin-bottom:12px;overflow:hidden;position:relative">
+      <div style="background:radial-gradient(ellipse 150px 90px at 92% 8%,rgba(26,255,170,.12) 0%,transparent 70%);position:absolute;inset:0;pointer-events:none"></div>
+      <div class="week-bars">
+        <div class="wbar-col">
+          <div class="wbar-val">5.8</div>
+          <div class="wbar-wrap"><div class="wbar" style="height:58%;background:linear-gradient(180deg,rgba(255,170,0,.9),rgba(255,170,0,.4))"></div></div>
+          <div class="wbar-lbl">Sem.1</div>
+        </div>
+        <div class="wbar-col">
+          <div class="wbar-val">6.4</div>
+          <div class="wbar-wrap"><div class="wbar" style="height:64%;background:linear-gradient(180deg,rgba(255,170,0,.9),rgba(255,170,0,.4))"></div></div>
+          <div class="wbar-lbl">Sem.2</div>
+        </div>
+        <div class="wbar-col">
+          <div class="wbar-val">7.2</div>
+          <div class="wbar-wrap"><div class="wbar" style="height:72%;background:linear-gradient(180deg,rgba(26,255,170,.9),rgba(26,255,170,.4))"></div></div>
+          <div class="wbar-lbl">Sem.3</div>
+        </div>
+        <div class="wbar-col">
+          <div class="wbar-val">8.1</div>
+          <div class="wbar-wrap"><div class="wbar" style="height:81%;background:linear-gradient(180deg,rgba(26,255,170,.9),rgba(26,255,170,.4))"></div></div>
+          <div class="wbar-lbl">Sem.4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insights -->
+    <div class="section-title">Insights</div>
+
+    <div class="insight green">
+      <div class="insight-icon">📈</div>
+      <div class="insight-body">
+        <div class="insight-title">Progression constante</div>
+        <div class="insight-text">Votre score augmente de +0.58/10 par semaine. Vous êtes sur la bonne trajectoire pour la phase de réintroduction.</div>
+      </div>
+    </div>
+
+    <div class="insight orange">
+      <div class="insight-icon">⚠️</div>
+      <div class="insight-body">
+        <div class="insight-title">Weekends difficiles</div>
+        <div class="insight-text">Vos scores du vendredi et samedi sont en moyenne 1.2 points plus bas. Les sorties au restaurant semblent impacter vos symptômes.</div>
+      </div>
+    </div>
+
+    <div class="insight blue">
+      <div class="insight-icon">💤</div>
+      <div class="insight-body">
+        <div class="insight-title">Corrélation sommeil</div>
+        <div class="insight-text">Les jours avec moins de 7h de sommeil affichent un score bien-être de 1.8 point inférieur à la moyenne.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+(function tick(){
+  const d=new Date(),el=document.getElementById('clock');
+  if(el) el.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  setTimeout(tick,15000);
+})();
+function selPeriod(el){document.querySelectorAll('.p-tab').forEach(e=>e.classList.remove('active'));el.classList.add('active')}
+function selMetric(el){el.classList.toggle('active')}
+</script>
+</body>
+</html>

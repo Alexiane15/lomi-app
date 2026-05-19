@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Aliment</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:390px;min-height:100%;background:#232323;display:flex;flex-direction:column;position:relative}
+
+/* Status bar */
+.sbar{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:relative;z-index:10}
+.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
+.sbar-icons{display:flex;align-items:center;gap:6px}
+.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
+.sig b{display:block;width:3px;background:#fff;border-radius:1px}
+.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
+.wifi-icon{position:relative;width:15px;height:11px}
+.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
+.wifi-icon::before{width:15px;height:8px;bottom:2px}
+.wifi-icon::after{width:9px;height:5px;bottom:2px}
+.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
+.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+/* Top bar */
+.topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);line-height:1;user-select:none;transition:background .15s}
+.back-btn:hover{background:rgba(255,255,255,.11)}
+.topbar-title{flex:1;font-size:16px;font-weight:700;color:#f4f2ed}
+.bookmark-btn{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .15s}
+.bookmark-btn:hover{background:rgba(255,255,255,.11)}
+
+/* Content */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 16px 36px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* Hero */
+.hero{display:flex;align-items:center;gap:18px;padding:12px 0 20px}
+.hero-emoji-wrap{width:80px;height:80px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:40px;flex-shrink:0}
+.hero-info{flex:1}
+.hero-name{font-size:26px;font-weight:700;color:#f4f2ed;letter-spacing:-.5px}
+.hero-cat{font-size:13px;color:rgba(255,255,255,.45);margin-top:3px}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+.hero-badge.mod{background:rgba(255,170,0,.12);border-color:rgba(255,170,0,.3);color:#ffaa00}
+.hero-badge.av{background:rgba(255,80,80,.12);border-color:rgba(255,80,80,.3);color:#ff5050}
+
+/* Card */
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;position:relative;overflow:hidden;margin-bottom:10px}
+.card-title{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:12px}
+
+/* Phase cards */
+.phase-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.phase-card{border-radius:16px;padding:12px 10px;display:flex;flex-direction:column;gap:0;position:relative;overflow:hidden;border:none}
+.phase-card.ok{background:radial-gradient(ellipse 100px 85px at 20% 28%, rgba(0,230,120,.9) 0%, transparent 65%),radial-gradient(ellipse 80px 70px at 82% 74%, rgba(0,180,200,.8) 0%, transparent 60%),#0d1f18;box-shadow:0 5px 16px rgba(0,180,120,.22)}
+.phase-card.mod{background:radial-gradient(ellipse 100px 85px at 20% 28%, rgba(255,160,40,.9) 0%, transparent 65%),radial-gradient(ellipse 80px 70px at 82% 74%, rgba(255,100,20,.8) 0%, transparent 60%),#1f1208;box-shadow:0 5px 16px rgba(255,120,30,.22)}
+.phase-card.av{background:radial-gradient(ellipse 100px 85px at 20% 28%, rgba(255,50,80,.9) 0%, transparent 65%),radial-gradient(ellipse 80px 70px at 82% 74%, rgba(255,20,50,.8) 0%, transparent 60%),#1f0810;box-shadow:0 5px 16px rgba(255,40,60,.22)}
+.phase-name{font-size:9px;font-weight:700;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.5px;position:relative;z-index:1}
+.phase-status{font-size:12px;font-weight:700;margin-top:2px;position:relative;z-index:1}
+.phase-card.ok .phase-status{color:#fff}
+.phase-card.mod .phase-status{color:#fff}
+.phase-card.av .phase-status{color:#fff}
+.phase-portion{font-size:10px;color:rgba(255,255,255,.7);margin-top:1px;position:relative;z-index:1}
+
+/* FODMAP breakdown */
+.fodmap-list{display:flex;flex-direction:column;gap:10px}
+.fodmap-row{display:flex;align-items:center;gap:10px}
+.fodmap-name{font-size:12px;color:#f4f2ed;width:110px;flex-shrink:0}
+.fodmap-bar-bg{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.fodmap-bar-fill{height:100%;border-radius:3px}
+.fodmap-lvl{font-size:11px;font-weight:600;width:40px;text-align:right;flex-shrink:0}
+.lvl-low{color:#1affaa}.lvl-mod{color:#ffaa00}.lvl-high{color:#ff5050}
+
+/* Portion visual */
+.portion-visual{display:flex;align-items:center;gap:16px}
+.portion-emoji-big{font-size:36px;width:70px;height:70px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.portion-info{flex:1}
+.portion-qty{font-size:22px;font-weight:700;color:#f4f2ed;letter-spacing:-.5px}
+.portion-unit{font-size:14px;font-weight:400;color:rgba(255,255,255,.5)}
+.portion-tip{font-size:12px;color:rgba(255,255,255,.45);margin-top:5px;line-height:1.4}
+
+/* Similar foods */
+.similar-list{display:flex;flex-direction:column;gap:6px}
+.similar-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;cursor:pointer;transition:background .15s}
+.similar-item:hover{background:rgba(255,255,255,.07)}
+.similar-emoji{font-size:18px;width:34px;height:34px;background:rgba(255,255,255,.06);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.similar-name{font-size:13px;font-weight:600;color:#f4f2ed;flex:1}
+.similar-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+
+/* Tip card */
+.tip-card{background:radial-gradient(ellipse 160px 80px at 100% 50%, rgba(74,176,255,.12) 0%, transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(74,176,255,.12);border-radius:18px;padding:16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
+.tip-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.tip-text{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.tip-text strong{color:#f4f2ed}
+
+/* CTA */
+.cta-btn{width:100%;height:52px;background:linear-gradient(135deg,#1affaa,rgba(74,176,255,.9));border:none;border-radius:16px;font-size:15px;font-weight:700;color:#1a1a1a;cursor:pointer;margin-top:4px;transition:opacity .2s}
+.cta-btn:hover{opacity:.9}
+
+.tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
+.tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}
+.tip-green{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.2)}
+.tip-blue{background:rgba(74,176,255,.07);border-color:rgba(74,176,255,.2)}
+.tip-purple{background:rgba(180,60,255,.07);border-color:rgba(180,60,255,.2)}
+.tip .tip-i{font-size:15px;flex-shrink:0;margin-top:1px;line-height:1}
+.tip .tip-b{flex:1;min-width:0}
+.tip .tip-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.tip-amber .tip-tag{color:rgba(255,180,0,.85)}
+.tip-green .tip-tag{color:rgba(26,255,170,.85)}
+.tip-blue .tip-tag{color:rgba(74,176,255,.85)}
+.tip-purple .tip-tag{color:rgba(180,60,255,.85)}
+.tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
+    <div class="sbar-icons">
+      <div class="sig"><b></b><b></b><b></b><b></b></div>
+      <div class="wifi-icon"><div class="wifi-dot"></div></div>
+      <div class="batt-icon"><div class="batt-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <span class="topbar-title">Détail aliment</span>
+    <div class="bookmark-btn">🔖</div>
+  </div>
+
+  <div class="content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-emoji-wrap">🥕</div>
+      <div class="hero-info">
+        <div class="hero-name">Carotte</div>
+        <div class="hero-cat">Légumes · Polyols faibles</div>
+        <div class="hero-badge">✓ OK en élimination</div>
+      </div>
+    </div>
+
+    <!-- Phase status -->
+    <div class="card-title">Statut par phase</div>
+    <div class="phase-row">
+      <div class="phase-card ok">
+        <div class="phase-name">Élimination</div>
+        <div class="phase-status">OK</div>
+        <div class="phase-portion">Sans limite</div>
+      </div>
+      <div class="phase-card ok">
+        <div class="phase-name">Réintro.</div>
+        <div class="phase-status">OK</div>
+        <div class="phase-portion">Normale</div>
+      </div>
+      <div class="phase-card ok">
+        <div class="phase-name">Maintenance</div>
+        <div class="phase-status">OK</div>
+        <div class="phase-portion">À volonté</div>
+      </div>
+    </div>
+
+    <!-- Portion -->
+    <div class="card" style="background:radial-gradient(ellipse 140px 80px at 100% 50%, rgba(26,255,170,.12) 0%, transparent 65%),rgba(255,255,255,.04);border-color:rgba(26,255,170,.12)">
+      <div class="card-title">Portion recommandée</div>
+      <div class="portion-visual">
+        <div class="portion-emoji-big">🥕</div>
+        <div class="portion-info">
+          <div class="portion-qty">Sans restriction <span class="portion-unit"></span></div>
+          <div class="portion-tip">La carotte est naturellement pauvre en FODMAPs. Vous pouvez la consommer cuite ou crue en toute quantité.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FODMAP breakdown -->
+    <div class="card">
+      <div class="card-title">Composition FODMAP</div>
+      <div class="fodmap-list">
+        <div class="fodmap-row">
+          <div class="fodmap-name">Fructose</div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:8%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="fodmap-lvl lvl-low">Faible</div>
+        </div>
+        <div class="fodmap-row">
+          <div class="fodmap-name">Lactose</div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:0%;background:#1affaa"></div></div>
+          <div class="fodmap-lvl lvl-low">Nul</div>
+        </div>
+        <div class="fodmap-row">
+          <div class="fodmap-name">Fructanes</div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:12%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="fodmap-lvl lvl-low">Faible</div>
+        </div>
+        <div class="fodmap-row">
+          <div class="fodmap-name">GOS</div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:5%;background:#1affaa"></div></div>
+          <div class="fodmap-lvl lvl-low">Nul</div>
+        </div>
+        <div class="fodmap-row">
+          <div class="fodmap-name">Polyols</div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:22%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="fodmap-lvl lvl-low">Faible</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tip -->
+    <div class="tip tip-amber" style="margin-bottom:12px">
+      <div class="tip-i">💡</div>
+      <div class="tip-b">
+        <div class="tip-tag">Astuce cuisson</div>
+        <div class="tip-t">La cuisson réduit la teneur en polyols. Préférez la carotte vapeur ou rôtie pour une meilleure tolérance digestive.</div>
+      </div>
+    </div>
+
+    <!-- Similar foods -->
+    <div class="card">
+      <div class="card-title">Légumes similaires</div>
+      <div class="similar-list">
+        <div class="similar-item">
+          <div class="similar-emoji">🥒</div>
+          <div class="similar-name">Concombre</div>
+          <div class="similar-badge">OK</div>
+        </div>
+        <div class="similar-item">
+          <div class="similar-emoji">🍅</div>
+          <div class="similar-name">Tomate</div>
+          <div class="similar-badge">OK</div>
+        </div>
+        <div class="similar-item">
+          <div class="similar-emoji">🌿</div>
+          <div class="similar-name">Épinards</div>
+          <div class="similar-badge">OK</div>
+        </div>
+        <div class="similar-item">
+          <div class="similar-emoji">🥦</div>
+          <div class="similar-name">Chou-fleur</div>
+          <div class="similar-badge" style="background:rgba(255,170,0,.12);border-color:rgba(255,170,0,.3);color:#ffaa00">Modéré</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="cta-btn" onclick="history.back()">Ajouter à un repas</button>
+
+  </div>
+</div>
+<script>
+(function tick(){
+  const d=new Date(),el=document.getElementById('clock');
+  if(el) el.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  setTimeout(tick,15000);
+})();
+</script>
+</body>
+</html>

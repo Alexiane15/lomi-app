@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Ajouter un repas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:390px;height:100%;background:#232323;display:flex;flex-direction:column;overflow:hidden}
+
+.sbar{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:relative;z-index:10}
+.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
+.sbar-icons{display:flex;align-items:center;gap:6px}
+.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
+.sig b{display:block;width:3px;background:#fff;border-radius:1px}
+.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
+.wifi-icon{position:relative;width:15px;height:11px}
+.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
+.wifi-icon::before{width:15px;height:8px;bottom:2px}
+.wifi-icon::after{width:9px;height:5px;bottom:2px}
+.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
+.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+.topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);line-height:1;user-select:none}
+.topbar-title{flex:1;font-size:16px;font-weight:700;color:#f4f2ed}
+
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:0 16px 0;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* Meal type selector */
+.meal-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.meal-type{height:56px;border-radius:16px;border:none;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:box-shadow .15s,opacity .15s;user-select:none;position:relative;overflow:hidden}
+.meal-type:hover{opacity:.88}
+.meal-type.active{box-shadow:0 0 0 2.5px #fff,0 6px 20px rgba(255,255,255,.15)}
+.meal-types .meal-type:nth-child(1){background:radial-gradient(ellipse 90px 70px at 22% 32%, rgba(255,160,40,.85) 0%,transparent 65%),radial-gradient(ellipse 70px 60px at 80% 72%, rgba(255,100,20,.75) 0%,transparent 60%),#1f1208}
+.meal-types .meal-type:nth-child(2){background:radial-gradient(ellipse 90px 70px at 22% 32%, rgba(255,220,50,.85) 0%,transparent 65%),radial-gradient(ellipse 70px 60px at 80% 72%, rgba(255,160,30,.75) 0%,transparent 60%),#1f1900}
+.meal-types .meal-type:nth-child(3){background:radial-gradient(ellipse 90px 70px at 22% 32%, rgba(70,140,255,.88) 0%,transparent 65%),radial-gradient(ellipse 70px 60px at 80% 72%, rgba(120,60,255,.78) 0%,transparent 60%),#0d1020}
+.meal-types .meal-type:nth-child(4){background:radial-gradient(ellipse 90px 70px at 22% 32%, rgba(255,108,115,.88) 0%,transparent 65%),radial-gradient(ellipse 70px 60px at 80% 72%, rgba(255,38,178,.78) 0%,transparent 60%),#1e1525}
+.mt-emoji{font-size:20px}
+.mt-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.85)}
+.meal-type.active .mt-label{color:#fff}
+
+/* Time row */
+.time-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px}
+.time-icon{font-size:16px;opacity:.6}
+.time-label{font-size:13px;color:rgba(255,255,255,.5);flex:1}
+.time-val{font-size:14px;font-weight:700;color:#f4f2ed}
+
+/* Search */
+.search-wrap{position:relative;margin-bottom:12px}
+.search-input{width:100%;height:46px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:0 44px 0 44px;font-size:14px;color:#fff;font-family:inherit;outline:none;transition:border-color .2s}
+.search-input::placeholder{color:rgba(255,255,255,.35)}
+.search-input:focus{border-color:rgba(26,255,170,.4);background:rgba(255,255,255,.09)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.4;pointer-events:none}
+
+/* Selected foods */
+.section-label{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
+.selected-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.sel-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(26,255,170,.06);border:1px solid rgba(26,255,170,.18);border-radius:14px}
+.sel-emoji{font-size:18px;width:34px;height:34px;background:rgba(26,255,170,.08);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sel-info{flex:1;min-width:0}
+.sel-name{font-size:13px;font-weight:600;color:#f4f2ed}
+.sel-qty-row{display:flex;align-items:center;gap:6px;margin-top:3px}
+.qty-btn{width:22px;height:22px;background:rgba(255,255,255,.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;user-select:none;flex-shrink:0}
+.sel-qty{font-size:12px;color:rgba(255,255,255,.55);min-width:50px;text-align:center}
+.sel-remove{font-size:18px;color:rgba(255,255,255,.2);cursor:pointer;padding:4px;flex-shrink:0;line-height:1}
+.sel-remove:hover{color:rgba(255,80,80,.6)}
+
+/* Add food suggestions */
+.suggestions{display:flex;flex-direction:column;gap:4px;margin-bottom:16px}
+.sug-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:12px;cursor:pointer;transition:background .15s}
+.sug-item:hover{background:rgba(255,255,255,.08)}
+.sug-emoji{font-size:16px;width:30px;height:30px;background:rgba(255,255,255,.07);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sug-name{font-size:13px;color:#f4f2ed;flex:1}
+.sug-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);color:#1affaa;flex-shrink:0}
+.add-icon{font-size:16px;color:rgba(255,255,255,.25);flex-shrink:0}
+
+/* Symptoms section */
+.symp-section{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;margin-bottom:16px;overflow:hidden;position:relative}
+.symp-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120px 80px at 96% 8%,rgba(255,170,0,.1) 0%,transparent 65%);pointer-events:none}
+.slider-row{margin-bottom:14px}
+.slider-row:last-child{margin-bottom:0}
+.slider-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.slider-name{font-size:13px;color:#f4f2ed}
+.slider-val{font-size:14px;font-weight:700;color:#1affaa;min-width:20px;text-align:right}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,.12);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#1affaa;border:2px solid #232323;box-shadow:0 0 0 2px rgba(26,255,170,.3);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#1affaa;border:2px solid #232323;cursor:pointer;box-shadow:none}
+
+/* Note */
+.note-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,.7);font-family:inherit;outline:none;resize:none;height:76px;margin-bottom:16px;transition:border-color .2s}
+.note-input::placeholder{color:rgba(255,255,255,.25)}
+.note-input:focus{border-color:rgba(26,255,170,.35)}
+
+/* Footer */
+.footer{padding:10px 16px 30px;flex-shrink:0}
+.save-btn{width:100%;height:52px;background:linear-gradient(135deg,#1affaa,rgba(74,176,255,.9));border:none;border-radius:16px;font-size:15px;font-weight:700;color:#1a1a1a;cursor:pointer;transition:opacity .2s}
+.save-btn:hover{opacity:.9}
+
+.tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
+.tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}
+.tip-green{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.2)}
+.tip-blue{background:rgba(74,176,255,.07);border-color:rgba(74,176,255,.2)}
+.tip-purple{background:rgba(180,60,255,.07);border-color:rgba(180,60,255,.2)}
+.tip .tip-i{font-size:15px;flex-shrink:0;margin-top:1px;line-height:1}
+.tip .tip-b{flex:1;min-width:0}
+.tip .tip-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.tip-amber .tip-tag{color:rgba(255,180,0,.85)}
+.tip-green .tip-tag{color:rgba(26,255,170,.85)}
+.tip-blue .tip-tag{color:rgba(74,176,255,.85)}
+.tip-purple .tip-tag{color:rgba(180,60,255,.85)}
+.tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
+    <div class="sbar-icons">
+      <div class="sig"><b></b><b></b><b></b><b></b></div>
+      <div class="wifi-icon"><div class="wifi-dot"></div></div>
+      <div class="batt-icon"><div class="batt-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+    <span class="topbar-title">Nouveau repas</span>
+  </div>
+
+  <div class="content">
+
+    <!-- Meal type -->
+    <div class="meal-types">
+      <div class="meal-type" onclick="selectMeal(this)">
+        <div class="mt-emoji">🌅</div><div class="mt-label">Petit-déj.</div>
+      </div>
+      <div class="meal-type active" onclick="selectMeal(this)">
+        <div class="mt-emoji">☀️</div><div class="mt-label">Déjeuner</div>
+      </div>
+      <div class="meal-type" onclick="selectMeal(this)">
+        <div class="mt-emoji">🌙</div><div class="mt-label">Dîner</div>
+      </div>
+      <div class="meal-type" onclick="selectMeal(this)">
+        <div class="mt-emoji">🍎</div><div class="mt-label">Collation</div>
+      </div>
+    </div>
+
+    <!-- Tip saisie -->
+    <div class="tip tip-green">
+      <div class="tip-i">✅</div>
+      <div class="tip-b">
+        <div class="tip-tag">Précision</div>
+        <div class="tip-t">Saisissez votre repas dans les 2h suivant le repas pour une corrélation optimale avec vos symptômes digestifs.</div>
+      </div>
+    </div>
+
+    <!-- Time -->
+    <div class="time-row">
+      <div class="time-icon">🕐</div>
+      <div class="time-label">Heure du repas</div>
+      <div class="time-val" id="meal-time">12:30</div>
+    </div>
+
+    <!-- Food search -->
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="6.5" cy="6.5" r="5.5" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
+        <path d="M10.5 10.5L14 14" stroke="rgba(255,255,255,.6)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input class="search-input" type="text" placeholder="Rechercher un aliment…" id="food-search" oninput="filterSuggestions(this.value)"/>
+    </div>
+
+    <!-- Selected foods -->
+    <div class="section-label">Aliments sélectionnés</div>
+    <div class="selected-list" id="selected-list">
+      <div class="sel-item">
+        <div class="sel-emoji">🍚</div>
+        <div class="sel-info">
+          <div class="sel-name">Riz blanc</div>
+          <div class="sel-qty-row">
+            <div class="qty-btn" onclick="changeQty(this,-10)">−</div>
+            <div class="sel-qty">120 g</div>
+            <div class="qty-btn" onclick="changeQty(this,10)">+</div>
+          </div>
+        </div>
+        <div class="sel-remove" onclick="removeItem(this)">×</div>
+      </div>
+      <div class="sel-item">
+        <div class="sel-emoji">🍗</div>
+        <div class="sel-info">
+          <div class="sel-name">Poulet grillé</div>
+          <div class="sel-qty-row">
+            <div class="qty-btn" onclick="changeQty(this,-10)">−</div>
+            <div class="sel-qty">150 g</div>
+            <div class="qty-btn" onclick="changeQty(this,10)">+</div>
+          </div>
+        </div>
+        <div class="sel-remove" onclick="removeItem(this)">×</div>
+      </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="section-label">Suggestions</div>
+    <div class="suggestions" id="suggestions">
+      <div class="sug-item" onclick="addFood(this,'🥕','Carotte')">
+        <div class="sug-emoji">🥕</div><div class="sug-name">Carotte</div>
+        <div class="sug-status">OK</div><div class="add-icon">+</div>
+      </div>
+      <div class="sug-item" onclick="addFood(this,'🥒','Concombre')">
+        <div class="sug-emoji">🥒</div><div class="sug-name">Concombre</div>
+        <div class="sug-status">OK</div><div class="add-icon">+</div>
+      </div>
+      <div class="sug-item" onclick="addFood(this,'🍅','Tomate')">
+        <div class="sug-emoji">🍅</div><div class="sug-name">Tomate</div>
+        <div class="sug-status">OK</div><div class="add-icon">+</div>
+      </div>
+      <div class="sug-item" onclick="addFood(this,'🫒','Huile d\\'olive')">
+        <div class="sug-emoji">🫒</div><div class="sug-name">Huile d'olive</div>
+        <div class="sug-status">OK</div><div class="add-icon">+</div>
+      </div>
+    </div>
+
+    <!-- Symptoms -->
+    <div class="section-label">Symptômes post-repas</div>
+    <div class="symp-section">
+      <div class="slider-row">
+        <div class="slider-header">
+          <div class="slider-name">Ballonnements</div>
+          <div class="slider-val" id="val-b">0</div>
+        </div>
+        <input type="range" min="0" max="10" value="0" oninput="document.getElementById('val-b').textContent=this.value"/>
+      </div>
+      <div class="slider-row">
+        <div class="slider-header">
+          <div class="slider-name">Douleurs</div>
+          <div class="slider-val" id="val-d">0</div>
+        </div>
+        <input type="range" min="0" max="10" value="0" oninput="document.getElementById('val-d').textContent=this.value"/>
+      </div>
+      <div class="slider-row">
+        <div class="slider-header">
+          <div class="slider-name">Bien-être général</div>
+          <div class="slider-val" id="val-w" style="color:#ffaa00">5</div>
+        </div>
+        <input type="range" min="0" max="10" value="5" oninput="document.getElementById('val-w').textContent=this.value"/>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="section-label">Note (optionnel)</div>
+    <textarea class="note-input" placeholder="Ex : légère gêne 1h après, peut-être les tomates…"></textarea>
+
+  </div>
+
+  <div class="footer">
+    <button class="save-btn" onclick="save()">Enregistrer le repas</button>
+  </div>
+
+</div>
+<script>
+(function tick(){
+  const d=new Date(),el=document.getElementById('clock');
+  if(el) el.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  setTimeout(tick,15000);
+})();
+
+// Init time
+(function(){
+  const d=new Date();
+  document.getElementById('meal-time').textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+})();
+
+function selectMeal(el){
+  document.querySelectorAll('.meal-type').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function removeItem(btn){
+  btn.closest('.sel-item').remove();
+}
+
+function changeQty(btn, delta){
+  const qtyEl = btn.parentElement.querySelector('.sel-qty');
+  const match = qtyEl.textContent.match(/(\d+)/);
+  if(!match) return;
+  let v = parseInt(match[1]) + delta;
+  if(v < 10) v = 10;
+  qtyEl.textContent = v + ' g';
+}
+
+function addFood(el, emoji, name){
+  const list = document.getElementById('selected-list');
+  const item = document.createElement('div');
+  item.className = 'sel-item';
+  item.innerHTML = `<div class="sel-emoji">${emoji}</div>
+    <div class="sel-info">
+      <div class="sel-name">${name}</div>
+      <div class="sel-qty-row">
+        <div class="qty-btn" onclick="changeQty(this,-10)">−</div>
+        <div class="sel-qty">80 g</div>
+        <div class="qty-btn" onclick="changeQty(this,10)">+</div>
+      </div>
+    </div>
+    <div class="sel-remove" onclick="removeItem(this)">×</div>`;
+  list.appendChild(item);
+  document.getElementById('food-search').value='';
+}
+
+function filterSuggestions(v){}
+
+function save(){
+  history.back();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mon parcours</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0b0f0e;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;min-height:100vh;padding-bottom:48px}
+
+  /* ── HEADER ── */
+  .top-bar{
+    display:flex;align-items:center;gap:12px;
+    padding:54px 20px 14px;
+    position:sticky;top:0;z-index:20;
+    background:#0b0f0e;
+    border-bottom:1px solid rgba(255,255,255,.05);
+  }
+  .back-btn{
+    width:34px;height:34px;border-radius:10px;
+    background:rgba(255,255,255,.08);border:none;
+    color:#fff;font-size:18px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;flex-shrink:0;line-height:1;
+  }
+  .top-title{font-size:17px;font-weight:700;letter-spacing:-.2px}
+
+  /* ── STREAK ROW ── */
+  .streak-row{
+    display:flex;align-items:center;gap:10px;
+    padding:14px 20px 0;
+  }
+  .streak-pill{
+    display:flex;align-items:center;gap:5px;
+    background:rgba(255,155,0,.1);
+    border:1px solid rgba(255,155,0,.28);
+    border-radius:20px;padding:5px 11px;
+    font-size:13px;font-weight:700;color:#ffaa00;
+    flex-shrink:0;
+  }
+  .streak-pill .fire{font-size:15px}
+  .xp-wrap{flex:1;display:flex;flex-direction:column;gap:4px}
+  .xp-meta{display:flex;justify-content:space-between;align-items:baseline}
+  .xp-val{font-size:11px;font-weight:700;color:rgba(255,255,255,.5)}
+  .xp-track{height:6px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+  .xp-fill{height:100%;width:62%;background:linear-gradient(90deg,#1affaa,#00c8ff);border-radius:99px}
+
+  /* ── SECTION DIVIDER ── */
+  .section-head{
+    padding:24px 20px 10px;
+    font-size:11px;font-weight:700;
+    color:rgba(255,255,255,.28);
+    letter-spacing:.7px;text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+
+  /* ── EXPAND PANEL ── */
+  .expand-panel{margin:0 20px}
+  .expand-trigger{
+    display:flex;align-items:center;gap:12px;
+    padding:13px 16px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    cursor:pointer;
+    transition:background .15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .expand-trigger:active{background:rgba(255,255,255,.07)}
+  .expand-trigger.open{border-radius:14px 14px 0 0;border-bottom-color:transparent}
+  .expand-icon{font-size:18px;flex-shrink:0}
+  .expand-meta{flex:1;min-width:0}
+  .expand-title{font-size:14px;font-weight:700;letter-spacing:-.1px}
+  .expand-sub{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px}
+  .expand-chevron{
+    font-size:13px;color:rgba(255,255,255,.25);
+    transition:transform .22s ease;flex-shrink:0;
+  }
+  .expand-trigger.open .expand-chevron{transform:rotate(180deg)}
+
+  .expand-body{
+    display:none;
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,255,255,.08);
+    border-top:none;
+    border-radius:0 0 14px 14px;
+    padding:4px 0 8px;
+  }
+  .expand-body.open{display:block}
+
+  /* ── PATH CONTAINER ── */
+  .path{padding:0 20px}
+
+  /* ── DAY ROW ── */
+  .day-row{
+    display:flex;align-items:center;gap:14px;
+    position:relative;min-height:58px;
+  }
+  /* connector line between rows */
+  .day-row:not(:last-child)::after{
+    content:'';position:absolute;
+    left:19px;top:50px;
+    width:2px;height:calc(100% - 42px + 16px);
+    background:rgba(255,255,255,.07);
+    z-index:0;min-height:14px;
+  }
+  .day-row.done:not(:last-child)::after{background:rgba(26,255,170,.25)}
+  .day-row.today:not(:last-child)::after{
+    background:linear-gradient(to bottom,rgba(26,255,170,.35),rgba(255,255,255,.06));
+  }
+
+  /* ── NODE ── */
+  .node{
+    width:40px;height:40px;border-radius:50%;
+    flex-shrink:0;position:relative;z-index:1;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .node-done{
+    background:rgba(26,255,170,.15);
+    border:2px solid rgba(26,255,170,.5);
+  }
+  .node-done::after{content:'✓';font-size:15px;font-weight:800;color:#1affaa}
+
+  .node-today{
+    background:rgba(26,255,170,.15);
+    border:2.5px solid #1affaa;
+    box-shadow:0 0 0 5px rgba(26,255,170,.1),0 0 20px rgba(26,255,170,.25);
+  }
+  .node-today::after{content:'★';font-size:16px;color:#1affaa}
+
+  .node-near{
+    background:rgba(255,255,255,.05);
+    border:2px solid rgba(255,255,255,.14);
+  }
+  .node-near-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.22)}
+
+  .node-locked{
+    background:rgba(255,255,255,.03);
+    border:1.5px dashed rgba(255,255,255,.09);
+  }
+  .node-locked::after{content:'🔒';font-size:12px;opacity:.35}
+
+  /* ── DAY INFO ── */
+  .day-info{flex:1;min-width:0}
+  .day-label{font-size:14px;font-weight:700;letter-spacing:-.1px;line-height:1.2}
+  .day-label.muted{color:rgba(255,255,255,.3);font-weight:600}
+  .day-sublabel{font-size:12px;color:rgba(255,255,255,.3);margin-top:2px;line-height:1}
+
+  /* ── BADGES / RIGHT ── */
+  .day-right{flex-shrink:0;text-align:right}
+  .xp-chip{font-size:11px;font-weight:600;color:rgba(255,190,0,.6)}
+  .badge{
+    font-size:10px;font-weight:700;letter-spacing:.3px;
+    padding:3px 8px;border-radius:8px;
+  }
+  .badge-today{
+    background:rgba(26,255,170,.18);color:#1affaa;
+    animation:blink 2.4s ease-in-out infinite;
+  }
+  .badge-soon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.25)}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.55}}
+
+  /* ── MILESTONE ROW ── */
+  .milestone{
+    margin:4px 0;
+    display:flex;align-items:center;gap:14px;
+  }
+  .milestone-node{
+    width:40px;height:40px;border-radius:14px;
+    flex-shrink:0;
+    background:linear-gradient(135deg,rgba(26,255,170,.2),rgba(74,176,255,.15));
+    border:2px solid rgba(26,255,170,.45);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;
+  }
+  .milestone-label{font-size:13px;font-weight:700;color:rgba(26,255,170,.9)}
+  .milestone-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
+
+  /* ── MORE DAYS PILL ── */
+  .more-days{
+    margin:8px 20px 0;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:12px;padding:10px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .more-days-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.3)}
+  .more-days-count{font-size:12px;font-weight:700;color:rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:8px;padding:2px 8px}
+
+  /* ── TODAY CARD ── */
+  .today-card{
+    margin:0 20px 6px;
+    border-radius:20px;overflow:hidden;
+    background:
+      radial-gradient(ellipse 240px 150px at 92% 8%, rgba(26,255,170,.34) 0%, transparent 58%),
+      radial-gradient(ellipse 180px 130px at 8% 85%, rgba(74,176,255,.24) 0%, transparent 58%),
+      #0d2018;
+    border:1px solid rgba(26,255,170,.28);
+    position:relative;
+  }
+  .today-card-inner{padding:17px 17px 15px}
+  .today-eyebrow{
+    font-size:10px;font-weight:700;letter-spacing:.6px;
+    text-transform:uppercase;color:rgba(26,255,170,.75);
+    margin-bottom:5px;
+  }
+  .today-title{font-size:20px;font-weight:800;letter-spacing:-.3px;line-height:1.1;margin-bottom:2px}
+  .today-sub{font-size:13px;color:rgba(255,255,255,.42);margin-bottom:14px;line-height:1.4}
+
+  .avoid-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35);margin-bottom:7px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:13px}
+  .chip{padding:5px 10px;border-radius:20px;font-size:11px;font-weight:600;line-height:1}
+  .chip-red{background:rgba(255,75,75,.13);border:1px solid rgba(255,75,75,.3);color:#ff9494}
+  .chip-green{background:rgba(26,255,170,.09);border:1px solid rgba(26,255,170,.22);color:rgba(26,255,170,.9)}
+
+  .tip-box{
+    background:rgba(0,0,0,.2);border-radius:11px;
+    padding:10px 12px;
+    font-size:12px;color:rgba(255,255,255,.48);line-height:1.5;
+    border-left:2.5px solid rgba(26,255,170,.45);
+    margin-bottom:13px;
+  }
+  .tip-box b{color:rgba(26,255,170,.85);font-weight:700}
+
+  .card-actions{display:flex;gap:8px}
+  .btn-primary{
+    flex:1;
+    background:rgba(26,255,170,.16);border:1px solid rgba(26,255,170,.38);
+    border-radius:12px;padding:11px 10px;
+    font-size:13px;font-weight:700;color:#1affaa;
+    text-align:center;cursor:pointer;
+  }
+  .btn-secondary{
+    flex:1;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+    border-radius:12px;padding:11px 10px;
+    font-size:13px;font-weight:600;color:rgba(255,255,255,.45);
+    text-align:center;cursor:pointer;
+  }
+
+  /* ── LOCKED PHASE CARD ── */
+  .locked-phase{
+    margin:0 20px;
+    border-radius:16px;
+    background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+    padding:14px 16px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .locked-phase-icon{font-size:26px;opacity:.35;flex-shrink:0}
+  .locked-phase-title{font-size:14px;font-weight:700;color:rgba(255,255,255,.35);line-height:1.2}
+  .locked-phase-sub{font-size:11px;color:rgba(255,255,255,.2);margin-top:3px;line-height:1.4}
+  .locked-phase-eta{
+    margin-top:5px;display:inline-block;
+    font-size:10px;font-weight:700;
+    color:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.08);border-radius:6px;
+    padding:2px 7px;
+  }
+
+  /* ── OVERLAYS ── */
+  .overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.7);z-index:100;
+    align-items:flex-end;
+    backdrop-filter:blur(6px);
+  }
+  .overlay.open{display:flex}
+  .sheet{
+    background:#141c18;border-radius:24px 24px 0 0;
+    padding:22px 20px 44px;width:100%;max-height:88vh;overflow-y:auto;
+  }
+  .sheet-handle{width:34px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 18px}
+  .sheet-title{font-size:19px;font-weight:800;letter-spacing:-.3px;margin-bottom:3px}
+  .sheet-sub{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:20px}
+
+  .grp{margin-bottom:18px}
+  .grp-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.4);margin-bottom:7px}
+  .grp-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
+  .grp-note{font-size:11px;color:rgba(255,255,255,.3);line-height:1.5}
+
+  .sheet-close{
+    width:100%;background:rgba(255,255,255,.07);border:none;
+    border-radius:14px;padding:14px;
+    font-size:15px;font-weight:700;color:rgba(255,255,255,.5);
+    margin-top:10px;cursor:pointer;
+  }
+
+  /* log sheet */
+  .log-q{font-size:16px;font-weight:700;letter-spacing:-.2px;margin-bottom:14px}
+  .emo-row{display:flex;justify-content:space-between;margin-bottom:22px}
+  .emo-btn{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;background:none;border:none}
+  .emo-btn .e{font-size:32px;filter:grayscale(1);opacity:.45;transition:.15s;display:block}
+  .emo-btn .el{font-size:10px;color:rgba(255,255,255,.3);font-weight:600}
+  .emo-btn.sel .e{filter:none;opacity:1;transform:scale(1.12)}
+  .check-q{font-size:14px;font-weight:700;letter-spacing:-.1px;margin-bottom:10px}
+  .check-row{display:flex;gap:7px;margin-bottom:20px}
+  .check-opt{
+    flex:1;padding:11px 6px;border-radius:12px;
+    text-align:center;font-size:12px;font-weight:600;
+    border:1.5px solid rgba(255,255,255,.1);
+    background:none;color:rgba(255,255,255,.45);cursor:pointer;transition:.12s;
+  }
+  .check-opt.sel{background:rgba(26,255,170,.13);border-color:rgba(26,255,170,.45);color:#1affaa}
+  .btn-submit{
+    width:100%;background:#1affaa;border:none;
+    border-radius:14px;padding:15px;
+    font-size:16px;font-weight:800;color:#071510;cursor:pointer;
+    letter-spacing:-.2px;
+  }
+
+  .success{display:none;flex-direction:column;align-items:center;text-align:center;padding:10px 0 6px}
+  .success.show{display:flex}
+  .success .s-ico{font-size:54px;margin-bottom:12px}
+  .success .s-title{font-size:21px;font-weight:800;letter-spacing:-.3px;margin-bottom:5px}
+  .success .s-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.5}
+  .xp-badge{
+    margin:14px 0;
+    background:rgba(255,195,0,.1);border:1px solid rgba(255,195,0,.28);
+    border-radius:14px;padding:11px 22px;
+    font-size:16px;font-weight:800;color:#ffcc00;
+    letter-spacing:-.1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="top-bar">
+  <button class="back-btn" onclick="history.back()">‹</button>
+  <div class="top-title">Mon parcours FODMAP</div>
+</div>
+
+<!-- Streak + XP -->
+<div class="streak-row">
+  <div class="streak-pill"><span class="fire">🔥</span> 17 jours</div>
+  <div class="xp-wrap">
+    <div class="xp-meta">
+      <span class="xp-val">620 XP</span>
+      <span class="xp-val">Niveau 3</span>
+    </div>
+    <div class="xp-track"><div class="xp-fill"></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════ À VENIR ══════════════════ -->
+<div class="section-head">À venir</div>
+
+<div class="expand-panel">
+  <div class="expand-trigger" onclick="togglePanel(this)">
+    <div class="expand-icon">🔒</div>
+    <div class="expand-meta">
+      <div class="expand-title">39 jours restants</div>
+      <div class="expand-sub">Prochain milestone : Jour 21</div>
+    </div>
+    <div class="expand-chevron">▾</div>
+  </div>
+  <div class="expand-body">
+    <div class="path" style="padding:8px 16px 0">
+      <div class="day-row">
+        <div class="node node-locked"></div>
+        <div class="day-info">
+          <div class="day-label muted">Jour 21 · Fin de semaine 3</div>
+          <div class="day-sublabel">Bilan mi-parcours</div>
+        </div>
+        <div class="day-right"><span class="badge badge-soon">🏆</span></div>
+      </div>
+      <div class="day-row">
+        <div class="node node-locked"></div>
+        <div class="day-info"><div class="day-label muted">Jour 20</div><div class="day-sublabel">Élimination complète</div></div>
+      </div>
+      <div class="day-row">
+        <div class="node node-locked"></div>
+        <div class="day-info"><div class="day-label muted">Jour 19</div><div class="day-sublabel">Élimination complète</div></div>
+      </div>
+      <div class="day-row">
+        <div class="node node-near"><div class="node-near-dot"></div></div>
+        <div class="day-info">
+          <div class="day-label muted">Jour 18 · Demain</div>
+          <div class="day-sublabel">Élimination complète</div>
+        </div>
+        <div class="day-right"><span class="badge badge-soon">À venir</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ AUJOURD'HUI ══════════════════ -->
+<div class="section-head" style="padding-top:18px">Aujourd'hui</div>
+
+<!-- connector from above into today -->
+<div style="display:flex;padding:0 20px;margin-bottom:-2px">
+  <div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:12px;background:linear-gradient(to bottom,rgba(255,255,255,.06),rgba(26,255,170,.35))"></div></div>
+</div>
+
+<div style="display:flex;align-items:center;gap:14px;padding:0 20px;margin-bottom:10px">
+  <div class="node node-today" style="flex-shrink:0"></div>
+  <div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:rgba(26,255,170,.75)">Jour 17 · Semaine 3</div>
+  </div>
+  <div style="margin-left:auto"><span class="badge badge-today">EN COURS</span></div>
+</div>
+
+<div class="today-card">
+  <div class="today-card-inner">
+    <div class="today-title">Phase Élimination</div>
+    <div class="today-sub">Encore 39 jours — tu tiens le bon cap !</div>
+
+    <div class="avoid-label">À éviter aujourd'hui</div>
+    <div class="chips">
+      <div class="chip chip-red">Ail · Oignon</div>
+      <div class="chip chip-red">Lait · Yaourt</div>
+      <div class="chip chip-red">Pomme · Miel</div>
+      <div class="chip chip-red">Légumineuses</div>
+      <div class="chip chip-red">Champignons</div>
+      <div class="chip chip-green">✓ Riz</div>
+      <div class="chip chip-green">✓ Poulet</div>
+      <div class="chip chip-green">✓ ¼ Avocat</div>
+    </div>
+
+    <div class="tip-box">💡 <b>Astuce du jour :</b> Les sauces du commerce cachent souvent de l'ail en poudre. Vérifie toujours l'étiquette.</div>
+
+    <div class="card-actions">
+      <div class="btn-primary" onclick="openLog()">📝 Valider ma journée</div>
+      <div class="btn-secondary" onclick="openDetail()">Voir tout</div>
+    </div>
+  </div>
+</div>
+
+<!-- connector today → past -->
+<div style="display:flex;padding:0 20px;margin-top:0;margin-bottom:2px">
+  <div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:14px;background:linear-gradient(to bottom,rgba(26,255,170,.35),rgba(26,255,170,.22))"></div></div>
+</div>
+
+<!-- ══════════════════ PASSÉ ══════════════════ -->
+<div class="section-head">Passé</div>
+
+<div class="expand-panel">
+  <div class="expand-trigger" onclick="togglePanel(this)">
+    <div class="expand-icon">✅</div>
+    <div class="expand-meta">
+      <div class="expand-title">16 jours complétés</div>
+      <div class="expand-sub">620 XP accumulés · 2 milestones</div>
+    </div>
+    <div class="expand-chevron">▾</div>
+  </div>
+  <div class="expand-body">
+    <div class="path" style="padding:8px 16px 0">
+      <div class="day-row done">
+        <div class="node node-done"></div>
+        <div class="day-info"><div class="day-label">Jour 16</div><div class="day-sublabel">Semaine 3 · Élimination</div></div>
+        <div class="day-right xp-chip">+35 XP</div>
+      </div>
+      <div class="day-row done">
+        <div class="node node-done"></div>
+        <div class="day-info"><div class="day-label">Jour 15</div><div class="day-sublabel">Semaine 3 · Élimination</div></div>
+        <div class="day-right xp-chip">+35 XP</div>
+      </div>
+      <div class="day-row done">
+        <div class="milestone-node">🏆</div>
+        <div class="day-info">
+          <div class="milestone-label">Jour 14 — 2 semaines !</div>
+          <div class="milestone-sub">Tu as tenu 14 jours d'affilée</div>
+        </div>
+        <div class="day-right xp-chip" style="color:rgba(255,190,0,.85)">+80 XP</div>
+      </div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 13</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 12</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 11</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 10</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 9</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 8</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done">
+        <div class="milestone-node">🏆</div>
+        <div class="day-info">
+          <div class="milestone-label">Jour 7 — 1ère semaine !</div>
+          <div class="milestone-sub">Première grande étape franchie</div>
+        </div>
+        <div class="day-right xp-chip" style="color:rgba(255,190,0,.85)">+80 XP</div>
+      </div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 6</div><div class="day-sublabel">Élimination complète</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 5</div><div class="day-sublabel">Polyols ajoutés</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 4</div><div class="day-sublabel">GOS ajoutés</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 3</div><div class="day-sublabel">Fructose ajouté</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 2</div><div class="day-sublabel">Lactose ajouté</div></div><div class="day-right xp-chip">+35 XP</div></div>
+      <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 1</div><div class="day-sublabel">Démarrage · Fructanes</div></div><div class="day-right xp-chip">+35 XP</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Phases à venir -->
+<div class="section-head" style="margin-top:28px">Phases à venir</div>
+
+<div class="locked-phase" style="margin-bottom:10px">
+  <div class="locked-phase-icon">🔬</div>
+  <div>
+    <div class="locked-phase-title">Phase 2 · Réintroduction</div>
+    <div class="locked-phase-sub">Tu testeras chaque groupe FODMAP un par un pour identifier tes intolérances</div>
+    <div class="locked-phase-eta">Déblocage dans 39 jours</div>
+  </div>
+</div>
+<div class="locked-phase">
+  <div class="locked-phase-icon">🎯</div>
+  <div>
+    <div class="locked-phase-title">Phase 3 · Maintenance</div>
+    <div class="locked-phase-sub">Un régime personnalisé basé sur tes résultats</div>
+    <div class="locked-phase-eta">Déblocage dans ~4 mois</div>
+  </div>
+</div>
+
+<!-- ══════ DETAIL SHEET ══════ -->
+<div class="overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Jour 17 — Liste complète</div>
+    <div class="sheet-sub">Phase Élimination · Tous les groupes FODMAP</div>
+
+    <div class="grp">
+      <div class="grp-title">🧄 Fructanes</div>
+      <div class="grp-chips">
+        <div class="chip chip-red">Ail</div><div class="chip chip-red">Oignon cru / cuit</div><div class="chip chip-red">Poireau (bulbe)</div><div class="chip chip-red">Échalote</div><div class="chip chip-red">Pain de blé</div><div class="chip chip-red">Pâtes classiques</div><div class="chip chip-red">Couscous</div><div class="chip chip-red">Orge</div>
+      </div>
+      <div class="grp-note">✅ OK : ciboulette, partie verte du poireau, riz, pâtes sans gluten, huile infusée à l'ail</div>
+    </div>
+    <div class="grp">
+      <div class="grp-title">🥛 Lactose</div>
+      <div class="grp-chips">
+        <div class="chip chip-red">Lait</div><div class="chip chip-red">Yaourt classique</div><div class="chip chip-red">Fromage frais</div><div class="chip chip-red">Crème fraîche</div><div class="chip chip-red">Glace au lait</div>
+      </div>
+      <div class="grp-note">✅ OK : beurre, camembert, parmesan, lait sans lactose, boissons végétales</div>
+    </div>
+    <div class="grp">
+      <div class="grp-title">🍎 Fructose en excès</div>
+      <div class="grp-chips">
+        <div class="chip chip-red">Pomme</div><div class="chip chip-red">Poire</div><div class="chip chip-red">Mangue</div><div class="chip chip-red">Cerise</div><div class="chip chip-red">Miel</div><div class="chip chip-red">Sirop d'agave</div><div class="chip chip-red">Jus de fruits</div>
+      </div>
+      <div class="grp-note">✅ OK : fraise, myrtille, raisin (petite quantité), orange, citron</div>
+    </div>
+    <div class="grp">
+      <div class="grp-title">🫘 GOS · Galactanes</div>
+      <div class="grp-chips">
+        <div class="chip chip-red">Lentilles</div><div class="chip chip-red">Pois chiches</div><div class="chip chip-red">Haricots rouges</div><div class="chip chip-red">Pistache</div><div class="chip chip-red">Cajou</div>
+      </div>
+      <div class="grp-note">✅ OK : tofu ferme, noix, amandes (≤10), lait de soja sans GOS</div>
+    </div>
+    <div class="grp">
+      <div class="grp-title">🍄 Polyols</div>
+      <div class="grp-chips">
+        <div class="chip chip-red">Champignons</div><div class="chip chip-red">Chou-fleur</div><div class="chip chip-red">Pêche</div><div class="chip chip-red">Nectarine</div><div class="chip chip-red">Prune</div><div class="chip chip-red">Sorbitol</div><div class="chip chip-red">Xylitol</div>
+      </div>
+      <div class="grp-note">✅ OK : ¼ avocat, courgette, épinard, carotte, brocoli (≤75g)</div>
+    </div>
+
+    <button class="sheet-close" onclick="closeDetail()">Fermer</button>
+  </div>
+</div>
+
+<!-- ══════ LOG SHEET ══════ -->
+<div class="overlay" id="logOverlay" onclick="if(event.target===this)closeLog()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div id="logForm">
+      <div class="log-q">Comment tu te sens aujourd'hui ?</div>
+      <div class="emo-row">
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😣</span><span class="el">Très mal</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😕</span><span class="el">Pas top</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😐</span><span class="el">Neutre</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">🙂</span><span class="el">Bien</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😄</span><span class="el">Super</span></button>
+      </div>
+      <div class="check-q">Tu as respecté le régime ?</div>
+      <div class="check-row">
+        <button class="check-opt" onclick="chk(this)">✅ Oui</button>
+        <button class="check-opt" onclick="chk(this)">⚠️ Presque</button>
+        <button class="check-opt" onclick="chk(this)">❌ Non</button>
+      </div>
+      <button class="btn-submit" onclick="submitLog()">Valider · +35 XP</button>
+    </div>
+    <div class="success" id="successCard">
+      <div class="s-ico">🎉</div>
+      <div class="s-title">Journée validée !</div>
+      <div class="s-sub">Encore un jour de gagné.<br>Tu es à 62% de la phase 1 !</div>
+      <div class="xp-badge">+35 XP gagnés</div>
+      <button class="sheet-close" onclick="closeLog()">Super !</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function togglePanel(trigger){
+    const body=trigger.nextElementSibling;
+    trigger.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+  function openDetail(){document.getElementById('detailOverlay').classList.add('open')}
+  function closeDetail(){document.getElementById('detailOverlay').classList.remove('open')}
+  function openLog(){
+    document.getElementById('logOverlay').classList.add('open');
+    document.getElementById('logForm').style.display='';
+    document.getElementById('successCard').classList.remove('show');
+  }
+  function closeLog(){document.getElementById('logOverlay').classList.remove('open')}
+  function sel(b){document.querySelectorAll('.emo-btn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')}
+  function chk(b){document.querySelectorAll('.check-opt').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')}
+  function submitLog(){document.getElementById('logForm').style.display='none';document.getElementById('successCard').classList.add('show')}
+</script>
+</body>
+</html>
