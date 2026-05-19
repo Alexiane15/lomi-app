@@ -81,52 +81,175 @@ body{
 
 /* ── FAB ── */
 .fab-btn{
-  position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-  width:56px;height:56px;border-radius:50%;
+  position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+  width:44px;height:44px;border-radius:50%;
   background:linear-gradient(135deg,#1affaa,#00c8ff);
   border:none;
-  box-shadow:0 4px 20px rgba(26,255,170,.45),0 2px 8px rgba(0,0,0,.4);
+  box-shadow:0 3px 14px rgba(26,255,170,.4),0 2px 6px rgba(0,0,0,.35);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;z-index:50;
-  transition:transform .2s ease, box-shadow .2s ease;
+  transition:box-shadow .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
 .fab-btn .fab-plus{
-  font-size:26px;font-weight:300;color:#071510;line-height:1;
+  font-size:22px;font-weight:300;color:#071510;line-height:1;
   transition:transform .25s ease;
 }
-.fab-btn.active{box-shadow:0 4px 24px rgba(26,255,170,.3),0 2px 8px rgba(0,0,0,.3)}
 .fab-btn.active .fab-plus{transform:rotate(45deg)}
 
 /* ── FAB overlay ── */
 .fab-overlay{
   display:none;position:fixed;inset:0;z-index:49;
-  background:rgba(0,0,0,.6);backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.65);backdrop-filter:blur(8px);
   align-items:flex-end;justify-content:center;
 }
 .fab-overlay.open{display:flex}
+
+/* shared sheet base */
 .fab-sheet{
   width:100%;max-width:390px;
-  background:#141a17;border-radius:28px 28px 0 0;
-  padding:20px 20px 100px;
+  background:#111916;border-radius:26px 26px 0 0;
+  padding:0 0 40px;
+  display:none;flex-direction:column;
+  max-height:92vh;overflow-y:auto;
 }
-.fab-handle{width:34px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 20px}
-.fab-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px}
-.fab-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fab-sheet.active{display:flex}
+.fab-handle{width:34px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin:16px auto 0}
+
+/* menu sheet */
+.fab-menu-header{padding:18px 20px 4px;font-size:13px;font-weight:700;color:rgba(255,255,255,.28);letter-spacing:.6px;text-transform:uppercase}
+.fab-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px 0}
 .fab-item{
-  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
-  padding:16px 16px 14px;
-  border-radius:18px;border:1px solid rgba(255,255,255,.08);
+  display:flex;flex-direction:column;align-items:flex-start;gap:5px;
+  padding:15px 14px 13px;
+  border-radius:18px;border:1px solid rgba(255,255,255,.07);
   background:rgba(255,255,255,.04);
   cursor:pointer;transition:background .12s;
   -webkit-tap-highlight-color:transparent;
 }
 .fab-item:active{background:rgba(255,255,255,.09)}
-.fab-item-ico{font-size:26px;line-height:1}
-.fab-item-label{font-size:15px;font-weight:700;color:#f4f2ed;letter-spacing:-.2px}
-.fab-item-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:-2px}
-.fab-item.accent{border-color:rgba(26,255,170,.25);background:rgba(26,255,170,.06)}
-.fab-item.accent .fab-item-label{color:#1affaa}
+.fab-ico{font-size:24px;line-height:1}
+.fab-lbl{font-size:15px;font-weight:700;color:#f4f2ed;letter-spacing:-.2px}
+.fab-sub{font-size:11px;color:rgba(255,255,255,.3)}
+.fab-item.hi{border-color:rgba(26,255,170,.22);background:rgba(26,255,170,.05)}
+.fab-item.hi .fab-lbl{color:#1affaa}
+
+/* form sheets shared */
+.fsh{padding:18px 20px 0}
+.fsh-top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.fsh-back{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.07);border:none;color:rgba(255,255,255,.5);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fsh-title{font-size:18px;font-weight:800;letter-spacing:-.3px}
+.fsh-section{font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+
+/* type selector */
+.type-row{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+.type-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 13px;border-radius:20px;
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.09);
+  font-size:13px;font-weight:600;color:rgba(255,255,255,.5);
+  cursor:pointer;transition:all .12s;white-space:nowrap;
+  -webkit-tap-highlight-color:transparent;
+}
+.type-btn.sel{background:rgba(26,255,170,.12);border-color:rgba(26,255,170,.4);color:#1affaa}
+
+/* food input */
+.food-input-row{display:flex;gap:8px;margin-bottom:10px}
+.food-input{
+  flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:11px 14px;font-size:14px;color:#fff;outline:none;
+  font-family:inherit;
+}
+.food-input::placeholder{color:rgba(255,255,255,.25)}
+.food-input:focus{border-color:rgba(26,255,170,.35)}
+.food-add-btn{
+  width:42px;height:42px;border-radius:12px;
+  background:rgba(26,255,170,.14);border:1px solid rgba(26,255,170,.3);
+  color:#1affaa;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.quick-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.qc{
+  padding:5px 10px;border-radius:20px;font-size:12px;font-weight:600;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  color:rgba(255,255,255,.45);cursor:pointer;transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+}
+.qc.sel{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.3);color:rgba(26,255,170,.9)}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;min-height:22px;margin-bottom:14px}
+.tag-pill{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 10px;border-radius:20px;
+  background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.25);
+  font-size:12px;font-weight:600;color:rgba(26,255,170,.9);
+}
+.tag-x{font-size:13px;opacity:.6;cursor:pointer;line-height:1}
+
+/* symptom intensity */
+.intensity-row{display:flex;gap:6px;margin-bottom:18px}
+.int-btn{
+  flex:1;height:40px;border-radius:10px;
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
+  font-size:14px;font-weight:700;color:rgba(255,255,255,.35);
+  cursor:pointer;transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+}
+.int-btn.sel-1{background:rgba(26,255,170,.15);border-color:rgba(26,255,170,.4);color:#1affaa}
+.int-btn.sel-2{background:rgba(255,200,0,.12);border-color:rgba(255,200,0,.35);color:#ffcc00}
+.int-btn.sel-3{background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.35);color:#ff9a00}
+.int-btn.sel-4{background:rgba(255,80,50,.12);border-color:rgba(255,80,50,.35);color:#ff6040}
+.int-btn.sel-5{background:rgba(255,30,30,.14);border-color:rgba(255,30,30,.4);color:#ff3030}
+
+/* when row */
+.when-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.when-btn{
+  padding:7px 12px;border-radius:20px;font-size:12px;font-weight:600;
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.4);cursor:pointer;transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+}
+.when-btn.sel{background:rgba(74,176,255,.1);border-color:rgba(74,176,255,.35);color:rgba(74,176,255,.9)}
+
+/* mood row */
+.mood-row-fab{display:flex;gap:6px;margin-bottom:18px}
+.mf-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:12px 4px;border-radius:14px;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.07);
+  cursor:pointer;transition:all .12s;
+  -webkit-tap-highlight-color:transparent;
+}
+.mf-btn .mf-e{font-size:26px;filter:grayscale(1);opacity:.45;transition:.15s}
+.mf-btn .mf-l{font-size:10px;color:rgba(255,255,255,.3);font-weight:600}
+.mf-btn.sel{background:rgba(26,255,170,.08);border-color:rgba(26,255,170,.3)}
+.mf-btn.sel .mf-e{filter:none;opacity:1;transform:scale(1.1)}
+
+/* textarea */
+.fab-textarea{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:13px 14px;font-size:14px;color:#fff;
+  font-family:inherit;resize:none;outline:none;line-height:1.5;
+  margin-bottom:14px;
+}
+.fab-textarea::placeholder{color:rgba(255,255,255,.22)}
+.fab-textarea:focus{border-color:rgba(26,255,170,.3)}
+
+/* submit */
+.fab-submit{
+  width:100%;background:#1affaa;border:none;border-radius:14px;
+  padding:14px;font-size:15px;font-weight:800;color:#071510;
+  cursor:pointer;letter-spacing:-.1px;margin-top:4px;
+}
+.fab-submit:disabled{opacity:.4}
+
+/* success */
+.fab-success{
+  display:none;flex-direction:column;align-items:center;
+  text-align:center;padding:32px 20px 16px;
+}
+.fab-success.show{display:flex}
+.fab-success .s-ico{font-size:52px;margin-bottom:12px}
+.fab-success .s-t{font-size:20px;font-weight:800;letter-spacing:-.3px;margin-bottom:5px}
+.fab-success .s-s{font-size:13px;color:rgba(255,255,255,.38);line-height:1.5}
 
 /* ═══════════════════════════
    SCREEN 1 — CARNET
@@ -1810,31 +1933,99 @@ function switchToAliments() {
 })();
 
 // ── FAB quick-add ──
-function openFab() {
-  document.getElementById('fab-overlay').classList.add('open');
-  document.getElementById('fab-btn').classList.add('active');
-}
-function closeFab() {
-  document.getElementById('fab-overlay').classList.remove('open');
-  document.getElementById('fab-btn').classList.remove('active');
-}
-function fabAction(type) {
-  closeFab();
-  if (type === 'repas')    location.href = 'page-entry.html';
-  if (type === 'symptome') location.href = 'page-score.html';
-  if (type === 'humeur') {
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    document.querySelector('[data-screen="carnet"]').classList.add('active');
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById('screen-carnet').classList.add('active');
-    setTimeout(()=>{ document.querySelector('.mood-card')?.scrollIntoView({behavior:'smooth',block:'center'}); },100);
+const FAB = {
+  open() {
+    document.getElementById('fab-overlay').classList.add('open');
+    document.getElementById('fab-btn').classList.add('active');
+    FAB.show('fab-menu');
+  },
+  close() {
+    document.getElementById('fab-overlay').classList.remove('open');
+    document.getElementById('fab-btn').classList.remove('active');
+  },
+  show(id) {
+    document.querySelectorAll('.fab-sheet').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
   }
-  if (type === 'note') {
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    document.querySelector('[data-screen="carnet"]').classList.add('active');
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById('screen-carnet').classList.add('active');
-  }
+};
+
+// ── Repas ──
+let repasAliments = [];
+function openRepas() { FAB.show('fab-repas'); repasAliments=[]; renderTags(); }
+function selType(btn) { document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); }
+function toggleQC(chip) {
+  chip.classList.toggle('sel');
+  const food = chip.dataset.food;
+  if(chip.classList.contains('sel')) { if(!repasAliments.includes(food)) repasAliments.push(food); }
+  else repasAliments = repasAliments.filter(f=>f!==food);
+  renderTags();
+}
+function addFoodInput() {
+  const inp = document.getElementById('food-inp');
+  const v = inp.value.trim();
+  if(v && !repasAliments.includes(v)) { repasAliments.push(v); renderTags(); }
+  inp.value='';
+}
+function removeTag(food) { repasAliments=repasAliments.filter(f=>f!==food); renderTags(); }
+function renderTags() {
+  const w = document.getElementById('tags-wrap');
+  w.innerHTML = repasAliments.map(f=>`<div class="tag-pill">${f}<span class="tag-x" onclick="removeTag('${f}')">×</span></div>`).join('');
+}
+function submitRepas() {
+  const type = document.querySelector('.type-btn.sel')?.textContent.trim() || 'Repas';
+  FAB.show('fab-repas');
+  document.getElementById('fab-repas').querySelector('.fab-form').style.display='none';
+  const s = document.getElementById('success-repas');
+  s.classList.add('show');
+  s.querySelector('.s-s').textContent = type + (repasAliments.length ? ' · ' + repasAliments.join(', ') : '') + ' enregistré';
+  setTimeout(()=>{ FAB.close(); s.classList.remove('show'); document.getElementById('fab-repas').querySelector('.fab-form').style.display=''; },2000);
+}
+
+// ── Symptôme ──
+let symptIntensity=0, symptWhen='', symptTypes=[];
+function selInt(btn,n) {
+  document.querySelectorAll('.int-btn').forEach(b=>{ b.className='int-btn'; });
+  btn.classList.add('sel-'+n); symptIntensity=n;
+}
+function selWhen(btn,v) { document.querySelectorAll('.when-btn').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); symptWhen=v; }
+function toggleSympt(chip) {
+  chip.classList.toggle('sel');
+  const v=chip.dataset.s;
+  if(chip.classList.contains('sel')) { if(!symptTypes.includes(v)) symptTypes.push(v); }
+  else symptTypes=symptTypes.filter(x=>x!==v);
+}
+function submitSymptome() {
+  const desc = symptTypes.length ? symptTypes.join(', ') : 'Symptôme';
+  document.getElementById('fab-symptome').querySelector('.fab-form').style.display='none';
+  const s=document.getElementById('success-symptome');
+  s.classList.add('show');
+  s.querySelector('.s-s').textContent = desc + (symptIntensity ? ' · Intensité '+symptIntensity+'/5' : '') + (symptWhen ? ' · '+symptWhen : '');
+  setTimeout(()=>{ FAB.close(); s.classList.remove('show'); document.getElementById('fab-symptome').querySelector('.fab-form').style.display=''; symptTypes=[]; symptIntensity=0; },2000);
+}
+
+// ── Humeur ──
+let humeurSel='';
+function selMood(btn,v) { document.querySelectorAll('.mf-btn').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); humeurSel=v; }
+function submitHumeur() {
+  if(!humeurSel) return;
+  document.getElementById('fab-humeur').querySelector('.fab-form').style.display='none';
+  const s=document.getElementById('success-humeur');
+  s.classList.add('show');
+  const note=document.getElementById('humeur-note').value.trim();
+  s.querySelector('.s-s').textContent = humeurSel + (note?' · '+note:'') + ' · enregistré';
+  setTimeout(()=>{ FAB.close(); s.classList.remove('show'); document.getElementById('fab-humeur').querySelector('.fab-form').style.display=''; humeurSel=''; document.getElementById('humeur-note').value=''; },2000);
+}
+
+// ── Note ──
+function selNoteCat(btn) { document.querySelectorAll('.type-btn.note-cat').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); }
+function submitNote() {
+  const txt=document.getElementById('note-text').value.trim();
+  if(!txt) return;
+  document.getElementById('fab-note').querySelector('.fab-form').style.display='none';
+  const s=document.getElementById('success-note');
+  s.classList.add('show');
+  s.querySelector('.s-s').textContent = '"'+txt.substring(0,60)+(txt.length>60?'…':'')+'"';
+  setTimeout(()=>{ FAB.close(); s.classList.remove('show'); document.getElementById('fab-note').querySelector('.fab-form').style.display=''; document.getElementById('note-text').value=''; },2000);
 }
 
 // ── Navigation vers sous-pages ──
@@ -1853,38 +2044,185 @@ document.querySelectorAll('.top-food-row').forEach(r =>
 </script>
 
 <!-- ── FAB ── -->
-<button class="fab-btn" id="fab-btn" onclick="openFab()">
+<button class="fab-btn" id="fab-btn" onclick="FAB.open()">
   <span class="fab-plus">+</span>
 </button>
 
-<!-- ── FAB Sheet ── -->
-<div class="fab-overlay" id="fab-overlay" onclick="if(event.target===this)closeFab()">
-  <div class="fab-sheet">
+<!-- ── FAB Overlay ── -->
+<div class="fab-overlay" id="fab-overlay" onclick="if(event.target===this)FAB.close()">
+
+  <!-- Menu -->
+  <div class="fab-sheet" id="fab-menu">
     <div class="fab-handle"></div>
-    <div class="fab-title">Ajouter</div>
+    <div class="fab-menu-header">Ajouter</div>
     <div class="fab-grid">
-      <div class="fab-item accent" onclick="fabAction('repas')">
-        <div class="fab-item-ico">🍽️</div>
-        <div class="fab-item-label">Repas</div>
-        <div class="fab-item-sub">Petit-déj, déj, dîner…</div>
+      <div class="fab-item hi" onclick="openRepas()">
+        <div class="fab-ico">🍽️</div>
+        <div class="fab-lbl">Repas</div>
+        <div class="fab-sub">Petit-déj, déj, dîner…</div>
       </div>
-      <div class="fab-item" onclick="fabAction('symptome')">
-        <div class="fab-item-ico">😣</div>
-        <div class="fab-item-label">Symptôme</div>
-        <div class="fab-item-sub">Douleur, ballonnement…</div>
+      <div class="fab-item" onclick="FAB.show('fab-symptome')">
+        <div class="fab-ico">😣</div>
+        <div class="fab-lbl">Symptôme</div>
+        <div class="fab-sub">Douleur, ballonnement…</div>
       </div>
-      <div class="fab-item" onclick="fabAction('humeur')">
-        <div class="fab-item-ico">😊</div>
-        <div class="fab-item-label">Humeur</div>
-        <div class="fab-item-sub">Comment tu te sens</div>
+      <div class="fab-item" onclick="FAB.show('fab-humeur')">
+        <div class="fab-ico">😊</div>
+        <div class="fab-lbl">Humeur</div>
+        <div class="fab-sub">Comment tu te sens</div>
       </div>
-      <div class="fab-item" onclick="fabAction('note')">
-        <div class="fab-item-ico">📝</div>
-        <div class="fab-item-label">Note</div>
-        <div class="fab-item-sub">Observation libre</div>
+      <div class="fab-item" onclick="FAB.show('fab-note')">
+        <div class="fab-ico">📝</div>
+        <div class="fab-lbl">Note</div>
+        <div class="fab-sub">Observation libre</div>
       </div>
     </div>
+    <div style="height:16px"></div>
   </div>
+
+  <!-- ── Repas ── -->
+  <div class="fab-sheet" id="fab-repas">
+    <div class="fab-handle"></div>
+    <div class="fab-form">
+      <div class="fsh">
+        <div class="fsh-top">
+          <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
+          <div class="fsh-title">🍽️ Nouveau repas</div>
+        </div>
+        <div class="fsh-section">Type de repas</div>
+        <div class="type-row">
+          <div class="type-btn sel" onclick="selType(this)">🌅 Petit-déj</div>
+          <div class="type-btn" onclick="selType(this)">☀️ Déjeuner</div>
+          <div class="type-btn" onclick="selType(this)">🌙 Dîner</div>
+          <div class="type-btn" onclick="selType(this)">🍎 Collation</div>
+        </div>
+        <div class="fsh-section">Aliments</div>
+        <div class="food-input-row">
+          <input class="food-input" id="food-inp" placeholder="Ajouter un aliment…" onkeydown="if(event.key==='Enter')addFoodInput()">
+          <button class="food-add-btn" onclick="addFoodInput()">+</button>
+        </div>
+        <div class="quick-chips">
+          <div class="qc" data-food="Riz" onclick="toggleQC(this)">🍚 Riz</div>
+          <div class="qc" data-food="Poulet" onclick="toggleQC(this)">🍗 Poulet</div>
+          <div class="qc" data-food="Œufs" onclick="toggleQC(this)">🥚 Œufs</div>
+          <div class="qc" data-food="Avocat" onclick="toggleQC(this)">🥑 Avocat</div>
+          <div class="qc" data-food="Saumon" onclick="toggleQC(this)">🐟 Saumon</div>
+          <div class="qc" data-food="Quinoa" onclick="toggleQC(this)">🌾 Quinoa</div>
+          <div class="qc" data-food="Carottes" onclick="toggleQC(this)">🥕 Carottes</div>
+          <div class="qc" data-food="Épinards" onclick="toggleQC(this)">🥬 Épinards</div>
+        </div>
+        <div class="tags-wrap" id="tags-wrap"></div>
+        <button class="fab-submit" onclick="submitRepas()">Enregistrer le repas</button>
+      </div>
+    </div>
+    <div class="fab-success" id="success-repas">
+      <div class="s-ico">✅</div>
+      <div class="s-t">Repas enregistré !</div>
+      <div class="s-s"></div>
+    </div>
+  </div>
+
+  <!-- ── Symptôme ── -->
+  <div class="fab-sheet" id="fab-symptome">
+    <div class="fab-handle"></div>
+    <div class="fab-form">
+      <div class="fsh">
+        <div class="fsh-top">
+          <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
+          <div class="fsh-title">😣 Symptôme</div>
+        </div>
+        <div class="fsh-section">Type</div>
+        <div class="quick-chips" style="margin-bottom:18px">
+          <div class="qc" data-s="Ballonnements" onclick="toggleSympt(this)">Ballonnements</div>
+          <div class="qc" data-s="Douleurs" onclick="toggleSympt(this)">Douleurs</div>
+          <div class="qc" data-s="Nausées" onclick="toggleSympt(this)">Nausées</div>
+          <div class="qc" data-s="Crampes" onclick="toggleSympt(this)">Crampes</div>
+          <div class="qc" data-s="Reflux" onclick="toggleSympt(this)">Reflux</div>
+          <div class="qc" data-s="Transit lent" onclick="toggleSympt(this)">Transit lent</div>
+          <div class="qc" data-s="Transit rapide" onclick="toggleSympt(this)">Transit rapide</div>
+          <div class="qc" data-s="Fatigue" onclick="toggleSympt(this)">Fatigue</div>
+        </div>
+        <div class="fsh-section">Intensité</div>
+        <div class="intensity-row">
+          <button class="int-btn" onclick="selInt(this,1)">1</button>
+          <button class="int-btn" onclick="selInt(this,2)">2</button>
+          <button class="int-btn" onclick="selInt(this,3)">3</button>
+          <button class="int-btn" onclick="selInt(this,4)">4</button>
+          <button class="int-btn" onclick="selInt(this,5)">5</button>
+        </div>
+        <div class="fsh-section">Quand ?</div>
+        <div class="when-row">
+          <div class="when-btn sel" onclick="selWhen(this,'Maintenant')">Maintenant</div>
+          <div class="when-btn" onclick="selWhen(this,'Il y a 30 min')">Il y a 30 min</div>
+          <div class="when-btn" onclick="selWhen(this,'Il y a 1h')">Il y a 1h</div>
+          <div class="when-btn" onclick="selWhen(this,'Il y a 2h+')">Il y a 2h+</div>
+        </div>
+        <button class="fab-submit" onclick="submitSymptome()">Enregistrer</button>
+      </div>
+    </div>
+    <div class="fab-success" id="success-symptome">
+      <div class="s-ico">📋</div>
+      <div class="s-t">Symptôme noté !</div>
+      <div class="s-s"></div>
+    </div>
+  </div>
+
+  <!-- ── Humeur ── -->
+  <div class="fab-sheet" id="fab-humeur">
+    <div class="fab-handle"></div>
+    <div class="fab-form">
+      <div class="fsh">
+        <div class="fsh-top">
+          <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
+          <div class="fsh-title">😊 Humeur</div>
+        </div>
+        <div class="fsh-section">Comment tu te sens ?</div>
+        <div class="mood-row-fab">
+          <div class="mf-btn" onclick="selMood(this,'😣 Très mal')"><span class="mf-e">😣</span><span class="mf-l">Très mal</span></div>
+          <div class="mf-btn" onclick="selMood(this,'😕 Pas top')"><span class="mf-e">😕</span><span class="mf-l">Pas top</span></div>
+          <div class="mf-btn" onclick="selMood(this,'😐 Neutre')"><span class="mf-e">😐</span><span class="mf-l">Neutre</span></div>
+          <div class="mf-btn" onclick="selMood(this,'🙂 Bien')"><span class="mf-e">🙂</span><span class="mf-l">Bien</span></div>
+          <div class="mf-btn" onclick="selMood(this,'😄 Super')"><span class="mf-e">😄</span><span class="mf-l">Super</span></div>
+        </div>
+        <div class="fsh-section">Note (optionnel)</div>
+        <textarea class="fab-textarea" id="humeur-note" rows="3" placeholder="Un détail à ajouter…"></textarea>
+        <button class="fab-submit" onclick="submitHumeur()">Enregistrer</button>
+      </div>
+    </div>
+    <div class="fab-success" id="success-humeur">
+      <div class="s-ico">🌟</div>
+      <div class="s-t">Humeur enregistrée !</div>
+      <div class="s-s"></div>
+    </div>
+  </div>
+
+  <!-- ── Note ── -->
+  <div class="fab-sheet" id="fab-note">
+    <div class="fab-handle"></div>
+    <div class="fab-form">
+      <div class="fsh">
+        <div class="fsh-top">
+          <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
+          <div class="fsh-title">📝 Note</div>
+        </div>
+        <div class="fsh-section">Catégorie</div>
+        <div class="type-row" style="margin-bottom:16px">
+          <div class="type-btn note-cat sel" onclick="selNoteCat(this)">🔍 Observation</div>
+          <div class="type-btn note-cat" onclick="selNoteCat(this)">⚡ Réaction</div>
+          <div class="type-btn note-cat" onclick="selNoteCat(this)">💬 Autre</div>
+        </div>
+        <div class="fsh-section">Ta note</div>
+        <textarea class="fab-textarea" id="note-text" rows="5" placeholder="Ex: J'ai mangé une sauce tomate industrielle et j'ai eu des ballonnements 2h après…"></textarea>
+        <button class="fab-submit" onclick="submitNote()">Enregistrer la note</button>
+      </div>
+    </div>
+    <div class="fab-success" id="success-note">
+      <div class="s-ico">✅</div>
+      <div class="s-t">Note enregistrée !</div>
+      <div class="s-s"></div>
+    </div>
+  </div>
+
 </div>
 
 </body>
