@@ -6,13 +6,13 @@
 <title>Lomi — Connexion</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;display:flex;justify-content:center}
+html,body{height:100%;background:var(--bg);font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;display:flex;justify-content:center}
 
 .app{
   width:100%;max-width:390px;min-height:100%;
-  background:#0b0f0e;
+  background:var(--bg);
   display:flex;flex-direction:column;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;z-index:1;
   padding-top:env(safe-area-inset-top);
   padding-bottom:calc(48px + env(safe-area-inset-bottom));
 }
@@ -46,15 +46,17 @@ html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSyste
 .form-input{
   width:100%;height:50px;
   background:rgba(255,255,255,.06);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.1);
   border-radius:14px;
   padding:0 16px;
   font-size:15px;color:#fff;
   font-family:inherit;outline:none;
-  transition:border-color .2s,background .2s;
+  transition:border-color .15s,background .2s;
 }
 .form-input::placeholder{color:rgba(255,255,255,.25)}
-.form-input:focus{border-color:rgba(26,255,170,.4);background:rgba(255,255,255,.08)}
+.form-input:focus{border-color:rgba(26,255,170,.4);outline:none;background:rgba(255,255,255,.08)}
 
 /* Forgot */
 .forgot{text-align:right;margin-top:6px}
@@ -64,11 +66,13 @@ html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSyste
 .btn-primary{
   width:100%;height:52px;
   background:#1affaa;border:none;border-radius:14px;
+  font-family:'Outfit',sans-serif;
   font-size:15px;font-weight:800;color:#071510;
   cursor:pointer;margin-top:20px;
-  transition:opacity .2s;
+  transition:box-shadow .15s ease,transform .12s ease;
 }
-.btn-primary:active{opacity:.85}
+.btn-primary:hover{box-shadow:0 6px 22px rgba(26,255,170,.3)}
+.btn-primary:active{transform:scale(.97);opacity:.85}
 
 .sep{display:flex;align-items:center;gap:12px;margin:20px 0}
 .sep-line{flex:1;height:1px;background:rgba(255,255,255,.08)}
@@ -94,8 +98,16 @@ html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSyste
 .rgpd-text{font-size:11px;color:rgba(255,255,255,.35);line-height:1.5}
 .rgpd-text strong{color:rgba(255,255,255,.5)}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="aura-layer" aria-hidden="true">
+  <div class="aura aura-mint"></div>
+  <div class="aura aura-lilac"></div>
+  <div class="aura aura-blue"></div>
+</div>
 <div class="app">
 
   <div class="bk1"></div>

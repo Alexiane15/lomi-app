@@ -9,19 +9,19 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%}
 body{
-  height:100%;background:#1a1a1a;
-  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  height:100%;background:var(--bg);
+  font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;
   display:flex;justify-content:center;
 }
 .app{
   width:100%;max-width:390px;height:100%;
-  background:#232323;
-  display:flex;flex-direction:column;overflow:hidden;position:relative;
+  background:var(--bg);
+  display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:1;
 }
 
 /* ── Status bar ── */
 .sbar{
-  height:54px;flex-shrink:0;background:#232323;
+  height:54px;flex-shrink:0;background:var(--bg);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 22px;position:relative;z-index:10;
 }
@@ -113,7 +113,7 @@ body{
    STEP HEADER
 ══════════════════════════════ */
 .ob-icon{font-size:42px;line-height:1;margin-bottom:14px}
-.ob-title{font-size:24px;font-weight:700;color:#f4f2ed;line-height:1.15;margin-bottom:6px;letter-spacing:-.4px}
+.ob-title{font-size:24px;font-weight:700;color:var(--text-1);line-height:1.15;margin-bottom:6px;letter-spacing:-.4px}
 .ob-subtitle{font-size:13px;color:rgba(255,255,255,.4);line-height:1.5;margin-bottom:24px}
 
 /* Section heading */
@@ -132,7 +132,7 @@ body{
   padding:20px 8px 0;text-align:center;
 }
 .welcome-logo{
-  font-size:54px;font-weight:800;color:#f4f2ed;
+  font-size:54px;font-weight:800;color:var(--text-1);
   letter-spacing:-3.5px;line-height:1;margin-bottom:10px;
 }
 .welcome-logo span{color:#1affaa}
@@ -146,7 +146,7 @@ body{
 }
 .wf{
   display:flex;align-items:center;gap:13px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.07);transition:.15s ease;
   border-radius:16px;padding:13px 15px;text-align:left;
 }
 .wf-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center}
@@ -384,8 +384,16 @@ input[type=range].ob-range::-moz-range-thumb{
 ══════════════════════════════ */
 .spacer{height:18px}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="aura-layer" aria-hidden="true">
+  <div class="aura aura-mint"></div>
+  <div class="aura aura-lilac"></div>
+  <div class="aura aura-blue"></div>
+</div>
 <div class="app">
 
   <!-- Status Bar -->

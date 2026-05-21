@@ -6,13 +6,13 @@
 <title>Lomi — Mon profil</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;display:flex;justify-content:center}
+html,body{height:100%;background:var(--bg);font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;display:flex;justify-content:center}
 
 .app{
   width:100%;max-width:390px;min-height:100%;
-  background:#0b0f0e;
+  background:var(--bg);
   display:flex;flex-direction:column;
-  position:relative;
+  position:relative;z-index:1;
 }
 
 /* Bokeh */
@@ -52,7 +52,7 @@ html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSyste
 .section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.3);padding:18px 4px 8px}
 
 /* Card container */
-.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden}
+.card{background:rgba(255,255,255,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden}
 
 /* Profile hero row */
 .profile-hero{
@@ -89,7 +89,7 @@ html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSyste
   display:flex;align-items:center;gap:12px;
   padding:13px 16px;
   border-bottom:1px solid rgba(255,255,255,.05);
-  cursor:pointer;transition:background .15s;
+  cursor:pointer;transition:background .15s,transform .12s;
 }
 .row-item:last-child{border-bottom:none}
 .row-item:active{background:rgba(255,255,255,.04)}
@@ -144,8 +144,16 @@ html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSyste
 }
 .logout-btn:active{background:rgba(255,60,60,.18)}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="aura-layer" aria-hidden="true">
+  <div class="aura aura-mint"></div>
+  <div class="aura aura-lilac"></div>
+  <div class="aura aura-blue"></div>
+</div>
 <div class="app">
   <div class="bk1"></div>
 

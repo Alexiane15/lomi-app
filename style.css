@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #0b0d15;
+  --bg-surface: rgba(255,255,255,.05);
+  --bg-surface-2: rgba(255,255,255,.08);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-blur: blur(18px);
+
+  --mint: #1affaa;
+  --mint-dim: rgba(26,255,170,.12);
+  --mint-border: rgba(26,255,170,.25);
+  --lilac: #a78bfa;
+  --lilac-dim: rgba(167,139,250,.12);
+  --blue-chu: #4a7aff;
+  --blue-dim: rgba(74,122,255,.12);
+
+  --color-phase-active: var(--mint);
+  --color-phase-future: rgba(255,255,255,.2);
+
+  --text-1: #eef0f6;
+  --text-2: rgba(238,240,246,.55);
+  --text-3: rgba(238,240,246,.28);
+
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --sp-page: 20px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Outfit',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg);
+  color:var(--text-1);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Aura layer — à injecter dans chaque page */
+.aura-layer{
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+}
+.aura{position:absolute;border-radius:50%;filter:blur(90px);opacity:.7;}
+.aura-mint{
+  width:420px;height:420px;
+  background:radial-gradient(circle,rgba(26,255,170,.18) 0%,transparent 70%);
+  top:-80px;left:-60px;
+  animation:aura-float 14s ease-in-out infinite;
+}
+.aura-lilac{
+  width:360px;height:360px;
+  background:radial-gradient(circle,rgba(167,139,250,.16) 0%,transparent 70%);
+  bottom:-40px;right:-80px;
+  animation:aura-float 18s ease-in-out infinite reverse;
+}
+.aura-blue{
+  width:280px;height:280px;
+  background:radial-gradient(circle,rgba(74,122,255,.13) 0%,transparent 70%);
+  top:45%;left:35%;
+  animation:aura-float 11s ease-in-out infinite;
+  animation-delay:-5s;
+}
+@keyframes aura-float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(18px,-28px) scale(1.06)}
+  66%{transform:translate(-14px,18px) scale(.94)}
+}
+
+/* Glass card utility */
+.glass{
+  background:var(--bg-surface);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+}
+
+/* Page entry animation */
+.page-main{animation:fadeUp .28s ease both}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Interactive tap feedback */
+.tappable{
+  transition:transform .12s ease,background .15s ease;
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
+}
+.tappable:active{transform:scale(.97)}
+
+/* Primary button */
+.btn-mint{
+  background:var(--mint);color:#071510;border:none;
+  border-radius:var(--r-sm);padding:14px 20px;
+  font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;width:100%;
+  transition:box-shadow .15s ease,transform .12s ease;
+}
+.btn-mint:hover{box-shadow:0 6px 22px rgba(26,255,170,.3)}
+.btn-mint:active{transform:scale(.97)}
