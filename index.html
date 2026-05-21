@@ -820,6 +820,81 @@ body{
 .tip-purple .tip-tag{color:rgba(180,60,255,.85)}
 .tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
 
+/* ── Historique / Favoris ── */
+.hf-tabs{display:flex;margin:10px 14px 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:3px;gap:0}
+.hf-tab{flex:1;height:28px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:rgba(255,255,255,.4);border-radius:8px;cursor:pointer;user-select:none;transition:all .2s}
+.hf-tab.active{background:rgba(255,255,255,.1);color:#f4f2ed}
+.hf-panel{display:none;padding:10px 14px 0}
+.hf-panel.active{display:block}
+.hf-recent{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:4px}
+.hf-chip{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;transition:background .15s}
+.hf-chip:active{background:rgba(255,255,255,.1)}
+.hf-chip-icon{font-size:11px;opacity:.6}
+.hf-fav-list{display:flex;flex-direction:column;gap:0}
+.hf-fav-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.hf-fav-row:last-child{border-bottom:none}
+.hf-fav-emoji{font-size:16px;width:32px;height:32px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hf-fav-name{flex:1;font-size:13px;font-weight:600;color:#f4f2ed}
+.hf-fav-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);color:#1affaa}
+.hf-fav-heart{font-size:16px;cursor:pointer;color:#ff4466;margin-left:6px}
+
+/* Notes contextuelles */
+.context-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(26,255,170,.12);border-radius:18px;padding:14px;
+}
+.context-card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.35);margin-bottom:12px}
+.ctx-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ctx-row:last-child{margin-bottom:0}
+.ctx-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.5);width:56px;flex-shrink:0}
+.ctx-chips{display:flex;gap:6px;flex-wrap:wrap}
+.ctx-chip{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.09);font-size:11px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;user-select:none}
+.ctx-chip.sel-stress{background:rgba(255,80,60,.12);border-color:rgba(255,80,60,.35);color:#ff6040}
+.ctx-chip.sel-sleep{background:rgba(74,176,255,.12);border-color:rgba(74,176,255,.35);color:rgba(74,176,255,.9)}
+.ctx-chip.sel-ok{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.3);color:#1affaa}
+
+/* Observance + Export médical */
+.observance-card{
+  margin:14px 14px 0;
+  background:
+    radial-gradient(ellipse 160px 100px at 10% 30%, rgba(26,255,170,.16) 0%, transparent 65%),
+    radial-gradient(ellipse 120px 80px at 90% 80%, rgba(74,176,255,.12) 0%, transparent 65%),
+    rgba(255,255,255,.04);
+  border:1px solid rgba(26,255,170,.14);border-radius:20px;padding:16px;
+}
+.obs-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.obs-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.35)}
+.obs-chip{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:3px 9px;border-radius:8px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);color:#1affaa}
+.obs-body{display:flex;align-items:center;gap:16px}
+.obs-ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
+.obs-ring-wrap svg{width:80px;height:80px;transform:rotate(-90deg)}
+.obs-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
+.obs-pct{font-size:22px;font-weight:700;color:#1affaa;line-height:1}
+.obs-pct-sub{font-size:8px;color:rgba(255,255,255,.4)}
+.obs-info{flex:1}
+.obs-main{font-size:14px;font-weight:700;color:#f4f2ed;letter-spacing:-.2px;margin-bottom:3px}
+.obs-sub{font-size:11px;color:rgba(255,255,255,.4);line-height:1.4}
+.obs-miss{font-size:10px;color:rgba(255,170,0,.7);margin-top:4px}
+
+.export-card{
+  margin:10px 14px 0;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;
+}
+.export-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.export-icon{font-size:22px}
+.export-info{flex:1}
+.export-title{font-size:15px;font-weight:700;color:#f4f2ed;letter-spacing:-.2px}
+.export-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
+.export-btn{
+  width:100%;height:46px;
+  background:#1affaa;border:none;border-radius:12px;
+  font-size:14px;font-weight:800;color:#071510;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:opacity .2s;
+}
+.export-btn:active{opacity:.8}
+.export-btn:disabled{opacity:.6;cursor:default}
+
 /* ── SCREEN SUIVI ── */
 .s4-content{padding:14px 14px 32px;display:flex;flex-direction:column;gap:14px}
 
@@ -1126,6 +1201,42 @@ body{
           <div class="search-x" onclick="document.getElementById('search-input').value=''">×</div>
         </div>
 
+        <!-- Historique & Favoris -->
+        <div class="hf-tabs">
+          <div class="hf-tab active" onclick="switchHfTab(this,'hf-history')">🕐 Historique</div>
+          <div class="hf-tab" onclick="switchHfTab(this,'hf-favs')">❤️ Favoris</div>
+        </div>
+        <div class="hf-panel active" id="hf-history">
+          <div class="hf-recent">
+            <div class="hf-chip" onclick="setSearch('Ail')"><span class="hf-chip-icon">🕐</span> Ail</div>
+            <div class="hf-chip" onclick="setSearch('Pomme')"><span class="hf-chip-icon">🕐</span> Pomme</div>
+            <div class="hf-chip" onclick="setSearch('Yaourt')"><span class="hf-chip-icon">🕐</span> Yaourt</div>
+            <div class="hf-chip" onclick="setSearch('Lentilles')"><span class="hf-chip-icon">🕐</span> Lentilles</div>
+          </div>
+        </div>
+        <div class="hf-panel" id="hf-favs">
+          <div class="hf-fav-list">
+            <div class="hf-fav-row">
+              <div class="hf-fav-emoji">🍚</div>
+              <div class="hf-fav-name">Riz blanc</div>
+              <div class="hf-fav-badge">✓ OK</div>
+              <div class="hf-fav-heart">❤️</div>
+            </div>
+            <div class="hf-fav-row">
+              <div class="hf-fav-emoji">🍗</div>
+              <div class="hf-fav-name">Poulet</div>
+              <div class="hf-fav-badge">✓ OK</div>
+              <div class="hf-fav-heart">❤️</div>
+            </div>
+            <div class="hf-fav-row">
+              <div class="hf-fav-emoji">🥑</div>
+              <div class="hf-fav-name">Avocat</div>
+              <div class="hf-fav-badge">✓ OK</div>
+              <div class="hf-fav-heart">❤️</div>
+            </div>
+          </div>
+        </div>
+
         <div class="phases">
           <div class="phase active" onclick="selectPhase(this)">Élimination</div>
           <div class="phase" onclick="selectPhase(this)">Réintroduction</div>
@@ -1296,6 +1407,27 @@ body{
           <div class="tip-b">
             <div class="tip-tag">Attention aux traces</div>
             <div class="tip-t">L'ail et l'oignon en poudre dans les sauces industrielles peuvent suffire à déclencher des symptômes. Lisez toujours les étiquettes.</div>
+          </div>
+        </div>
+
+        <!-- Notes contextuelles -->
+        <div class="context-card">
+          <div class="context-card-title">Notes contextuelles</div>
+          <div class="ctx-row">
+            <div class="ctx-label">Stress</div>
+            <div class="ctx-chips" id="stress-chips">
+              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-stress')">😰 Élevé</div>
+              <div class="ctx-chip sel-ok" onclick="selectCtx(this,'stress-chips','sel-ok')">😐 Normal</div>
+              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-ok')">😌 Bas</div>
+            </div>
+          </div>
+          <div class="ctx-row">
+            <div class="ctx-label">Sommeil</div>
+            <div class="ctx-chips" id="sleep-chips">
+              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-stress')">😴 &lt;6h</div>
+              <div class="ctx-chip sel-sleep" onclick="selectCtx(this,'sleep-chips','sel-sleep')">😊 6-8h</div>
+              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-ok')">🌟 &gt;8h</div>
+            </div>
           </div>
         </div>
 
@@ -1672,6 +1804,49 @@ body{
           </div>
         </div>
 
+        <!-- Observance du protocole -->
+        <div class="observance-card">
+          <div class="obs-header">
+            <div class="obs-label">Observance du protocole</div>
+            <div class="obs-chip">30 jours</div>
+          </div>
+          <div class="obs-body">
+            <div class="obs-ring-wrap">
+              <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="7"/>
+                <circle cx="40" cy="40" r="32" fill="none" stroke="#1affaa" stroke-width="7"
+                  stroke-linecap="round"
+                  stroke-dasharray="174.5 201"
+                  stroke-dashoffset="0"/>
+              </svg>
+              <div class="obs-center">
+                <div class="obs-pct">87%</div>
+                <div class="obs-pct-sub">observé</div>
+              </div>
+            </div>
+            <div class="obs-info">
+              <div class="obs-main">17 jours sur 20 respectés</div>
+              <div class="obs-sub">Excellent niveau d'observance sur la période</div>
+              <div class="obs-miss">⚠️ 3 jours d'écart détectés</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Export médical -->
+        <div class="export-card">
+          <div class="export-header">
+            <div class="export-icon">📄</div>
+            <div class="export-info">
+              <div class="export-title">Export médical</div>
+              <div class="export-sub">Rapport au format CHU Bordeaux · Dernière génération : jamais</div>
+            </div>
+          </div>
+          <button class="export-btn" id="export-btn" onclick="generateReport()">
+            <span id="export-icon">📄</span>
+            <span id="export-label">Générer le rapport PDF</span>
+          </button>
+        </div>
+
       </div><!-- /s3-content -->
     </div>
 
@@ -1921,6 +2096,49 @@ function switchToAliments() {
   document.querySelector('[data-screen="aliments"]').classList.add('active');
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-aliments').classList.add('active');
+}
+
+// ── Historique / Favoris tabs ──
+function switchHfTab(el, panelId) {
+  document.querySelectorAll('.hf-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.hf-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+function setSearch(q) {
+  const input = document.getElementById('search-input');
+  input.value = q;
+  state.query = q;
+  render();
+}
+
+// ── Context chips (stress / sleep) ──
+function selectCtx(el, groupId, selClass) {
+  const group = document.getElementById(groupId);
+  group.querySelectorAll('.ctx-chip').forEach(c => {
+    c.classList.remove('sel-stress', 'sel-sleep', 'sel-ok');
+  });
+  el.classList.add(selClass);
+}
+
+// ── Generate report ──
+function generateReport() {
+  const btn = document.getElementById('export-btn');
+  const icon = document.getElementById('export-icon');
+  const label = document.getElementById('export-label');
+  if (btn.disabled) return;
+  btn.disabled = true;
+  icon.textContent = '⏳';
+  label.textContent = 'Génération en cours…';
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.style.background = 'rgba(26,255,170,.15)';
+    btn.style.border = '1.5px solid rgba(26,255,170,.4)';
+    btn.style.color = '#1affaa';
+    icon.textContent = '✓';
+    label.textContent = 'Rapport prêt ✓';
+    document.querySelector('.export-sub').textContent = 'Rapport au format CHU Bordeaux · Généré maintenant';
+  }, 2000);
 }
 
 // ── Greeting date ──

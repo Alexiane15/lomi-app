@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Connexion</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0b0f0e;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;display:flex;justify-content:center}
+
+.app{
+  width:100%;max-width:390px;min-height:100%;
+  background:#0b0f0e;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:calc(48px + env(safe-area-inset-bottom));
+}
+
+/* Bokeh */
+.bk1{position:absolute;top:-40px;right:-60px;pointer-events:none;z-index:0;
+  width:300px;height:300px;
+  background:radial-gradient(ellipse 300px 300px at 60% 40%, rgba(26,255,170,.14) 0%, transparent 58%)}
+.bk2{position:absolute;bottom:60px;left:-80px;pointer-events:none;z-index:0;
+  width:260px;height:260px;
+  background:radial-gradient(ellipse 260px 260px at 40% 60%, rgba(74,176,255,.1) 0%, transparent 58%)}
+
+/* Topbar */
+.topbar{height:56px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px;position:relative;z-index:1}
+.back-btn{width:34px;height:34px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);user-select:none;transition:background .15s}
+.back-btn:active{background:rgba(255,255,255,.14)}
+
+/* Content */
+.content{flex:1;overflow-y:auto;padding:0 24px 48px;scrollbar-width:none;position:relative;z-index:1}
+.content::-webkit-scrollbar{display:none}
+
+/* Header */
+.header{padding:24px 0 32px}
+.logo{font-size:28px;font-weight:800;color:#1affaa;letter-spacing:-1px;margin-bottom:10px}
+.header-title{font-size:26px;font-weight:700;color:#f4f2ed;letter-spacing:-.5px;line-height:1.2;margin-bottom:6px}
+.header-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.4}
+
+/* Form */
+.form-group{margin-bottom:14px}
+.form-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.4);margin-bottom:6px;display:block}
+.form-input{
+  width:100%;height:50px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+  padding:0 16px;
+  font-size:15px;color:#fff;
+  font-family:inherit;outline:none;
+  transition:border-color .2s,background .2s;
+}
+.form-input::placeholder{color:rgba(255,255,255,.25)}
+.form-input:focus{border-color:rgba(26,255,170,.4);background:rgba(255,255,255,.08)}
+
+/* Forgot */
+.forgot{text-align:right;margin-top:6px}
+.forgot a{font-size:12px;color:rgba(26,255,170,.6);text-decoration:none}
+
+/* Buttons */
+.btn-primary{
+  width:100%;height:52px;
+  background:#1affaa;border:none;border-radius:14px;
+  font-size:15px;font-weight:800;color:#071510;
+  cursor:pointer;margin-top:20px;
+  transition:opacity .2s;
+}
+.btn-primary:active{opacity:.85}
+
+.sep{display:flex;align-items:center;gap:12px;margin:20px 0}
+.sep-line{flex:1;height:1px;background:rgba(255,255,255,.08)}
+.sep-txt{font-size:12px;color:rgba(255,255,255,.3);font-weight:600}
+
+.btn-outline{
+  width:100%;height:52px;
+  background:transparent;
+  border:1.5px solid rgba(255,255,255,.15);border-radius:14px;
+  font-size:15px;font-weight:700;color:rgba(255,255,255,.7);
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.btn-outline:active{background:rgba(255,255,255,.05)}
+
+/* RGPD note */
+.rgpd{
+  display:flex;align-items:flex-start;gap:8px;
+  margin-top:24px;padding:12px 14px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;
+}
+.rgpd-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.rgpd-text{font-size:11px;color:rgba(255,255,255,.35);line-height:1.5}
+.rgpd-text strong{color:rgba(255,255,255,.5)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="bk1"></div>
+  <div class="bk2"></div>
+
+  <div class="topbar">
+    <div class="back-btn" onclick="history.back()">‹</div>
+  </div>
+
+  <div class="content">
+
+    <div class="header">
+      <div class="logo">lomi</div>
+      <div class="header-title">Bienvenue sur lomi</div>
+      <div class="header-sub">Connectez-vous ou créez votre profil patient</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Adresse e-mail</label>
+      <input class="form-input" type="email" placeholder="votre@email.com" autocomplete="email"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Mot de passe</label>
+      <input class="form-input" type="password" placeholder="••••••••" autocomplete="current-password"/>
+      <div class="forgot"><a href="#">Mot de passe oublié ?</a></div>
+    </div>
+
+    <button class="btn-primary" onclick="location.href='index.html'">Se connecter</button>
+
+    <div class="sep">
+      <div class="sep-line"></div>
+      <div class="sep-txt">ou</div>
+      <div class="sep-line"></div>
+    </div>
+
+    <button class="btn-outline" onclick="location.href='page-signup.html'">Créer un compte</button>
+
+    <div class="rgpd">
+      <div class="rgpd-icon">🔒</div>
+      <div class="rgpd-text">
+        Vos données sont hébergées sur <strong>serveur HDS certifié</strong> · Conformité <strong>RGPD</strong> garantie · Aucune donnée partagée sans votre consentement
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

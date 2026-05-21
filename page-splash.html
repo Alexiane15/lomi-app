@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Lomi — Bienvenue</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#0a0f0d;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;display:flex;justify-content:center}
+
+.app{
+  width:100%;max-width:390px;min-height:100%;
+  background:#0a0f0d;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:calc(48px + env(safe-area-inset-bottom));
+}
+
+/* Bokeh */
+.bokeh{position:absolute;inset:0;pointer-events:none;z-index:0}
+.bk1{position:absolute;width:340px;height:340px;top:-60px;right:-80px;
+  background:radial-gradient(ellipse 340px 340px at 60% 40%, rgba(26,255,170,.18) 0%, transparent 58%)}
+.bk2{position:absolute;width:280px;height:280px;bottom:80px;left:-60px;
+  background:radial-gradient(ellipse 280px 280px at 40% 60%, rgba(74,176,255,.14) 0%, transparent 58%)}
+.bk3{position:absolute;width:200px;height:200px;top:40%;right:20px;
+  background:radial-gradient(ellipse 200px 200px at 50% 50%, rgba(26,255,170,.08) 0%, transparent 58%)}
+
+/* Center block */
+.center{display:flex;flex-direction:column;align-items:center;gap:12px;position:relative;z-index:1;padding-top:80px}
+
+.logo{font-size:52px;font-weight:800;color:#1affaa;letter-spacing:-2px;line-height:1}
+.logo-sub{font-size:16px;color:rgba(255,255,255,.4);letter-spacing:-.1px;font-weight:500}
+
+.monash-badge{
+  margin-top:8px;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:20px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  font-size:11px;color:rgba(255,255,255,.5);
+}
+.monash-dot{width:6px;height:6px;border-radius:50%;background:#1affaa;flex-shrink:0}
+
+/* Illustration area */
+.illus{width:240px;height:240px;position:relative;z-index:1;margin:0 auto}
+.illus-ring{
+  position:absolute;inset:0;
+  border-radius:50%;
+  border:1.5px solid rgba(26,255,170,.15);
+}
+.illus-ring-2{
+  position:absolute;inset:20px;
+  border-radius:50%;
+  border:1.5px solid rgba(26,255,170,.1);
+}
+.illus-center{
+  position:absolute;inset:40px;
+  border-radius:50%;
+  background:radial-gradient(ellipse 160px 160px at 50% 50%, rgba(26,255,170,.18) 0%, transparent 70%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;
+}
+
+/* Bottom block */
+.bottom{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;padding:0 24px;position:relative;z-index:1}
+
+/* CHU badge */
+.chu-badge{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  width:100%;
+}
+.chu-info{display:flex;flex-direction:column;gap:1px}
+.chu-main{font-size:12px;font-weight:600;color:rgba(255,255,255,.7)}
+.chu-sub{font-size:10px;color:rgba(255,255,255,.35)}
+
+/* CTA */
+.cta{
+  width:100%;height:54px;
+  background:#1affaa;border:none;border-radius:14px;
+  font-size:16px;font-weight:800;color:#071510;
+  cursor:pointer;letter-spacing:-.2px;
+  transition:opacity .2s;
+}
+.cta:active{opacity:.85}
+
+.already{font-size:13px;color:rgba(255,255,255,.35)}
+.already a{color:rgba(26,255,170,.7);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="bokeh">
+    <div class="bk1"></div>
+    <div class="bk2"></div>
+    <div class="bk3"></div>
+  </div>
+
+  <div class="center">
+    <div class="logo">lomi</div>
+    <div class="logo-sub">Votre compagnon FODMAP</div>
+    <div class="monash-badge">
+      <div class="monash-dot"></div>
+      Protocole Monash University certifié
+    </div>
+  </div>
+
+  <div class="illus">
+    <div class="illus-ring"></div>
+    <div class="illus-ring-2"></div>
+    <div class="illus-center">🥗</div>
+  </div>
+
+  <div class="bottom">
+    <div class="chu-badge">
+      <span style="font-size:22px">🏥</span>
+      <div class="chu-info">
+        <div class="chu-main">En partenariat avec le CHU de Bordeaux</div>
+        <div class="chu-sub">Suivi médical supervisé · Protocole validé</div>
+      </div>
+    </div>
+
+    <button class="cta" onclick="location.href='onboarding.html'">Commencer</button>
+    <div class="already">Déjà un compte ? <a href="page-login.html">Se connecter</a></div>
+  </div>
+
+</div>
+</body>
+</html>
