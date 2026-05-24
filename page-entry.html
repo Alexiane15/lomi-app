@@ -123,6 +123,100 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .phase-badge-chip,.fab-menu-header{
   font-family:"DM Mono",monospace;
 }
+
+/* ════════════════════════════════════
+   DESIGN SYSTEM OVERRIDE — Light Neutral
+   ════════════════════════════════════ */
+body{background:#f0ece6;color:#111111}
+.app{background:#f0ece6}
+/* Status bar */
+.sbar{background:#f0ece6}
+.sbar-time{color:#111111}
+.sig b{background:#111111}
+.wifi-icon::before,.wifi-icon::after{border-color:#111111}
+.wifi-dot{background:#111111}
+.batt-icon{border-color:rgba(17,17,17,.5)}
+.batt-icon::after{background:rgba(17,17,17,.35)}
+.batt-fill{background:#111111}
+/* Top bar / back buttons */
+.top-bar{background:#f0ece6;border-bottom-color:rgba(0,0,0,.07)}
+.back-btn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.5)}
+.topbar{background:#f0ece6}
+.topbar-title{color:#111111}
+.top-title{color:#111111}
+.bookmark-btn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.5)}
+/* Cards */
+.card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.card-title{color:rgba(17,17,17,.35)}
+/* Tips */
+.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
+.tip-green{background:rgba(26,92,58,.06);border-color:rgba(26,92,58,.18)}
+.tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
+.tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
+.tip-amber .tip-tag{color:rgba(179,101,0,.85)}
+.tip-green .tip-tag{color:rgba(26,92,58,.85)}
+.tip-blue .tip-tag{color:rgba(42,90,156,.85)}
+.tip-purple .tip-tag{color:rgba(120,50,180,.85)}
+.tip .tip-t{color:rgba(17,17,17,.6)}
+.tip-card{background:#ffffff;border-color:rgba(42,90,156,.15)}
+.tip-text{color:rgba(17,17,17,.6)}
+.tip-text strong{color:#111111}
+/* Buttons */
+.cta-btn{background:#111111;color:#ffffff;border-radius:100px}
+.btn-primary{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.35);color:#1a5c3a}
+.btn-secondary{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.09);color:rgba(17,17,17,.45)}
+/* Section headings */
+.section-head{color:rgba(17,17,17,.35)}
+.stat-heading{color:#111111}
+/* Overlays / sheets */
+.overlay{background:rgba(0,0,0,.4)}
+.sheet{background:#faf9f7}
+.sheet-handle{background:rgba(0,0,0,.12)}
+.sheet-title{color:#111111}
+.sheet-sub{color:rgba(17,17,17,.35)}
+.grp-title{color:rgba(17,17,17,.4)}
+.grp-note{color:rgba(17,17,17,.3)}
+.sheet-close{background:rgba(0,0,0,.06);color:rgba(17,17,17,.5)}
+/* Chips */
+.chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
+.chip-green{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.22);color:#1a5c3a}
+/* Hero badge */
+.hero-badge{background:rgba(26,92,58,.12);border-color:rgba(26,92,58,.3);color:#1a5c3a}
+.hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
+.hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
+.hero-name{color:#111111}
+.hero-cat{color:rgba(17,17,17,.45)}
+.hero-emoji-wrap{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+/* FODMAP bars */
+.fodmap-bar-bg{background:rgba(0,0,0,.08)}
+.fodmap-name{color:#111111}
+.lvl-low{color:#1a5c3a}
+.lvl-mod{color:#b36500}
+.lvl-high{color:#c0392b}
+/* Portion */
+.portion-emoji-big{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.portion-qty{color:#111111}
+.portion-unit{color:rgba(17,17,17,.5)}
+.portion-tip{color:rgba(17,17,17,.45)}
+/* Similar items */
+.similar-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.06)}
+.similar-item:hover{background:rgba(0,0,0,.06)}
+.similar-emoji{background:rgba(0,0,0,.05)}
+.similar-name{color:#111111}
+.similar-badge{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+/* Phase cards in food detail */
+.phase-card.ok{background:#1a5c3a;box-shadow:none}
+.phase-card.mod{background:#b36500;box-shadow:none}
+.phase-card.av{background:#c0392b;box-shadow:none}
+/* Log form */
+.log-q{color:#111111}
+.check-q{color:#111111}
+.check-opt{border-color:rgba(0,0,0,.1);color:rgba(17,17,17,.45)}
+.check-opt.sel{background:rgba(26,92,58,.13);border-color:rgba(26,92,58,.45);color:#1a5c3a}
+.btn-submit{background:#111111;color:#ffffff;border-radius:100px}
+.success .s-title{color:#111111}
+.success .s-sub{color:rgba(17,17,17,.4)}
+
 </style>
 </head>
 <body>
@@ -148,22 +242,21 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <!-- Meal type -->
     <div class="meal-types">
       <div class="meal-type" onclick="selectMeal(this)">
-        <div class="mt-emoji">🌅</div><div class="mt-label">Petit-déj.</div>
+        <div class="mt-label">Petit-déj.</div>
       </div>
       <div class="meal-type active" onclick="selectMeal(this)">
-        <div class="mt-emoji">☀️</div><div class="mt-label">Déjeuner</div>
+        <div class="mt-label">Déjeuner</div>
       </div>
       <div class="meal-type" onclick="selectMeal(this)">
-        <div class="mt-emoji">🌙</div><div class="mt-label">Dîner</div>
+        <div class="mt-label">Dîner</div>
       </div>
       <div class="meal-type" onclick="selectMeal(this)">
-        <div class="mt-emoji">🍎</div><div class="mt-label">Collation</div>
+        <div class="mt-label">Collation</div>
       </div>
     </div>
 
     <!-- Tip saisie -->
     <div class="tip tip-green">
-      <div class="tip-i">✅</div>
       <div class="tip-b">
         <div class="tip-tag">Précision</div>
         <div class="tip-t">Saisissez votre repas dans les 2h suivant le repas pour une corrélation optimale avec vos symptômes digestifs.</div>
@@ -172,7 +265,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
     <!-- Time -->
     <div class="time-row">
-      <div class="time-icon">🕐</div>
+      
       <div class="time-label">Heure du repas</div>
       <div class="time-val" id="meal-time">12:30</div>
     </div>
@@ -190,7 +283,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <div class="section-label">Aliments sélectionnés</div>
     <div class="selected-list" id="selected-list">
       <div class="sel-item">
-        <div class="sel-emoji">🍚</div>
+        <div class="sel-emoji"></div>
         <div class="sel-info">
           <div class="sel-name">Riz blanc</div>
           <div class="sel-qty-row">
@@ -202,7 +295,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
         <div class="sel-remove" onclick="removeItem(this)">×</div>
       </div>
       <div class="sel-item">
-        <div class="sel-emoji">🍗</div>
+        <div class="sel-emoji"></div>
         <div class="sel-info">
           <div class="sel-name">Poulet grillé</div>
           <div class="sel-qty-row">
@@ -218,20 +311,20 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <!-- Suggestions -->
     <div class="section-label">Suggestions</div>
     <div class="suggestions" id="suggestions">
-      <div class="sug-item" onclick="addFood(this,'🥕','Carotte')">
-        <div class="sug-emoji">🥕</div><div class="sug-name">Carotte</div>
+      <div class="sug-item" onclick="addFood(this,'','Carotte')">
+        <div class="sug-name">Carotte</div>
         <div class="sug-status">OK</div><div class="add-icon">+</div>
       </div>
-      <div class="sug-item" onclick="addFood(this,'🥒','Concombre')">
-        <div class="sug-emoji">🥒</div><div class="sug-name">Concombre</div>
+      <div class="sug-item" onclick="addFood(this,'','Concombre')">
+        <div class="sug-name">Concombre</div>
         <div class="sug-status">OK</div><div class="add-icon">+</div>
       </div>
-      <div class="sug-item" onclick="addFood(this,'🍅','Tomate')">
-        <div class="sug-emoji">🍅</div><div class="sug-name">Tomate</div>
+      <div class="sug-item" onclick="addFood(this,'','Tomate')">
+        <div class="sug-name">Tomate</div>
         <div class="sug-status">OK</div><div class="add-icon">+</div>
       </div>
-      <div class="sug-item" onclick="addFood(this,'🫒','Huile d\\'olive')">
-        <div class="sug-emoji">🫒</div><div class="sug-name">Huile d'olive</div>
+      <div class="sug-item" onclick="addFood(this,'','Huile d\\'olive')">
+        <div class="sug-name">Huile d'olive</div>
         <div class="sug-status">OK</div><div class="add-icon">+</div>
       </div>
     </div>
@@ -308,7 +401,7 @@ function addFood(el, emoji, name){
   const list = document.getElementById('selected-list');
   const item = document.createElement('div');
   item.className = 'sel-item';
-  item.innerHTML = `<div class="sel-emoji">${emoji}</div>
+  item.innerHTML = `<div class="sel-emoji"></div>
     <div class="sel-info">
       <div class="sel-name">${name}</div>
       <div class="sel-qty-row">

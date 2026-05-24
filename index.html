@@ -999,6 +999,314 @@ body{
 .phase-badge-chip,.fab-menu-header{
   font-family:"DM Mono",monospace;
 }
+
+/* ════════════════════════════════════
+   DESIGN SYSTEM OVERRIDE — Light Neutral
+   ════════════════════════════════════ */
+
+/* 1. Body/App/Screens */
+body{background:#f0ece6;color:#111111}
+.app{background:#f0ece6}
+.screens-wrap{background:#f0ece6}
+.screen{background:transparent}
+
+/* 2. Status bar */
+.sbar{background:#f0ece6}
+.sbar-time{color:#111111}
+.sig b{background:#111111}
+.wifi-icon::before,.wifi-icon::after{border-color:#111111}
+.wifi-dot{background:#111111}
+.batt-icon{border-color:rgba(17,17,17,.5)}
+.batt-icon::after{background:rgba(17,17,17,.35)}
+.batt-fill{background:#111111}
+
+/* 3. Nav */
+.nav{background:#f0ece6;border-bottom:1px solid rgba(0,0,0,.07)}
+.nav-item{color:rgba(17,17,17,.3)}
+.nav-item.active{color:#111111}
+
+/* 4. FAB */
+.fab-btn{background:#111111;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.fab-btn .fab-plus{color:#ffffff}
+
+/* 5. FAB overlay / sheets */
+.fab-overlay{background:rgba(0,0,0,.4)}
+.fab-sheet{background:#faf9f7}
+.fab-handle{background:rgba(0,0,0,.12)}
+.fab-menu-header{color:rgba(17,17,17,.35)}
+.fab-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.07)}
+.fab-item:active{background:rgba(0,0,0,.06)}
+.fab-lbl{color:#111111}
+.fab-sub{color:rgba(17,17,17,.4)}
+.fab-item.hi{background:rgba(26,92,58,.07);border-color:rgba(26,92,58,.2)}
+.fab-item.hi .fab-lbl{color:#1a5c3a}
+.fsh-back{background:rgba(0,0,0,.06);color:rgba(17,17,17,.5)}
+.fsh-title{color:#111111}
+.fsh-section{color:rgba(17,17,17,.4)}
+.type-btn{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.09);color:rgba(17,17,17,.5)}
+.type-btn.sel{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.35);color:#1a5c3a}
+.food-input{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.09);color:#111111}
+.food-input::placeholder{color:rgba(17,17,17,.3)}
+.food-input:focus{border-color:rgba(26,92,58,.4)}
+.food-add-btn{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+.qc{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.45)}
+.qc.sel{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+.tag-pill{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.2);color:#1a5c3a}
+.int-btn{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.07);color:rgba(17,17,17,.4)}
+.int-btn.sel-1{background:rgba(26,92,58,.12);border-color:rgba(26,92,58,.4);color:#1a5c3a}
+.when-btn{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.07);color:rgba(17,17,17,.4)}
+.when-btn.sel{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.35);color:#1a5c3a}
+.mf-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.07)}
+.mf-btn .mf-l{color:rgba(17,17,17,.4)}
+.mf-btn.sel{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.25)}
+.fab-textarea{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.09);color:#111111}
+.fab-textarea::placeholder{color:rgba(17,17,17,.3)}
+.fab-submit{background:#111111;color:#ffffff;border-radius:100px}
+.fab-success .s-s{color:rgba(17,17,17,.4)}
+.fab-success .s-t{color:#111111}
+
+/* 6. Screen 1 — Carnet/Home */
+.hg-date{color:rgba(17,17,17,.4)}
+.hg-hi{color:#111111}
+.hg-streak{color:#111111;background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1)}
+.phase-hero{background:#ffffff;border:1px solid rgba(0,0,0,.07)}
+.phase-badge-chip{color:#1a5c3a;background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.2)}
+.phase-name{color:#111111}
+.phase-desc{color:rgba(17,17,17,.45)}
+.phase-day-label{color:rgba(17,17,17,.45)}
+.phase-day-count{color:#1a5c3a}
+.phase-bar-bg{background:rgba(0,0,0,.08)}
+.phase-bar-fill{background:#1a5c3a}
+.pt-step.pt-active .pt-dot{background:#1a5c3a;box-shadow:none}
+.pt-step.pt-future .pt-dot{background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.15)}
+.pt-lbl{color:rgba(17,17,17,.3)}
+.pt-step.pt-active .pt-lbl{color:#1a5c3a}
+.pt-connector{background:rgba(0,0,0,.1)}
+.pt-connector.done{background:rgba(26,92,58,.35)}
+.phase-next{color:#1a5c3a;background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.15)}
+.missions-title{color:#111111}
+.missions-count{color:#1a5c3a;background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.2)}
+.mission-item{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.mission-item:hover{background:rgba(0,0,0,.03)}
+.mission-item.done{background:rgba(26,92,58,.05);border-color:rgba(26,92,58,.15)}
+.mission-check{border-color:rgba(0,0,0,.18)}
+.mission-item.done .mission-check{background:#1a5c3a;border-color:#1a5c3a;color:#ffffff}
+.mission-name{color:#111111}
+.mission-item.done .mission-name{color:rgba(17,17,17,.35)}
+.mission-sub{color:rgba(17,17,17,.38)}
+.mission-arrow{color:rgba(17,17,17,.2)}
+.mood-card{background:#ffffff;border:1px solid rgba(0,0,0,.07)}
+.mood-label{color:rgba(17,17,17,.5)}
+.mood-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.06);height:44px;justify-content:center}
+.mood-btn:hover{background:rgba(0,0,0,.06)}
+.mood-btn.active{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.25)}
+.mood-lbl{color:rgba(17,17,17,.4);font-size:12px;font-weight:600}
+.mood-btn.active .mood-lbl{color:#1a5c3a}
+.score-card{background:#ffffff;border:1px solid rgba(0,0,0,.07)}
+.rt{stroke:rgba(0,0,0,.08)}
+.score-n{color:#111111}
+.score-d{color:rgba(17,17,17,.45)}
+.score-sub{color:rgba(17,17,17,.45)}
+.score-mood{color:#111111}
+.cal{background:#ffffff;border-radius:22px}
+.cal-month span{color:#111111}
+.cal-col{border-right-color:rgba(0,0,0,.08) !important}
+.cal-month{border-right-color:rgba(0,0,0,.15) !important}
+.cc{color:#111111}
+.cc:hover:not(.empty){background:rgba(0,0,0,.05)}
+.cc.sel::before{background:rgba(26,92,58,.35)}
+.cal-btn{color:rgba(17,17,17,.3)}
+.cal-btn:hover{color:rgba(17,17,17,.65)}
+.pill{background:#ffffff;border-color:rgba(0,0,0,.08)}
+.pill:hover{border-color:rgba(0,0,0,.2)}
+.pill span{color:#111111}
+.tend-title{color:#111111}
+.tend-card{background:#ffffff;border:1px solid rgba(0,0,0,.07)}
+.xl{color:rgba(17,17,17,.35)}
+.legtxt{color:#111111}
+
+/* 7. Screen 2 — Aliments */
+.search{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.09)}
+.search:focus-within{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.18)}
+.search svg path{stroke:#111111;opacity:.4}
+.search input{color:#111111}
+.search input::placeholder{color:rgba(17,17,17,.35)}
+.search-x{background:rgba(0,0,0,.1);color:rgba(17,17,17,.5)}
+.phases{border-color:rgba(0,0,0,.08)}
+.phase{color:rgba(17,17,17,.4)}
+.phase+.phase{border-left-color:rgba(0,0,0,.08)}
+.phase.active{background:rgba(26,92,58,.1);color:#1a5c3a}
+.c-ok{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+.c-mod{background:rgba(179,101,0,.08);border-color:rgba(179,101,0,.25);color:#b36500}
+.c-av{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
+.c-cat{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.09);color:rgba(17,17,17,.55)}
+.chip.on.c-cat{background:rgba(0,0,0,.12);border-color:rgba(0,0,0,.2);color:#111111}
+.res-count{color:rgba(17,17,17,.35)}
+.cat-lbl{color:rgba(17,17,17,.35)}
+.food{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.food.ok{background:#ffffff;border-color:rgba(26,92,58,.12)}
+.food.mod{background:#ffffff;border-color:rgba(179,101,0,.12)}
+.food.av{background:#ffffff;border-color:rgba(192,57,43,.12)}
+.food:hover{background:rgba(0,0,0,.02)}
+.food.ok::before{background:#1a5c3a}
+.food.mod::before{background:#b36500}
+.food.av::before{background:#c0392b}
+.food-icon{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.food-name{color:#111111}
+.food-sub{color:rgba(17,17,17,.4)}
+.food-tag{color:rgba(17,17,17,.4);background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.b-ok{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+.b-mod{background:rgba(179,101,0,.1);border-color:rgba(179,101,0,.25);color:#b36500}
+.b-av{background:rgba(192,57,43,.1);border-color:rgba(192,57,43,.25);color:#c0392b}
+
+/* 8. Screen 3 — Statistiques */
+.period-sel{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.p-tab{color:rgba(17,17,17,.35)}
+.p-tab.active{background:rgba(0,0,0,.08);color:#111111}
+.hero-card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.hero-label{color:rgba(17,17,17,.35)}
+.hero-period{color:rgba(17,17,17,.35)}
+.hero-score{color:#111111}
+.hero-score span{color:rgba(17,17,17,.45)}
+.hero-delta{color:#1a5c3a}
+.hero-sub{color:rgba(17,17,17,.35)}
+.stat-heading{color:#111111}
+.stat-card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.s3-content > .stat-section .stat-card{background:#ffffff !important;border-color:rgba(0,0,0,.07) !important}
+.tile-1{background:#111111}
+.tile-2{background:#2d3a2e}
+.tile-3{background:#2e2a1c}
+.tile-4{background:#3a1c2a}
+.tile-label{color:rgba(255,255,255,.65)}
+.tile-n{color:#ffffff}
+.tile-sub{color:rgba(255,255,255,.5)}
+.barchart-period{color:rgba(17,17,17,.5);background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.bc-leg{color:rgba(17,17,17,.5)}
+.bar-lbl{color:rgba(17,17,17,.3)}
+.bars-axis-lbl{color:rgba(17,17,17,.3)}
+.bar.green{background:#1a5c3a}
+.bar.orange{background:#b36500}
+.symp-name{color:#111111}
+.symp-bar-bg{background:rgba(0,0,0,.08)}
+.symp-val{color:rgba(17,17,17,.65)}
+.symp-down{color:#1a5c3a}
+.symp-flat{color:rgba(17,17,17,.3)}
+.symp-up{color:#c0392b}
+.donut-pct{color:#1a5c3a}
+.donut-qlabel{color:rgba(17,17,17,.4)}
+.dl-dot-green{background:#1a5c3a}
+.dl-dot-blue{background:#2a5a9c}
+.dl-dot-red{background:#c0392b}
+.dl-label{color:rgba(17,17,17,.55)}
+.dl-val{color:#111111}
+.corr-row{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.corr-row.rh{background:#ffffff;border-color:rgba(192,57,43,.18)}
+.corr-row.rm{background:#ffffff;border-color:rgba(179,101,0,.16)}
+.corr-row.rl{background:#ffffff;border-color:rgba(26,92,58,.14)}
+.corr-emoji{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.corr-name{color:#111111}
+.corr-detail{color:rgba(17,17,17,.38)}
+.corr-pct-label{color:rgba(17,17,17,.35)}
+.corr-bar-bg{background:rgba(0,0,0,.08)}
+.corr-high{color:#c0392b}
+.corr-mid{color:#b36500}
+.corr-low{color:#1a5c3a}
+.top-food-rank{color:rgba(17,17,17,.35)}
+.top-food-emoji{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.top-food-name{color:#111111}
+.top-food-freq{color:rgba(17,17,17,.35)}
+.top-food-bar-bg{background:rgba(0,0,0,.08)}
+.top-food-bar-fill{background:#1a5c3a}
+.top-food-row{border-bottom-color:rgba(0,0,0,.05)}
+.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
+.tip-green{background:rgba(26,92,58,.06);border-color:rgba(26,92,58,.18)}
+.tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
+.tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
+.tip-amber .tip-tag{color:rgba(179,101,0,.85)}
+.tip-green .tip-tag{color:rgba(26,92,58,.85)}
+.tip-blue .tip-tag{color:rgba(42,90,156,.85)}
+.tip-purple .tip-tag{color:rgba(120,50,180,.85)}
+.tip .tip-t{color:rgba(17,17,17,.6)}
+
+/* 9. Historique / Favoris */
+.hf-tabs{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.hf-tab{color:rgba(17,17,17,.4)}
+.hf-tab.active{background:rgba(0,0,0,.08);color:#111111}
+.hf-chip{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.09);color:rgba(17,17,17,.55)}
+.hf-fav-emoji{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.07)}
+.hf-fav-name{color:#111111}
+.hf-fav-badge{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.2);color:#1a5c3a}
+.hf-fav-row{border-bottom-color:rgba(0,0,0,.06)}
+
+/* 10. Suivi screen */
+.suivi-hero{background:#111111;border-color:rgba(255,255,255,.1)}
+.suivi-hero-chip{color:rgba(255,255,255,.75);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
+.suivi-hero-week{color:rgba(255,255,255,.45)}
+.suivi-hero-title{color:#ffffff}
+.suivi-hero-sub{color:rgba(255,255,255,.45)}
+.suivi-big-n{color:#ffffff}
+.suivi-big-label{color:rgba(255,255,255,.5)}
+.suivi-big-sep{background:rgba(255,255,255,.15)}
+.suivi-big-right-n{color:#ffffff}
+.suivi-big-right-l{color:rgba(255,255,255,.4)}
+.suivi-bar-bg{background:rgba(255,255,255,.15)}
+.suivi-bar-fill{background:#ffffff}
+.spt-step.active .spt-dot{background:#ffffff;box-shadow:none}
+.spt-step.future .spt-dot{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.3)}
+.spt-lbl{color:rgba(255,255,255,.35)}
+.spt-step.active .spt-lbl{color:rgba(255,255,255,.8)}
+.spt-date{color:rgba(255,255,255,.25)}
+.spt-connector{background:rgba(255,255,255,.12)}
+.spt-connector.done{background:rgba(255,255,255,.4)}
+.sv-tile-1,.sv-tile-2,.sv-tile-3{background:#ffffff;border:1px solid rgba(0,0,0,.07)}
+.sv-tile-label{color:rgba(17,17,17,.45)}
+.sv-tile-n{color:#111111}
+.sv-tile-sub{color:rgba(17,17,17,.35)}
+.suivi-section-title{color:#111111}
+.suivi-fodmap-card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.fodmap-item{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.07)}
+.fodmap-item.high{border-color:rgba(192,57,43,.2);background:rgba(192,57,43,.05)}
+.fodmap-item.mod{border-color:rgba(179,101,0,.18);background:rgba(179,101,0,.05)}
+.fodmap-name{color:#111111}
+.fodmap-dot.high{background:#c0392b}
+.fodmap-dot.mod{background:#b36500}
+.suivi-meals-card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.suivi-meal-row{border-bottom-color:rgba(0,0,0,.06)}
+.suivi-meal-time{color:rgba(17,17,17,.35)}
+.suivi-meal-icon{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.07)}
+.suivi-meal-name{color:#111111}
+.suivi-meal-detail{color:rgba(17,17,17,.35)}
+.smb-ok{background:rgba(26,92,58,.1);color:#1a5c3a;border-color:rgba(26,92,58,.2)}
+.smb-warn{background:rgba(179,101,0,.1);color:#b36500;border-color:rgba(179,101,0,.2)}
+.smb-bad{background:rgba(192,57,43,.1);color:#c0392b;border-color:rgba(192,57,43,.2)}
+.suivi-next-card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.suivi-next-label{color:rgba(17,17,17,.4)}
+.suivi-next-title{color:#111111}
+.suivi-next-desc{color:rgba(17,17,17,.45)}
+.suivi-next-pill{color:rgba(17,17,17,.55);background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.09)}
+.context-card{background:#ffffff;border-color:rgba(0,0,0,.08)}
+.context-card-title{color:rgba(17,17,17,.35)}
+.ctx-label{color:rgba(17,17,17,.45)}
+.ctx-chip{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.45)}
+.ctx-chip.sel-ok{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.3);color:#1a5c3a}
+.ctx-chip.sel-stress{background:rgba(192,57,43,.1);border-color:rgba(192,57,43,.3);color:#c0392b}
+.ctx-chip.sel-sleep{background:rgba(42,90,156,.1);border-color:rgba(42,90,156,.3);color:#2a5a9c}
+.observance-card{background:#ffffff;border-color:rgba(0,0,0,.08)}
+.obs-label{color:rgba(17,17,17,.35)}
+.obs-chip{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.2);color:#1a5c3a}
+.obs-pct{color:#1a5c3a}
+.obs-pct-sub{color:rgba(17,17,17,.4)}
+.obs-main{color:#111111}
+.obs-sub{color:rgba(17,17,17,.4)}
+.obs-miss{color:#b36500}
+.export-card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.export-title{color:#111111}
+.export-sub{color:rgba(17,17,17,.35)}
+.export-btn{background:#111111;color:#ffffff;border-radius:100px}
+
+/* 11. Section titles & scores */
+.section-title{color:#111111}
+.score-ring .rt{stroke:rgba(0,0,0,.08)}
 </style>
 </head>
 <body>
@@ -1034,15 +1342,14 @@ body{
         <div class="home-greeting">
           <div class="hg-left">
             <div class="hg-date" id="hg-date">Samedi 10 mai</div>
-            <div class="hg-hi">Bonjour, Sarah 👋</div>
+            <div class="hg-hi">Bonjour, Sarah</div>
           </div>
-          <div class="hg-streak">🔥 17 jours</div>
+          <div class="hg-streak">17 jours</div>
         </div>
 
         <!-- Phase hero -->
         <div class="phase-hero" onclick="switchToSuivi()" style="cursor:pointer">
           <div class="phase-top">
-            <div class="phase-icon">🥗</div>
             <div class="phase-badge-chip">Phase active</div>
           </div>
           <div class="phase-name">Élimination</div>
@@ -1077,7 +1384,6 @@ body{
 
         <!-- Tip Carnet -->
         <div class="tip tip-amber">
-          <div class="tip-i">💡</div>
           <div class="tip-b">
             <div class="tip-tag">Conseil du jour</div>
             <div class="tip-t">Semaine 3 est souvent une étape clé — la majorité des patients observent une réduction des ballonnements à ce stade. Continuez !</div>
@@ -1092,7 +1398,6 @@ body{
 
         <div class="mission-item done" onclick="toggleMission(this)">
           <div class="mission-check">✓</div>
-          <div class="mission-emoji">🌅</div>
           <div class="mission-text">
             <div class="mission-name">Loguer le petit-déjeuner</div>
             <div class="mission-sub">Flocons d'avoine, banane, lait s. lactose</div>
@@ -1101,7 +1406,6 @@ body{
 
         <div class="mission-item" onclick="location.href='page-entry.html'">
           <div class="mission-check"></div>
-          <div class="mission-emoji">☀️</div>
           <div class="mission-text">
             <div class="mission-name">Loguer le déjeuner</div>
             <div class="mission-sub">Repas du midi à saisir</div>
@@ -1111,7 +1415,6 @@ body{
 
         <div class="mission-item" onclick="location.href='page-entry.html'">
           <div class="mission-check"></div>
-          <div class="mission-emoji">🌙</div>
           <div class="mission-text">
             <div class="mission-name">Loguer le dîner</div>
             <div class="mission-sub">Repas du soir à saisir</div>
@@ -1121,7 +1424,6 @@ body{
 
         <div class="mission-item done" onclick="toggleMission(this)">
           <div class="mission-check">✓</div>
-          <div class="mission-emoji">💧</div>
           <div class="mission-text">
             <div class="mission-name">S'hydrater suffisamment</div>
             <div class="mission-sub">1.5 L sur 2 L objectif</div>
@@ -1130,7 +1432,6 @@ body{
 
         <div class="mission-item" onclick="switchToAliments()">
           <div class="mission-check"></div>
-          <div class="mission-emoji">🔍</div>
           <div class="mission-text">
             <div class="mission-name">Vérifier mon repas du midi</div>
             <div class="mission-sub">Consulter la liste FODMAP avant de manger</div>
@@ -1140,7 +1441,6 @@ body{
 
         <div class="mission-item" onclick="location.href='page-score.html'">
           <div class="mission-check"></div>
-          <div class="mission-emoji">📊</div>
           <div class="mission-text">
             <div class="mission-name">Évaluer mes symptômes du jour</div>
             <div class="mission-sub">Bilan de fin de journée</div>
@@ -1152,11 +1452,11 @@ body{
         <div class="mood-card">
           <div class="mood-label">Comment vous sentez-vous là ?</div>
           <div class="mood-emojis">
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-emoji">😟</div><div class="mood-lbl">Mal</div></div>
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-emoji">😕</div><div class="mood-lbl">Bof</div></div>
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-emoji">😐</div><div class="mood-lbl">Neutre</div></div>
-            <div class="mood-btn active" onclick="selectMood(this)"><div class="mood-emoji">🙂</div><div class="mood-lbl">Bien</div></div>
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-emoji">😊</div><div class="mood-lbl">Super</div></div>
+            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Mal</div></div>
+            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Bof</div></div>
+            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Neutre</div></div>
+            <div class="mood-btn active" onclick="selectMood(this)"><div class="mood-lbl">Bien</div></div>
+            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Super</div></div>
           </div>
         </div>
 
@@ -1211,36 +1511,33 @@ body{
 
         <!-- Historique & Favoris -->
         <div class="hf-tabs">
-          <div class="hf-tab active" onclick="switchHfTab(this,'hf-history')">🕐 Historique</div>
-          <div class="hf-tab" onclick="switchHfTab(this,'hf-favs')">❤️ Favoris</div>
+          <div class="hf-tab active" onclick="switchHfTab(this,'hf-history')">Historique</div>
+          <div class="hf-tab" onclick="switchHfTab(this,'hf-favs')">Favoris</div>
         </div>
         <div class="hf-panel active" id="hf-history">
           <div class="hf-recent">
-            <div class="hf-chip" onclick="setSearch('Ail')"><span class="hf-chip-icon">🕐</span> Ail</div>
-            <div class="hf-chip" onclick="setSearch('Pomme')"><span class="hf-chip-icon">🕐</span> Pomme</div>
-            <div class="hf-chip" onclick="setSearch('Yaourt')"><span class="hf-chip-icon">🕐</span> Yaourt</div>
-            <div class="hf-chip" onclick="setSearch('Lentilles')"><span class="hf-chip-icon">🕐</span> Lentilles</div>
+            <div class="hf-chip" onclick="setSearch('Ail')">Ail</div>
+            <div class="hf-chip" onclick="setSearch('Pomme')">Pomme</div>
+            <div class="hf-chip" onclick="setSearch('Yaourt')">Yaourt</div>
+            <div class="hf-chip" onclick="setSearch('Lentilles')">Lentilles</div>
           </div>
         </div>
         <div class="hf-panel" id="hf-favs">
           <div class="hf-fav-list">
             <div class="hf-fav-row">
-              <div class="hf-fav-emoji">🍚</div>
+              <div class="hf-fav-emoji">R</div>
               <div class="hf-fav-name">Riz blanc</div>
-              <div class="hf-fav-badge">✓ OK</div>
-              <div class="hf-fav-heart">❤️</div>
+              <div class="hf-fav-badge">OK</div>
             </div>
             <div class="hf-fav-row">
-              <div class="hf-fav-emoji">🍗</div>
+              <div class="hf-fav-emoji">Po</div>
               <div class="hf-fav-name">Poulet</div>
-              <div class="hf-fav-badge">✓ OK</div>
-              <div class="hf-fav-heart">❤️</div>
+              <div class="hf-fav-badge">OK</div>
             </div>
             <div class="hf-fav-row">
-              <div class="hf-fav-emoji">🥑</div>
+              <div class="hf-fav-emoji">Av</div>
               <div class="hf-fav-name">Avocat</div>
-              <div class="hf-fav-badge">✓ OK</div>
-              <div class="hf-fav-heart">❤️</div>
+              <div class="hf-fav-badge">OK</div>
             </div>
           </div>
         </div>
@@ -1265,7 +1562,6 @@ body{
 
         <!-- Tip Aliments -->
         <div class="tip tip-amber" style="margin:0 14px 14px">
-          <div class="tip-i">💡</div>
           <div class="tip-b">
             <div class="tip-tag">Astuce</div>
             <div class="tip-t">Les produits industriels contiennent souvent de l'ail ou de l'oignon en poudre. Préférez les aliments bruts et cuisinez maison pendant la phase d'élimination.</div>
@@ -1348,7 +1644,6 @@ body{
 
         <!-- Tip après tiles -->
         <div class="tip tip-green">
-          <div class="tip-i">✅</div>
           <div class="tip-b">
             <div class="tip-tag">Bonne régularité</div>
             <div class="tip-t">Vous avez loggué 90 % de vos repas cette semaine. La régularité est essentielle pour identifier vos déclencheurs avec précision.</div>
@@ -1359,47 +1654,41 @@ body{
         <div>
           <div class="suivi-section-title" style="display:flex;align-items:center;justify-content:space-between">
             Restrictions actuelles
-            <span onclick="location.href='page-restrictions.html'" style="font-size:11px;font-weight:600;color:rgba(26,255,170,.7);cursor:pointer">Voir tout →</span>
+            <span onclick="location.href='page-restrictions.html'" style="font-size:11px;font-weight:600;color:rgba(26,92,58,.7);cursor:pointer">Voir tout →</span>
           </div>
           <div class="suivi-fodmap-card" onclick="location.href='page-restrictions.html'" style="cursor:pointer">
             <div class="suivi-fodmap-grid">
               <div class="fodmap-item high">
-                <div class="fodmap-emoji">🧅</div>
                 <div class="fodmap-info">
                   <div class="fodmap-name">Oignons</div>
                 </div>
                 <div class="fodmap-dot high"></div>
               </div>
               <div class="fodmap-item high">
-                <div class="fodmap-emoji">🧄</div>
                 <div class="fodmap-info">
                   <div class="fodmap-name">Ail</div>
                 </div>
                 <div class="fodmap-dot high"></div>
               </div>
               <div class="fodmap-item high">
-                <div class="fodmap-emoji">🥛</div>
                 <div class="fodmap-info">
                   <div class="fodmap-name">Lactose</div>
                 </div>
                 <div class="fodmap-dot high"></div>
               </div>
               <div class="fodmap-item high">
-                <div class="fodmap-emoji">🌾</div>
                 <div class="fodmap-info">
                   <div class="fodmap-name">Gluten</div>
                 </div>
                 <div class="fodmap-dot high"></div>
               </div>
               <div class="fodmap-item mod">
-                <div class="fodmap-emoji">🍎</div>
                 <div class="fodmap-info">
                   <div class="fodmap-name">Pomme</div>
                 </div>
                 <div class="fodmap-dot mod"></div>
               </div>
               <div class="fodmap-item mod">
-                <div class="fodmap-emoji">🥜</div>
                 <div class="fodmap-info">
                   <div class="fodmap-name">Légumineuses</div>
                 </div>
@@ -1411,7 +1700,6 @@ body{
 
         <!-- Tip restrictions -->
         <div class="tip tip-amber">
-          <div class="tip-i">⚠️</div>
           <div class="tip-b">
             <div class="tip-tag">Attention aux traces</div>
             <div class="tip-t">L'ail et l'oignon en poudre dans les sauces industrielles peuvent suffire à déclencher des symptômes. Lisez toujours les étiquettes.</div>
@@ -1424,17 +1712,17 @@ body{
           <div class="ctx-row">
             <div class="ctx-label">Stress</div>
             <div class="ctx-chips" id="stress-chips">
-              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-stress')">😰 Élevé</div>
-              <div class="ctx-chip sel-ok" onclick="selectCtx(this,'stress-chips','sel-ok')">😐 Normal</div>
-              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-ok')">😌 Bas</div>
+              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-stress')">Élevé</div>
+              <div class="ctx-chip sel-ok" onclick="selectCtx(this,'stress-chips','sel-ok')">Normal</div>
+              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-ok')">Bas</div>
             </div>
           </div>
           <div class="ctx-row">
             <div class="ctx-label">Sommeil</div>
             <div class="ctx-chips" id="sleep-chips">
-              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-stress')">😴 &lt;6h</div>
-              <div class="ctx-chip sel-sleep" onclick="selectCtx(this,'sleep-chips','sel-sleep')">😊 6-8h</div>
-              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-ok')">🌟 &gt;8h</div>
+              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-stress')">&lt;6h</div>
+              <div class="ctx-chip sel-sleep" onclick="selectCtx(this,'sleep-chips','sel-sleep')">6-8h</div>
+              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-ok')">&gt;8h</div>
             </div>
           </div>
         </div>
@@ -1445,7 +1733,7 @@ body{
           <div class="suivi-meals-card">
             <div class="suivi-meal-row">
               <div class="suivi-meal-time">08h30</div>
-              <div class="suivi-meal-icon">🌅</div>
+              <div class="suivi-meal-icon">Matin</div>
               <div class="suivi-meal-info">
                 <div class="suivi-meal-name">Petit-déjeuner</div>
                 <div class="suivi-meal-detail">Flocons d'avoine, banane, lait s. lactose</div>
@@ -1454,7 +1742,7 @@ body{
             </div>
             <div class="suivi-meal-row">
               <div class="suivi-meal-time">12h45</div>
-              <div class="suivi-meal-icon">☀️</div>
+              <div class="suivi-meal-icon">Midi</div>
               <div class="suivi-meal-info">
                 <div class="suivi-meal-name">Déjeuner</div>
                 <div class="suivi-meal-detail">Non renseigné</div>
@@ -1463,7 +1751,7 @@ body{
             </div>
             <div class="suivi-meal-row">
               <div class="suivi-meal-time">19h30</div>
-              <div class="suivi-meal-icon">🌙</div>
+              <div class="suivi-meal-icon">Soir</div>
               <div class="suivi-meal-info">
                 <div class="suivi-meal-name">Dîner</div>
                 <div class="suivi-meal-detail">Non renseigné</div>
@@ -1475,7 +1763,6 @@ body{
 
         <!-- Tip réintroduction -->
         <div class="tip tip-blue">
-          <div class="tip-i">ℹ️</div>
           <div class="tip-b">
             <div class="tip-tag">Méthode recommandée</div>
             <div class="tip-t">En réintroduction, testez un seul groupe FODMAP à la fois sur 3 jours, puis revenez à la base avant de passer au suivant.</div>
@@ -1701,7 +1988,7 @@ body{
           <div class="corr-list">
             <div class="corr-row rh">
               <div class="corr-header">
-                <div class="corr-emoji">🧅</div>
+                <div class="corr-emoji">On</div>
                 <div class="corr-info">
                   <div class="corr-name">Oignon → ballonnements</div>
                   <div class="corr-detail">Détecté 5× · délai ~1h30</div>
@@ -1715,7 +2002,7 @@ body{
             </div>
             <div class="corr-row rm">
               <div class="corr-header">
-                <div class="corr-emoji">🥛</div>
+                <div class="corr-emoji">La</div>
                 <div class="corr-info">
                   <div class="corr-name">Lait → douleurs</div>
                   <div class="corr-detail">Détecté 4× · délai ~2h</div>
@@ -1729,7 +2016,7 @@ body{
             </div>
             <div class="corr-row rm">
               <div class="corr-header">
-                <div class="corr-emoji">🧀</div>
+                <div class="corr-emoji">Ya</div>
                 <div class="corr-info">
                   <div class="corr-name">Yaourt → ballonnements</div>
                   <div class="corr-detail">Détecté 3× · délai ~1h</div>
@@ -1743,7 +2030,7 @@ body{
             </div>
             <div class="corr-row rl">
               <div class="corr-header">
-                <div class="corr-emoji">🍎</div>
+                <div class="corr-emoji">Po</div>
                 <div class="corr-info">
                   <div class="corr-name">Pomme → transit ralenti</div>
                   <div class="corr-detail">Détecté 2× · à confirmer</div>
@@ -1765,7 +2052,7 @@ body{
             <div class="top-food-list">
               <div class="top-food-row">
                 <div class="top-food-rank">1</div>
-                <div class="top-food-emoji">🍚</div>
+                <div class="top-food-emoji">Ri</div>
                 <div class="top-food-info">
                   <div class="top-food-name">Riz blanc</div>
                   <div class="top-food-freq">18 fois ce mois</div>
@@ -1774,7 +2061,7 @@ body{
               </div>
               <div class="top-food-row">
                 <div class="top-food-rank">2</div>
-                <div class="top-food-emoji">🥚</div>
+                <div class="top-food-emoji">Oe</div>
                 <div class="top-food-info">
                   <div class="top-food-name">Œufs</div>
                   <div class="top-food-freq">15 fois ce mois</div>
@@ -1783,7 +2070,7 @@ body{
               </div>
               <div class="top-food-row">
                 <div class="top-food-rank">3</div>
-                <div class="top-food-emoji">🍗</div>
+                <div class="top-food-emoji">Po</div>
                 <div class="top-food-info">
                   <div class="top-food-name">Poulet</div>
                   <div class="top-food-freq">13 fois ce mois</div>
@@ -1792,7 +2079,7 @@ body{
               </div>
               <div class="top-food-row">
                 <div class="top-food-rank">4</div>
-                <div class="top-food-emoji">🥕</div>
+                <div class="top-food-emoji">Ca</div>
                 <div class="top-food-info">
                   <div class="top-food-name">Carotte</div>
                   <div class="top-food-freq">11 fois ce mois</div>
@@ -1801,7 +2088,7 @@ body{
               </div>
               <div class="top-food-row">
                 <div class="top-food-rank">5</div>
-                <div class="top-food-emoji">🍌</div>
+                <div class="top-food-emoji">Ba</div>
                 <div class="top-food-info">
                   <div class="top-food-name">Banane</div>
                   <div class="top-food-freq">10 fois ce mois</div>
@@ -1835,7 +2122,7 @@ body{
             <div class="obs-info">
               <div class="obs-main">17 jours sur 20 respectés</div>
               <div class="obs-sub">Excellent niveau d'observance sur la période</div>
-              <div class="obs-miss">⚠️ 3 jours d'écart détectés</div>
+              <div class="obs-miss">3 jours d'écart détectés</div>
             </div>
           </div>
         </div>
@@ -1843,14 +2130,13 @@ body{
         <!-- Export médical -->
         <div class="export-card">
           <div class="export-header">
-            <div class="export-icon">📄</div>
             <div class="export-info">
               <div class="export-title">Export médical</div>
               <div class="export-sub">Rapport au format CHU Bordeaux · Dernière génération : jamais</div>
             </div>
           </div>
           <button class="export-btn" id="export-btn" onclick="generateReport()">
-            <span id="export-icon">📄</span>
+            <span id="export-icon"></span>
             <span id="export-label">Générer le rapport PDF</span>
           </button>
         </div>
@@ -1976,7 +2262,7 @@ function render() {
     items.forEach(f => {
       html += `
         <div class="food ${f.s}" onclick="location.href='page-food.html'" style="cursor:pointer">
-          <div class="food-icon">${f.e}</div>
+          <div class="food-icon">${f.name.slice(0,2)}</div>
           <div class="food-info">
             <div class="food-name">${f.name}</div>
             <div class="food-sub">${f.sub}</div>
@@ -2140,11 +2426,11 @@ function generateReport() {
   label.textContent = 'Génération en cours…';
   setTimeout(() => {
     btn.disabled = false;
-    btn.style.background = 'rgba(26,255,170,.15)';
-    btn.style.border = '1.5px solid rgba(26,255,170,.4)';
-    btn.style.color = '#1affaa';
-    icon.textContent = '✓';
-    label.textContent = 'Rapport prêt ✓';
+    btn.style.background = 'rgba(26,92,58,.12)';
+    btn.style.border = '1.5px solid rgba(26,92,58,.4)';
+    btn.style.color = '#1a5c3a';
+    icon.textContent = '';
+    label.textContent = 'Rapport prêt';
     document.querySelector('.export-sub').textContent = 'Rapport au format CHU Bordeaux · Généré maintenant';
   }, 2000);
 }
@@ -2283,22 +2569,18 @@ document.querySelectorAll('.top-food-row').forEach(r =>
     <div class="fab-menu-header">Ajouter</div>
     <div class="fab-grid">
       <div class="fab-item hi" onclick="openRepas()">
-        <div class="fab-ico">🍽️</div>
         <div class="fab-lbl">Repas</div>
         <div class="fab-sub">Petit-déj, déj, dîner…</div>
       </div>
       <div class="fab-item" onclick="FAB.show('fab-symptome')">
-        <div class="fab-ico">😣</div>
         <div class="fab-lbl">Symptôme</div>
         <div class="fab-sub">Douleur, ballonnement…</div>
       </div>
       <div class="fab-item" onclick="FAB.show('fab-humeur')">
-        <div class="fab-ico">😊</div>
         <div class="fab-lbl">Humeur</div>
         <div class="fab-sub">Comment tu te sens</div>
       </div>
       <div class="fab-item" onclick="FAB.show('fab-note')">
-        <div class="fab-ico">📝</div>
         <div class="fab-lbl">Note</div>
         <div class="fab-sub">Observation libre</div>
       </div>
@@ -2313,14 +2595,14 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       <div class="fsh">
         <div class="fsh-top">
           <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
-          <div class="fsh-title">🍽️ Nouveau repas</div>
+          <div class="fsh-title">Nouveau repas</div>
         </div>
         <div class="fsh-section">Type de repas</div>
         <div class="type-row">
-          <div class="type-btn sel" onclick="selType(this)">🌅 Petit-déj</div>
-          <div class="type-btn" onclick="selType(this)">☀️ Déjeuner</div>
-          <div class="type-btn" onclick="selType(this)">🌙 Dîner</div>
-          <div class="type-btn" onclick="selType(this)">🍎 Collation</div>
+          <div class="type-btn sel" onclick="selType(this)">Petit-déj</div>
+          <div class="type-btn" onclick="selType(this)">Déjeuner</div>
+          <div class="type-btn" onclick="selType(this)">Dîner</div>
+          <div class="type-btn" onclick="selType(this)">Collation</div>
         </div>
         <div class="fsh-section">Aliments</div>
         <div class="food-input-row">
@@ -2328,21 +2610,20 @@ document.querySelectorAll('.top-food-row').forEach(r =>
           <button class="food-add-btn" onclick="addFoodInput()">+</button>
         </div>
         <div class="quick-chips">
-          <div class="qc" data-food="Riz" onclick="toggleQC(this)">🍚 Riz</div>
-          <div class="qc" data-food="Poulet" onclick="toggleQC(this)">🍗 Poulet</div>
-          <div class="qc" data-food="Œufs" onclick="toggleQC(this)">🥚 Œufs</div>
-          <div class="qc" data-food="Avocat" onclick="toggleQC(this)">🥑 Avocat</div>
-          <div class="qc" data-food="Saumon" onclick="toggleQC(this)">🐟 Saumon</div>
-          <div class="qc" data-food="Quinoa" onclick="toggleQC(this)">🌾 Quinoa</div>
-          <div class="qc" data-food="Carottes" onclick="toggleQC(this)">🥕 Carottes</div>
-          <div class="qc" data-food="Épinards" onclick="toggleQC(this)">🥬 Épinards</div>
+          <div class="qc" data-food="Riz" onclick="toggleQC(this)">Riz</div>
+          <div class="qc" data-food="Poulet" onclick="toggleQC(this)">Poulet</div>
+          <div class="qc" data-food="Œufs" onclick="toggleQC(this)">Œufs</div>
+          <div class="qc" data-food="Avocat" onclick="toggleQC(this)">Avocat</div>
+          <div class="qc" data-food="Saumon" onclick="toggleQC(this)">Saumon</div>
+          <div class="qc" data-food="Quinoa" onclick="toggleQC(this)">Quinoa</div>
+          <div class="qc" data-food="Carottes" onclick="toggleQC(this)">Carottes</div>
+          <div class="qc" data-food="Épinards" onclick="toggleQC(this)">Épinards</div>
         </div>
         <div class="tags-wrap" id="tags-wrap"></div>
         <button class="fab-submit" onclick="submitRepas()">Enregistrer le repas</button>
       </div>
     </div>
     <div class="fab-success" id="success-repas">
-      <div class="s-ico">✅</div>
       <div class="s-t">Repas enregistré !</div>
       <div class="s-s"></div>
     </div>
@@ -2355,7 +2636,7 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       <div class="fsh">
         <div class="fsh-top">
           <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
-          <div class="fsh-title">😣 Symptôme</div>
+          <div class="fsh-title">Symptôme</div>
         </div>
         <div class="fsh-section">Type</div>
         <div class="quick-chips" style="margin-bottom:18px">
@@ -2387,7 +2668,6 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       </div>
     </div>
     <div class="fab-success" id="success-symptome">
-      <div class="s-ico">📋</div>
       <div class="s-t">Symptôme noté !</div>
       <div class="s-s"></div>
     </div>
@@ -2400,15 +2680,15 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       <div class="fsh">
         <div class="fsh-top">
           <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
-          <div class="fsh-title">😊 Humeur</div>
+          <div class="fsh-title">Humeur</div>
         </div>
         <div class="fsh-section">Comment tu te sens ?</div>
         <div class="mood-row-fab">
-          <div class="mf-btn" onclick="selMood(this,'😣 Très mal')"><span class="mf-e">😣</span><span class="mf-l">Très mal</span></div>
-          <div class="mf-btn" onclick="selMood(this,'😕 Pas top')"><span class="mf-e">😕</span><span class="mf-l">Pas top</span></div>
-          <div class="mf-btn" onclick="selMood(this,'😐 Neutre')"><span class="mf-e">😐</span><span class="mf-l">Neutre</span></div>
-          <div class="mf-btn" onclick="selMood(this,'🙂 Bien')"><span class="mf-e">🙂</span><span class="mf-l">Bien</span></div>
-          <div class="mf-btn" onclick="selMood(this,'😄 Super')"><span class="mf-e">😄</span><span class="mf-l">Super</span></div>
+          <div class="mf-btn" onclick="selMood(this,'Très mal')"><span class="mf-l">Très mal</span></div>
+          <div class="mf-btn" onclick="selMood(this,'Pas top')"><span class="mf-l">Pas top</span></div>
+          <div class="mf-btn" onclick="selMood(this,'Neutre')"><span class="mf-l">Neutre</span></div>
+          <div class="mf-btn" onclick="selMood(this,'Bien')"><span class="mf-l">Bien</span></div>
+          <div class="mf-btn" onclick="selMood(this,'Super')"><span class="mf-l">Super</span></div>
         </div>
         <div class="fsh-section">Note (optionnel)</div>
         <textarea class="fab-textarea" id="humeur-note" rows="3" placeholder="Un détail à ajouter…"></textarea>
@@ -2416,7 +2696,6 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       </div>
     </div>
     <div class="fab-success" id="success-humeur">
-      <div class="s-ico">🌟</div>
       <div class="s-t">Humeur enregistrée !</div>
       <div class="s-s"></div>
     </div>
@@ -2429,13 +2708,13 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       <div class="fsh">
         <div class="fsh-top">
           <button class="fsh-back" onclick="FAB.show('fab-menu')">‹</button>
-          <div class="fsh-title">📝 Note</div>
+          <div class="fsh-title">Note</div>
         </div>
         <div class="fsh-section">Catégorie</div>
         <div class="type-row" style="margin-bottom:16px">
-          <div class="type-btn note-cat sel" onclick="selNoteCat(this)">🔍 Observation</div>
-          <div class="type-btn note-cat" onclick="selNoteCat(this)">⚡ Réaction</div>
-          <div class="type-btn note-cat" onclick="selNoteCat(this)">💬 Autre</div>
+          <div class="type-btn note-cat sel" onclick="selNoteCat(this)">Observation</div>
+          <div class="type-btn note-cat" onclick="selNoteCat(this)">Réaction</div>
+          <div class="type-btn note-cat" onclick="selNoteCat(this)">Autre</div>
         </div>
         <div class="fsh-section">Ta note</div>
         <textarea class="fab-textarea" id="note-text" rows="5" placeholder="Ex: J'ai mangé une sauce tomate industrielle et j'ai eu des ballonnements 2h après…"></textarea>
@@ -2443,7 +2722,6 @@ document.querySelectorAll('.top-food-row').forEach(r =>
       </div>
     </div>
     <div class="fab-success" id="success-note">
-      <div class="s-ico">✅</div>
       <div class="s-t">Note enregistrée !</div>
       <div class="s-s"></div>
     </div>

@@ -140,7 +140,7 @@
     background:rgba(255,255,255,.03);
     border:1.5px dashed rgba(255,255,255,.09);
   }
-  .node-locked::after{content:'🔒';font-size:12px;opacity:.35}
+  .node-locked::after{content:'';}
 
   /* ── DAY INFO ── */
   .day-info{flex:1;min-width:0}
@@ -329,6 +329,100 @@
 .phase-badge-chip,.fab-menu-header{
   font-family:"DM Mono",monospace;
 }
+
+/* ════════════════════════════════════
+   DESIGN SYSTEM OVERRIDE — Light Neutral
+   ════════════════════════════════════ */
+body{background:#f0ece6;color:#111111}
+.app{background:#f0ece6}
+/* Status bar */
+.sbar{background:#f0ece6}
+.sbar-time{color:#111111}
+.sig b{background:#111111}
+.wifi-icon::before,.wifi-icon::after{border-color:#111111}
+.wifi-dot{background:#111111}
+.batt-icon{border-color:rgba(17,17,17,.5)}
+.batt-icon::after{background:rgba(17,17,17,.35)}
+.batt-fill{background:#111111}
+/* Top bar / back buttons */
+.top-bar{background:#f0ece6;border-bottom-color:rgba(0,0,0,.07)}
+.back-btn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.5)}
+.topbar{background:#f0ece6}
+.topbar-title{color:#111111}
+.top-title{color:#111111}
+.bookmark-btn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.5)}
+/* Cards */
+.card{background:#ffffff;border-color:rgba(0,0,0,.07)}
+.card-title{color:rgba(17,17,17,.35)}
+/* Tips */
+.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
+.tip-green{background:rgba(26,92,58,.06);border-color:rgba(26,92,58,.18)}
+.tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
+.tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
+.tip-amber .tip-tag{color:rgba(179,101,0,.85)}
+.tip-green .tip-tag{color:rgba(26,92,58,.85)}
+.tip-blue .tip-tag{color:rgba(42,90,156,.85)}
+.tip-purple .tip-tag{color:rgba(120,50,180,.85)}
+.tip .tip-t{color:rgba(17,17,17,.6)}
+.tip-card{background:#ffffff;border-color:rgba(42,90,156,.15)}
+.tip-text{color:rgba(17,17,17,.6)}
+.tip-text strong{color:#111111}
+/* Buttons */
+.cta-btn{background:#111111;color:#ffffff;border-radius:100px}
+.btn-primary{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.35);color:#1a5c3a}
+.btn-secondary{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.09);color:rgba(17,17,17,.45)}
+/* Section headings */
+.section-head{color:rgba(17,17,17,.35)}
+.stat-heading{color:#111111}
+/* Overlays / sheets */
+.overlay{background:rgba(0,0,0,.4)}
+.sheet{background:#faf9f7}
+.sheet-handle{background:rgba(0,0,0,.12)}
+.sheet-title{color:#111111}
+.sheet-sub{color:rgba(17,17,17,.35)}
+.grp-title{color:rgba(17,17,17,.4)}
+.grp-note{color:rgba(17,17,17,.3)}
+.sheet-close{background:rgba(0,0,0,.06);color:rgba(17,17,17,.5)}
+/* Chips */
+.chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
+.chip-green{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.22);color:#1a5c3a}
+/* Hero badge */
+.hero-badge{background:rgba(26,92,58,.12);border-color:rgba(26,92,58,.3);color:#1a5c3a}
+.hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
+.hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
+.hero-name{color:#111111}
+.hero-cat{color:rgba(17,17,17,.45)}
+.hero-emoji-wrap{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+/* FODMAP bars */
+.fodmap-bar-bg{background:rgba(0,0,0,.08)}
+.fodmap-name{color:#111111}
+.lvl-low{color:#1a5c3a}
+.lvl-mod{color:#b36500}
+.lvl-high{color:#c0392b}
+/* Portion */
+.portion-emoji-big{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.portion-qty{color:#111111}
+.portion-unit{color:rgba(17,17,17,.5)}
+.portion-tip{color:rgba(17,17,17,.45)}
+/* Similar items */
+.similar-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.06)}
+.similar-item:hover{background:rgba(0,0,0,.06)}
+.similar-emoji{background:rgba(0,0,0,.05)}
+.similar-name{color:#111111}
+.similar-badge{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+/* Phase cards in food detail */
+.phase-card.ok{background:#1a5c3a;box-shadow:none}
+.phase-card.mod{background:#b36500;box-shadow:none}
+.phase-card.av{background:#c0392b;box-shadow:none}
+/* Log form */
+.log-q{color:#111111}
+.check-q{color:#111111}
+.check-opt{border-color:rgba(0,0,0,.1);color:rgba(17,17,17,.45)}
+.check-opt.sel{background:rgba(26,92,58,.13);border-color:rgba(26,92,58,.45);color:#1a5c3a}
+.btn-submit{background:#111111;color:#ffffff;border-radius:100px}
+.success .s-title{color:#111111}
+.success .s-sub{color:rgba(17,17,17,.4)}
+
 </style>
 </head>
 <body>
@@ -341,7 +435,7 @@
 
 <!-- Streak + XP -->
 <div class="streak-row">
-  <div class="streak-pill"><span class="fire">🔥</span> 17 jours</div>
+  <div class="streak-pill">17 jours</div>
   <div class="xp-wrap">
     <div class="xp-meta">
       <span class="xp-val">620 XP</span>
@@ -356,7 +450,7 @@
 
 <div class="expand-panel">
   <div class="expand-trigger" onclick="togglePanel(this)">
-    <div class="expand-icon">🔒</div>
+    <div class="expand-icon"></div>
     <div class="expand-meta">
       <div class="expand-title">39 jours restants</div>
       <div class="expand-sub">Prochain milestone : Jour 21</div>
@@ -371,7 +465,7 @@
           <div class="day-label muted">Jour 21 · Fin de semaine 3</div>
           <div class="day-sublabel">Bilan mi-parcours</div>
         </div>
-        <div class="day-right"><span class="badge badge-soon">🏆</span></div>
+        <div class="day-right"><span class="badge badge-soon">Bilan</span></div>
       </div>
       <div class="day-row">
         <div class="node node-locked"></div>
@@ -426,10 +520,10 @@
       <div class="chip chip-green">✓ ¼ Avocat</div>
     </div>
 
-    <div class="tip-box">💡 <b>Astuce du jour :</b> Les sauces du commerce cachent souvent de l'ail en poudre. Vérifie toujours l'étiquette.</div>
+    <div class="tip-box"><b>Astuce du jour :</b> Les sauces du commerce cachent souvent de l'ail en poudre. Vérifie toujours l'étiquette.</div>
 
     <div class="card-actions">
-      <div class="btn-primary" onclick="openLog()">📝 Valider ma journée</div>
+      <div class="btn-primary" onclick="openLog()">Valider ma journée</div>
       <div class="btn-secondary" onclick="openDetail()">Voir tout</div>
     </div>
   </div>
@@ -445,7 +539,7 @@
 
 <div class="expand-panel">
   <div class="expand-trigger" onclick="togglePanel(this)">
-    <div class="expand-icon">✅</div>
+    <div class="expand-icon"></div>
     <div class="expand-meta">
       <div class="expand-title">16 jours complétés</div>
       <div class="expand-sub">620 XP accumulés · 2 milestones</div>
@@ -465,7 +559,7 @@
         <div class="day-right xp-chip">+35 XP</div>
       </div>
       <div class="day-row done">
-        <div class="milestone-node">🏆</div>
+        <div class="milestone-node">14</div>
         <div class="day-info">
           <div class="milestone-label">Jour 14 — 2 semaines !</div>
           <div class="milestone-sub">Tu as tenu 14 jours d'affilée</div>
@@ -479,7 +573,7 @@
       <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 9</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
       <div class="day-row done"><div class="node node-done"></div><div class="day-info"><div class="day-label">Jour 8</div><div class="day-sublabel">Semaine 2</div></div><div class="day-right xp-chip">+35 XP</div></div>
       <div class="day-row done">
-        <div class="milestone-node">🏆</div>
+        <div class="milestone-node">7</div>
         <div class="day-info">
           <div class="milestone-label">Jour 7 — 1ère semaine !</div>
           <div class="milestone-sub">Première grande étape franchie</div>
@@ -500,7 +594,7 @@
 <div class="section-head" style="margin-top:28px">Phases à venir</div>
 
 <div class="locked-phase" style="margin-bottom:10px">
-  <div class="locked-phase-icon">🔬</div>
+  <div class="locked-phase-icon"></div>
   <div>
     <div class="locked-phase-title">Phase 2 · Réintroduction</div>
     <div class="locked-phase-sub">Tu testeras chaque groupe FODMAP un par un pour identifier tes intolérances</div>
@@ -508,7 +602,7 @@
   </div>
 </div>
 <div class="locked-phase">
-  <div class="locked-phase-icon">🎯</div>
+  <div class="locked-phase-icon"></div>
   <div>
     <div class="locked-phase-title">Phase 3 · Maintenance</div>
     <div class="locked-phase-sub">Un régime personnalisé basé sur tes résultats</div>
@@ -524,39 +618,39 @@
     <div class="sheet-sub">Phase Élimination · Tous les groupes FODMAP</div>
 
     <div class="grp">
-      <div class="grp-title">🧄 Fructanes</div>
+      <div class="grp-title">Fructanes</div>
       <div class="grp-chips">
         <div class="chip chip-red">Ail</div><div class="chip chip-red">Oignon cru / cuit</div><div class="chip chip-red">Poireau (bulbe)</div><div class="chip chip-red">Échalote</div><div class="chip chip-red">Pain de blé</div><div class="chip chip-red">Pâtes classiques</div><div class="chip chip-red">Couscous</div><div class="chip chip-red">Orge</div>
       </div>
-      <div class="grp-note">✅ OK : ciboulette, partie verte du poireau, riz, pâtes sans gluten, huile infusée à l'ail</div>
+      <div class="grp-note">OK : ciboulette, partie verte du poireau, riz, pâtes sans gluten, huile infusée à l'ail</div>
     </div>
     <div class="grp">
-      <div class="grp-title">🥛 Lactose</div>
+      <div class="grp-title">Lactose</div>
       <div class="grp-chips">
         <div class="chip chip-red">Lait</div><div class="chip chip-red">Yaourt classique</div><div class="chip chip-red">Fromage frais</div><div class="chip chip-red">Crème fraîche</div><div class="chip chip-red">Glace au lait</div>
       </div>
-      <div class="grp-note">✅ OK : beurre, camembert, parmesan, lait sans lactose, boissons végétales</div>
+      <div class="grp-note">OK : beurre, camembert, parmesan, lait sans lactose, boissons végétales</div>
     </div>
     <div class="grp">
-      <div class="grp-title">🍎 Fructose en excès</div>
+      <div class="grp-title">Fructose en excès</div>
       <div class="grp-chips">
         <div class="chip chip-red">Pomme</div><div class="chip chip-red">Poire</div><div class="chip chip-red">Mangue</div><div class="chip chip-red">Cerise</div><div class="chip chip-red">Miel</div><div class="chip chip-red">Sirop d'agave</div><div class="chip chip-red">Jus de fruits</div>
       </div>
-      <div class="grp-note">✅ OK : fraise, myrtille, raisin (petite quantité), orange, citron</div>
+      <div class="grp-note">OK : fraise, myrtille, raisin (petite quantité), orange, citron</div>
     </div>
     <div class="grp">
-      <div class="grp-title">🫘 GOS · Galactanes</div>
+      <div class="grp-title">GOS · Galactanes</div>
       <div class="grp-chips">
         <div class="chip chip-red">Lentilles</div><div class="chip chip-red">Pois chiches</div><div class="chip chip-red">Haricots rouges</div><div class="chip chip-red">Pistache</div><div class="chip chip-red">Cajou</div>
       </div>
-      <div class="grp-note">✅ OK : tofu ferme, noix, amandes (≤10), lait de soja sans GOS</div>
+      <div class="grp-note">OK : tofu ferme, noix, amandes (≤10), lait de soja sans GOS</div>
     </div>
     <div class="grp">
-      <div class="grp-title">🍄 Polyols</div>
+      <div class="grp-title">Polyols</div>
       <div class="grp-chips">
         <div class="chip chip-red">Champignons</div><div class="chip chip-red">Chou-fleur</div><div class="chip chip-red">Pêche</div><div class="chip chip-red">Nectarine</div><div class="chip chip-red">Prune</div><div class="chip chip-red">Sorbitol</div><div class="chip chip-red">Xylitol</div>
       </div>
-      <div class="grp-note">✅ OK : ¼ avocat, courgette, épinard, carotte, brocoli (≤75g)</div>
+      <div class="grp-note">OK : ¼ avocat, courgette, épinard, carotte, brocoli (≤75g)</div>
     </div>
 
     <button class="sheet-close" onclick="closeDetail()">Fermer</button>
@@ -570,22 +664,22 @@
     <div id="logForm">
       <div class="log-q">Comment tu te sens aujourd'hui ?</div>
       <div class="emo-row">
-        <button class="emo-btn" onclick="sel(this)"><span class="e">😣</span><span class="el">Très mal</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="e">😕</span><span class="el">Pas top</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="e">😐</span><span class="el">Neutre</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="e">🙂</span><span class="el">Bien</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="e">😄</span><span class="el">Super</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="el">Très mal</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="el">Pas top</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="el">Neutre</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="el">Bien</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="el">Super</span></button>
       </div>
       <div class="check-q">Tu as respecté le régime ?</div>
       <div class="check-row">
-        <button class="check-opt" onclick="chk(this)">✅ Oui</button>
-        <button class="check-opt" onclick="chk(this)">⚠️ Presque</button>
-        <button class="check-opt" onclick="chk(this)">❌ Non</button>
+        <button class="check-opt" onclick="chk(this)">Oui</button>
+        <button class="check-opt" onclick="chk(this)">Presque</button>
+        <button class="check-opt" onclick="chk(this)">Non</button>
       </div>
       <button class="btn-submit" onclick="submitLog()">Valider · +35 XP</button>
     </div>
     <div class="success" id="successCard">
-      <div class="s-ico">🎉</div>
+      
       <div class="s-title">Journée validée !</div>
       <div class="s-sub">Encore un jour de gagné.<br>Tu es à 62% de la phase 1 !</div>
       <div class="xp-badge">+35 XP gagnés</div>
