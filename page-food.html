@@ -117,35 +117,36 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 
 /* ── DM Mono for titles & subtitles ── */
 .section-title,.missions-title,.suivi-section-title,.context-card-title,
-.hg-hi,.phase-name,.fsh-title,.fsh-section,.card-title,.ob-title,.ob-subtitle,
-.phase-badge-chip,.fab-menu-header{
+.fsh-section,.card-title,.ob-title,.ob-subtitle,
+.phase-badge-chip,.fab-menu-header,.fsh-title{
   font-family:"DM Mono",monospace;
+  font-weight:400;
 }
 
 /* ════════════════════════════════════
    DESIGN SYSTEM OVERRIDE — Light Neutral
    ════════════════════════════════════ */
-body{background:#f0ece6;color:#111111}
-.app{background:#f0ece6}
+body{background:#2d2d2d;color:#eeeeee}
+.app{background:#2d2d2d}
 /* Status bar */
-.sbar{background:#f0ece6}
-.sbar-time{color:#111111}
+.sbar{background:#2d2d2d}
+.sbar-time{color:#ffffff}
 .sig b{background:#111111}
-.wifi-icon::before,.wifi-icon::after{border-color:#111111}
+.wifi-icon::before,.wifi-icon::after{border-color:#eeeeee}
 .wifi-dot{background:#111111}
-.batt-icon{border-color:rgba(17,17,17,.5)}
+.batt-icon{border-color:rgba(238,238,238,.55)}
 .batt-icon::after{background:rgba(17,17,17,.35)}
 .batt-fill{background:#111111}
 /* Top bar / back buttons */
-.top-bar{background:#f0ece6;border-bottom-color:rgba(0,0,0,.07)}
-.back-btn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.5)}
-.topbar{background:#f0ece6}
-.topbar-title{color:#111111}
-.top-title{color:#111111}
-.bookmark-btn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.08);color:rgba(17,17,17,.5)}
+.top-bar{background:#2d2d2d;border-bottom-color:rgba(0,0,0,.07)}
+.back-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
+.topbar{background:#2d2d2d}
+.topbar-title{color:#eeeeee}
+.top-title{color:#eeeeee}
+.bookmark-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
 /* Cards */
-.card{background:#ffffff;border-color:rgba(0,0,0,.07)}
-.card-title{color:rgba(17,17,17,.35)}
+.card{background:#383838;border-color:rgba(255,255,255,.08)}
+.card-title{color:rgba(238,238,238,.4)}
 /* Tips */
 .tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
 .tip-green{background:rgba(26,92,58,.06);border-color:rgba(26,92,58,.18)}
@@ -155,26 +156,26 @@ body{background:#f0ece6;color:#111111}
 .tip-green .tip-tag{color:rgba(26,92,58,.85)}
 .tip-blue .tip-tag{color:rgba(42,90,156,.85)}
 .tip-purple .tip-tag{color:rgba(120,50,180,.85)}
-.tip .tip-t{color:rgba(17,17,17,.6)}
-.tip-card{background:#ffffff;border-color:rgba(42,90,156,.15)}
-.tip-text{color:rgba(17,17,17,.6)}
-.tip-text strong{color:#111111}
+.tip .tip-t{color:rgba(238,238,238,.65)}
+.tip-card{background:#383838;border-color:rgba(42,90,156,.15)}
+.tip-text{color:rgba(238,238,238,.65)}
+.tip-text strong{color:#eeeeee}
 /* Buttons */
 .cta-btn{background:#111111;color:#ffffff;border-radius:100px}
 .btn-primary{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.35);color:#1a5c3a}
-.btn-secondary{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.09);color:rgba(17,17,17,.45)}
+.btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(238,238,238,.5)}
 /* Section headings */
-.section-head{color:rgba(17,17,17,.35)}
-.stat-heading{color:#111111}
+.section-head{color:rgba(238,238,238,.4)}
+.stat-heading{color:#eeeeee}
 /* Overlays / sheets */
 .overlay{background:rgba(0,0,0,.4)}
 .sheet{background:#faf9f7}
-.sheet-handle{background:rgba(0,0,0,.12)}
-.sheet-title{color:#111111}
-.sheet-sub{color:rgba(17,17,17,.35)}
-.grp-title{color:rgba(17,17,17,.4)}
-.grp-note{color:rgba(17,17,17,.3)}
-.sheet-close{background:rgba(0,0,0,.06);color:rgba(17,17,17,.5)}
+.sheet-handle{background:rgba(255,255,255,.1)}
+.sheet-title{color:#eeeeee}
+.sheet-sub{color:rgba(238,238,238,.4)}
+.grp-title{color:rgba(238,238,238,.45)}
+.grp-note{color:rgba(238,238,238,.35)}
+.sheet-close{background:rgba(255,255,255,.07);color:rgba(238,238,238,.55)}
 /* Chips */
 .chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
 .chip-green{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.22);color:#1a5c3a}
@@ -182,38 +183,38 @@ body{background:#f0ece6;color:#111111}
 .hero-badge{background:rgba(26,92,58,.12);border-color:rgba(26,92,58,.3);color:#1a5c3a}
 .hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
 .hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
-.hero-name{color:#111111}
-.hero-cat{color:rgba(17,17,17,.45)}
-.hero-emoji-wrap{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
+.hero-name{color:#eeeeee}
+.hero-cat{color:rgba(238,238,238,.5)}
+.hero-emoji-wrap{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
 /* FODMAP bars */
-.fodmap-bar-bg{background:rgba(0,0,0,.08)}
-.fodmap-name{color:#111111}
+.fodmap-bar-bg{background:rgba(255,255,255,.08)}
+.fodmap-name{color:#eeeeee}
 .lvl-low{color:#1a5c3a}
 .lvl-mod{color:#b36500}
 .lvl-high{color:#c0392b}
 /* Portion */
-.portion-emoji-big{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.08)}
-.portion-qty{color:#111111}
-.portion-unit{color:rgba(17,17,17,.5)}
-.portion-tip{color:rgba(17,17,17,.45)}
+.portion-emoji-big{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
+.portion-qty{color:#eeeeee}
+.portion-unit{color:rgba(238,238,238,.55)}
+.portion-tip{color:rgba(238,238,238,.5)}
 /* Similar items */
-.similar-item{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.06)}
-.similar-item:hover{background:rgba(0,0,0,.06)}
-.similar-emoji{background:rgba(0,0,0,.05)}
-.similar-name{color:#111111}
+.similar-item{background:rgba(255,255,255,.04);border-color:rgba(0,0,0,.06)}
+.similar-item:hover{background:rgba(255,255,255,.07)}
+.similar-emoji{background:rgba(255,255,255,.06)}
+.similar-name{color:#eeeeee}
 .similar-badge{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.25);color:#1a5c3a}
 /* Phase cards in food detail */
 .phase-card.ok{background:#1a5c3a;box-shadow:none}
 .phase-card.mod{background:#b36500;box-shadow:none}
 .phase-card.av{background:#c0392b;box-shadow:none}
 /* Log form */
-.log-q{color:#111111}
-.check-q{color:#111111}
-.check-opt{border-color:rgba(0,0,0,.1);color:rgba(17,17,17,.45)}
+.log-q{color:#eeeeee}
+.check-q{color:#eeeeee}
+.check-opt{border-color:rgba(0,0,0,.1);color:rgba(238,238,238,.5)}
 .check-opt.sel{background:rgba(26,92,58,.13);border-color:rgba(26,92,58,.45);color:#1a5c3a}
 .btn-submit{background:#111111;color:#ffffff;border-radius:100px}
-.success .s-title{color:#111111}
-.success .s-sub{color:rgba(17,17,17,.4)}
+.success .s-title{color:#eeeeee}
+.success .s-sub{color:rgba(238,238,238,.45)}
 
 </style>
 </head>
