@@ -325,10 +325,13 @@
 
 /* ── DM Mono for titles & subtitles ── */
 .section-title,.missions-title,.suivi-section-title,.context-card-title,
-.fsh-section,.card-title,.ob-title,.ob-subtitle,
-.phase-badge-chip,.fab-menu-header,.fsh-title{
+.fsh-section,.card-title,.ob-subtitle,
+.phase-badge-chip,.fab-menu-header{
   font-family:"DM Mono",monospace;
   font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  font-size:.85em;
 }
 
 /* ════════════════════════════════════
@@ -357,11 +360,11 @@ body{background:#2d2d2d;color:#eeeeee}
 .card-title{color:rgba(238,238,238,.4)}
 /* Tips */
 .tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
-.tip-green{background:rgba(26,92,58,.06);border-color:rgba(26,92,58,.18)}
+.tip-green{background:rgba(90,166,255,.06);border-color:rgba(90,166,255,.18)}
 .tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
 .tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
 .tip-amber .tip-tag{color:rgba(179,101,0,.85)}
-.tip-green .tip-tag{color:rgba(26,92,58,.85)}
+.tip-green .tip-tag{color:rgba(90,166,255,.85)}
 .tip-blue .tip-tag{color:rgba(42,90,156,.85)}
 .tip-purple .tip-tag{color:rgba(120,50,180,.85)}
 .tip .tip-t{color:rgba(238,238,238,.65)}
@@ -370,7 +373,7 @@ body{background:#2d2d2d;color:#eeeeee}
 .tip-text strong{color:#eeeeee}
 /* Buttons */
 .cta-btn{background:#111111;color:#ffffff;border-radius:100px}
-.btn-primary{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.35);color:#1a5c3a}
+.btn-primary{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.35);color:#5aa6ff}
 .btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(238,238,238,.5)}
 /* Section headings */
 .section-head{color:rgba(238,238,238,.4)}
@@ -386,9 +389,9 @@ body{background:#2d2d2d;color:#eeeeee}
 .sheet-close{background:rgba(255,255,255,.07);color:rgba(238,238,238,.55)}
 /* Chips */
 .chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
-.chip-green{background:rgba(26,92,58,.08);border-color:rgba(26,92,58,.22);color:#1a5c3a}
+.chip-green{background:rgba(90,166,255,.08);border-color:rgba(90,166,255,.22);color:#5aa6ff}
 /* Hero badge */
-.hero-badge{background:rgba(26,92,58,.12);border-color:rgba(26,92,58,.3);color:#1a5c3a}
+.hero-badge{background:rgba(90,166,255,.12);border-color:rgba(90,166,255,.3);color:#5aa6ff}
 .hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
 .hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
 .hero-name{color:#eeeeee}
@@ -397,7 +400,7 @@ body{background:#2d2d2d;color:#eeeeee}
 /* FODMAP bars */
 .fodmap-bar-bg{background:rgba(255,255,255,.08)}
 .fodmap-name{color:#eeeeee}
-.lvl-low{color:#1a5c3a}
+.lvl-low{color:#5aa6ff}
 .lvl-mod{color:#b36500}
 .lvl-high{color:#c0392b}
 /* Portion */
@@ -410,20 +413,37 @@ body{background:#2d2d2d;color:#eeeeee}
 .similar-item:hover{background:rgba(255,255,255,.07)}
 .similar-emoji{background:rgba(255,255,255,.06)}
 .similar-name{color:#eeeeee}
-.similar-badge{background:rgba(26,92,58,.1);border-color:rgba(26,92,58,.25);color:#1a5c3a}
+.similar-badge{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.25);color:#5aa6ff}
 /* Phase cards in food detail */
-.phase-card.ok{background:#1a5c3a;box-shadow:none}
+.phase-card.ok{background:#5aa6ff;box-shadow:none}
 .phase-card.mod{background:#b36500;box-shadow:none}
 .phase-card.av{background:#c0392b;box-shadow:none}
 /* Log form */
 .log-q{color:#eeeeee}
 .check-q{color:#eeeeee}
 .check-opt{border-color:rgba(0,0,0,.1);color:rgba(238,238,238,.5)}
-.check-opt.sel{background:rgba(26,92,58,.13);border-color:rgba(26,92,58,.45);color:#1a5c3a}
+.check-opt.sel{background:rgba(90,166,255,.13);border-color:rgba(90,166,255,.45);color:#5aa6ff}
 .btn-submit{background:#111111;color:#ffffff;border-radius:100px}
 .success .s-title{color:#eeeeee}
 .success .s-sub{color:rgba(238,238,238,.45)}
 
+
+/* ── H1: SF Pro Text Thin ── */
+.hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
+  font-weight:100;
+  text-transform:none;
+  letter-spacing:-.02em;
+}
+.topbar-title{font-size:22px}
+.hg-hi{font-size:28px}
+.fsh-title{font-size:24px}
+
+/* ── Body: SF Pro Text Normal ── */
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
+  font-weight:400;
+}
 </style>
 </head>
 <body>
