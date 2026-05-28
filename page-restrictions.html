@@ -7,14 +7,14 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#0b0f0e;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;min-height:100vh;padding-bottom:48px}
+  body{background:#2d2d2d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;min-height:100vh;padding-bottom:48px}
 
   /* ── HEADER ── */
   .top-bar{
     display:flex;align-items:center;gap:12px;
     padding:54px 20px 14px;
     position:sticky;top:0;z-index:20;
-    background:#0b0f0e;
+    background:#2d2d2d;
     border-bottom:1px solid rgba(255,255,255,.05);
   }
   .back-btn{
@@ -44,7 +44,7 @@
   .xp-meta{display:flex;justify-content:space-between;align-items:baseline}
   .xp-val{font-size:11px;font-weight:700;color:rgba(255,255,255,.5)}
   .xp-track{height:6px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
-  .xp-fill{height:100%;width:62%;background:linear-gradient(90deg,#1affaa,#00c8ff);border-radius:99px}
+  .xp-fill{height:100%;width:62%;background:#5aa6ff;border-radius:99px}
 
   /* ── SECTION DIVIDER ── */
   .section-head{
@@ -106,9 +106,9 @@
     background:rgba(255,255,255,.07);
     z-index:0;min-height:14px;
   }
-  .day-row.done:not(:last-child)::after{background:rgba(26,255,170,.25)}
+  .day-row.done:not(:last-child)::after{background:rgba(90,166,255,.25)}
   .day-row.today:not(:last-child)::after{
-    background:linear-gradient(to bottom,rgba(26,255,170,.35),rgba(255,255,255,.06));
+    background:linear-gradient(to bottom,rgba(90,166,255,.35),rgba(255,255,255,.06));
   }
 
   /* ── NODE ── */
@@ -118,17 +118,17 @@
     display:flex;align-items:center;justify-content:center;
   }
   .node-done{
-    background:rgba(26,255,170,.15);
-    border:2px solid rgba(26,255,170,.5);
+    background:rgba(90,166,255,.15);
+    border:2px solid rgba(90,166,255,.5);
   }
-  .node-done::after{content:'✓';font-size:15px;font-weight:800;color:#1affaa}
+  .node-done::after{content:'✓';font-size:15px;font-weight:800;color:#5aa6ff}
 
   .node-today{
-    background:rgba(26,255,170,.15);
-    border:2.5px solid #1affaa;
-    box-shadow:0 0 0 5px rgba(26,255,170,.1),0 0 20px rgba(26,255,170,.25);
+    background:rgba(90,166,255,.15);
+    border:2.5px solid #5aa6ff;
+    box-shadow:0 0 0 5px rgba(90,166,255,.1),0 0 20px rgba(90,166,255,.25);
   }
-  .node-today::after{content:'★';font-size:16px;color:#1affaa}
+  .node-today::after{content:'★';font-size:16px;color:#5aa6ff}
 
   .node-near{
     background:rgba(255,255,255,.05);
@@ -156,7 +156,7 @@
     padding:3px 8px;border-radius:8px;
   }
   .badge-today{
-    background:rgba(26,255,170,.18);color:#1affaa;
+    background:rgba(90,166,255,.18);color:#5aa6ff;
     animation:blink 2.4s ease-in-out infinite;
   }
   .badge-soon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.25)}
@@ -170,12 +170,12 @@
   .milestone-node{
     width:40px;height:40px;border-radius:14px;
     flex-shrink:0;
-    background:linear-gradient(135deg,rgba(26,255,170,.2),rgba(74,176,255,.15));
-    border:2px solid rgba(26,255,170,.45);
+    background:linear-gradient(135deg,rgba(90,166,255,.2),rgba(74,176,255,.15));
+    border:2px solid rgba(90,166,255,.45);
     display:flex;align-items:center;justify-content:center;
     font-size:18px;
   }
-  .milestone-label{font-size:13px;font-weight:700;color:rgba(26,255,170,.9)}
+  .milestone-label{font-size:13px;font-weight:700;color:rgba(90,166,255,.9)}
   .milestone-sub{font-size:11px;color:rgba(255,255,255,.3);margin-top:2px}
 
   /* ── MORE DAYS PILL ── */
@@ -193,17 +193,14 @@
   .today-card{
     margin:0 20px 6px;
     border-radius:20px;overflow:hidden;
-    background:
-      radial-gradient(ellipse 240px 150px at 92% 8%, rgba(26,255,170,.34) 0%, transparent 58%),
-      radial-gradient(ellipse 180px 130px at 8% 85%, rgba(74,176,255,.24) 0%, transparent 58%),
-      #0d2018;
-    border:1px solid rgba(26,255,170,.28);
+    background:#383838;
+    border:1px solid rgba(90,166,255,.28);
     position:relative;
   }
   .today-card-inner{padding:17px 17px 15px}
   .today-eyebrow{
     font-size:10px;font-weight:700;letter-spacing:.6px;
-    text-transform:uppercase;color:rgba(26,255,170,.75);
+    text-transform:uppercase;color:rgba(90,166,255,.75);
     margin-bottom:5px;
   }
   .today-title{font-size:20px;font-weight:800;letter-spacing:-.3px;line-height:1.1;margin-bottom:2px}
@@ -213,23 +210,23 @@
   .chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:13px}
   .chip{padding:5px 10px;border-radius:20px;font-size:11px;font-weight:600;line-height:1}
   .chip-red{background:rgba(255,75,75,.13);border:1px solid rgba(255,75,75,.3);color:#ff9494}
-  .chip-green{background:rgba(26,255,170,.09);border:1px solid rgba(26,255,170,.22);color:rgba(26,255,170,.9)}
+  .chip-green{background:rgba(90,166,255,.09);border:1px solid rgba(90,166,255,.22);color:rgba(90,166,255,.9)}
 
   .tip-box{
     background:rgba(0,0,0,.2);border-radius:11px;
     padding:10px 12px;
     font-size:12px;color:rgba(255,255,255,.48);line-height:1.5;
-    border-left:2.5px solid rgba(26,255,170,.45);
+    border-left:2.5px solid rgba(90,166,255,.45);
     margin-bottom:13px;
   }
-  .tip-box b{color:rgba(26,255,170,.85);font-weight:700}
+  .tip-box b{color:rgba(90,166,255,.85);font-weight:700}
 
   .card-actions{display:flex;gap:8px}
   .btn-primary{
     flex:1;
-    background:rgba(26,255,170,.16);border:1px solid rgba(26,255,170,.38);
+    background:rgba(90,166,255,.16);border:1px solid rgba(90,166,255,.38);
     border-radius:12px;padding:11px 10px;
-    font-size:13px;font-weight:700;color:#1affaa;
+    font-size:13px;font-weight:700;color:#5aa6ff;
     text-align:center;cursor:pointer;
   }
   .btn-secondary{
@@ -302,9 +299,9 @@
     border:1.5px solid rgba(255,255,255,.1);
     background:none;color:rgba(255,255,255,.45);cursor:pointer;transition:.12s;
   }
-  .check-opt.sel{background:rgba(26,255,170,.13);border-color:rgba(26,255,170,.45);color:#1affaa}
+  .check-opt.sel{background:rgba(90,166,255,.13);border-color:rgba(90,166,255,.45);color:#5aa6ff}
   .btn-submit{
-    width:100%;background:#1affaa;border:none;
+    width:100%;background:#5aa6ff;border:none;
     border-radius:14px;padding:15px;
     font-size:16px;font-weight:800;color:#071510;cursor:pointer;
     letter-spacing:-.2px;
@@ -428,6 +425,34 @@ body{background:#2d2d2d;color:#eeeeee}
 .success .s-sub{color:rgba(238,238,238,.45)}
 
 
+
+/* ── Restrictions page overrides ── */
+html,body{background:#2d2d2d !important;color:#eeeeee !important}
+.top-bar{background:#2d2d2d !important;border-bottom-color:rgba(255,255,255,.06) !important}
+.back-btn{background:rgba(255,255,255,.07) !important;color:rgba(238,238,238,.55) !important}
+.top-title{color:#eeeeee !important}
+.xp-fill{background:#5aa6ff !important}
+.xp-val{color:rgba(238,238,238,.5)}
+.xp-track{background:rgba(255,255,255,.08)}
+.section-head{color:rgba(238,238,238,.4) !important}
+.section-head::after{background:rgba(255,255,255,.08) !important}
+.expand-trigger{background:rgba(255,255,255,.04) !important;border-color:rgba(255,255,255,.08) !important}
+.expand-title{color:#eeeeee !important}
+.expand-sub{color:rgba(238,238,238,.4) !important}
+.expand-chevron{color:rgba(238,238,238,.28) !important}
+.expand-body{background:rgba(255,255,255,.02) !important;border-color:rgba(255,255,255,.07) !important}
+.today-card{background:#383838 !important;border-color:rgba(255,255,255,.09) !important;box-shadow:none !important}
+.today-card *[style*='radial-gradient']{background:#383838 !important}
+.grp-title{color:rgba(238,238,238,.38) !important}
+.grp-note{color:rgba(238,238,238,.35) !important}
+.chip-red{color:#c0392b !important;background:rgba(192,57,43,.1) !important;border-color:rgba(192,57,43,.25) !important}
+.chip-green{color:#5aa6ff !important;background:rgba(90,166,255,.1) !important;border-color:rgba(90,166,255,.25) !important}
+.check-opt{border-color:rgba(255,255,255,.12) !important;color:rgba(238,238,238,.5) !important;background:rgba(255,255,255,.04) !important}
+.check-opt.sel{background:rgba(90,166,255,.12) !important;border-color:rgba(90,166,255,.4) !important;color:#5aa6ff !important}
+.btn-submit,.cta-btn{background:#5aa6ff !important;color:#111111 !important;border-radius:100px !important}
+.today-node-ring{stroke:#5aa6ff !important;filter:none !important}
+.day-node.today .node-dot{background:#5aa6ff !important;box-shadow:none !important}
+
 /* ── H1: SF Pro Text Thin ── */
 .hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
@@ -513,13 +538,13 @@ body{
 
 <!-- connector from above into today -->
 <div style="display:flex;padding:0 20px;margin-bottom:-2px">
-  <div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:12px;background:linear-gradient(to bottom,rgba(255,255,255,.06),rgba(26,255,170,.35))"></div></div>
+  <div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:12px;background:linear-gradient(to bottom,rgba(255,255,255,.06),rgba(90,166,255,.35))"></div></div>
 </div>
 
 <div style="display:flex;align-items:center;gap:14px;padding:0 20px;margin-bottom:10px">
   <div class="node node-today" style="flex-shrink:0"></div>
   <div>
-    <div style="font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:rgba(26,255,170,.75)">Jour 17 · Semaine 3</div>
+    <div style="font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:rgba(90,166,255,.75)">Jour 17 · Semaine 3</div>
   </div>
   <div style="margin-left:auto"><span class="badge badge-today">EN COURS</span></div>
 </div>
@@ -552,7 +577,7 @@ body{
 
 <!-- connector today → past -->
 <div style="display:flex;padding:0 20px;margin-top:0;margin-bottom:2px">
-  <div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:14px;background:linear-gradient(to bottom,rgba(26,255,170,.35),rgba(26,255,170,.22))"></div></div>
+  <div style="width:40px;display:flex;justify-content:center"><div style="width:2px;height:14px;background:linear-gradient(to bottom,rgba(90,166,255,.35),rgba(90,166,255,.22))"></div></div>
 </div>
 
 <!-- ══════════════════ PASSÉ ══════════════════ -->

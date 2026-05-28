@@ -53,13 +53,13 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .hero-meta{text-align:center}
 .hero-mood{font-size:20px;font-weight:700;color:#f4f2ed}
 .hero-date{font-size:13px;color:rgba(255,255,255,.4);margin-top:3px}
-.hero-delta{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+.hero-delta{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;background:rgba(90,166,255,.12);border:1px solid rgba(26,255,170,.3);color:#5aa6ff}
 
 /* Week strip */
 .week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
 .day-pill{border-radius:12px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:background .15s;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
 .day-pill:hover{background:rgba(255,255,255,.08)}
-.day-pill.today{background:rgba(26,255,170,.08);border-color:rgba(26,255,170,.3)}
+.day-pill.today{background:rgba(90,166,255,.1);border-color:rgba(26,255,170,.3)}
 .dp-name{font-size:9px;color:rgba(255,255,255,.35);font-weight:600;text-transform:uppercase}
 .dp-num{font-size:11px;font-weight:700;color:#f4f2ed}
 .dp-score{font-size:11px;font-weight:700}
@@ -215,6 +215,36 @@ body{background:#2d2d2d;color:#eeeeee}
 .success .s-sub{color:rgba(238,238,238,.45)}
 
 
+
+/* ── Score page overrides ── */
+html,body{background:#2d2d2d !important}
+.app{background:#2d2d2d !important}
+.hero-card{background:#383838 !important;border-color:rgba(255,255,255,.09) !important;box-shadow:none !important}
+.hero-mood{color:#eeeeee;font-weight:100;font-size:22px}
+.hero-date{color:rgba(238,238,238,.45)}
+.hero-delta{background:rgba(90,166,255,.12);border-color:rgba(90,166,255,.3);color:#5aa6ff}
+.score-big{color:#eeeeee}
+.score-label{color:rgba(238,238,238,.4)}
+.score-denom{color:rgba(238,238,238,.38)}
+.day-pill{background:#3a3a3a;border-color:rgba(255,255,255,.07)}
+.day-pill.today{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.25)}
+.dp-name{color:rgba(238,238,238,.38)}
+.dp-num{color:#eeeeee}
+.breakdown-card{background:#383838 !important;border-color:rgba(255,255,255,.08) !important}
+.factor-icon{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
+.factor-name{color:#eeeeee}
+.factor-bar-bg{background:rgba(255,255,255,.08)}
+.factor-val{color:#eeeeee}
+.hist-row{background:#3a3a3a;border-color:rgba(255,255,255,.07)}
+.hist-date{color:rgba(238,238,238,.45)}
+.hist-bar-bg{background:rgba(255,255,255,.08)}
+.hist-score{color:#eeeeee}
+.tip-card.green,.tip-card.purple{background:#383838 !important;border:1px solid rgba(255,255,255,.08) !important;box-shadow:none !important}
+.tip-title{color:#eeeeee}
+.tip-text{color:rgba(238,238,238,.55)}
+.section-title{color:#eeeeee;margin:20px 0 12px}
+.content{padding:0 20px 40px}
+
 /* ── H1: SF Pro Text Thin ── */
 .hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
@@ -259,8 +289,8 @@ body{
         <svg viewBox="0 0 140 140">
           <defs>
             <linearGradient id="rg3" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#1affaa"/>
-              <stop offset="100%" stop-color="#4ab0ff"/>
+              <stop offset="0%" stop-color="#5aa6ff"/>
+              <stop offset="100%" stop-color="rgba(90,166,255,.6)"/>
             </linearGradient>
           </defs>
           <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
@@ -288,13 +318,13 @@ body{
       </div>
       <div class="day-pill" onclick="location.href='page-day.html'">
         <div class="dp-name">Mar</div><div class="dp-num">6</div>
-        <div class="dp-dot" style="background:#1affaa"></div>
-        <div class="dp-score" style="color:#1affaa">7.4</div>
+        <div class="dp-dot" style="background:#5aa6ff"></div>
+        <div class="dp-score" style="color:#5aa6ff">7.4</div>
       </div>
       <div class="day-pill" onclick="location.href='page-day.html'">
         <div class="dp-name">Mer</div><div class="dp-num">7</div>
-        <div class="dp-dot" style="background:#1affaa"></div>
-        <div class="dp-score" style="color:#1affaa">7.8</div>
+        <div class="dp-dot" style="background:#5aa6ff"></div>
+        <div class="dp-score" style="color:#5aa6ff">7.8</div>
       </div>
       <div class="day-pill" onclick="location.href='page-day.html'">
         <div class="dp-name">Jeu</div><div class="dp-num">8</div>
@@ -308,13 +338,13 @@ body{
       </div>
       <div class="day-pill today">
         <div class="dp-name">Sam</div><div class="dp-num">10</div>
-        <div class="dp-dot" style="background:#1affaa"></div>
-        <div class="dp-score" style="color:#1affaa">7.2</div>
+        <div class="dp-dot" style="background:#5aa6ff"></div>
+        <div class="dp-score" style="color:#5aa6ff">7.2</div>
       </div>
       <div class="day-pill" style="opacity:.35">
         <div class="dp-name">Dim</div><div class="dp-num">11</div>
-        <div class="dp-dot" style="background:rgba(255,255,255,.15)"></div>
-        <div class="dp-score" style="color:rgba(255,255,255,.3)">—</div>
+        <div class="dp-dot" style="background:rgba(255,255,255,.12)"></div>
+        <div class="dp-score" style="color:rgba(238,238,238,.3)">—</div>
       </div>
     </div>
 
@@ -328,22 +358,22 @@ body{
 
     <!-- Score breakdown -->
     <div class="section-title">Facteurs du score</div>
-    <div class="breakdown-card" style="background:radial-gradient(ellipse 130px 90px at 96% 8%,rgba(26,255,170,.12) 0%,transparent 65%),radial-gradient(ellipse 100px 80px at 4% 92%,rgba(208,48,255,.09) 0%,transparent 65%),rgba(255,255,255,.04);border-color:rgba(26,255,170,.09)">
+    <div class="breakdown-card">
       <div class="factor-row">
         <div class="factor-icon"></div>
         <div class="factor-info">
           <div class="factor-name">Alimentation</div>
-          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:82%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:82%;background:rgba(90,166,255,.7)"></div></div>
         </div>
-        <div class="factor-val" style="color:#1affaa">8.2</div>
+        <div class="factor-val" style="color:#5aa6ff">8.2</div>
       </div>
       <div class="factor-row">
         <div class="factor-icon"></div>
         <div class="factor-info">
           <div class="factor-name">Symptômes</div>
-          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:70%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:70%;background:rgba(90,166,255,.7)"></div></div>
         </div>
-        <div class="factor-val" style="color:#1affaa">7.0</div>
+        <div class="factor-val" style="color:#5aa6ff">7.0</div>
       </div>
       <div class="factor-row">
         <div class="factor-icon"></div>
@@ -357,9 +387,9 @@ body{
         <div class="factor-icon"></div>
         <div class="factor-info">
           <div class="factor-name">Activité</div>
-          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:75%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="factor-bar-bg"><div class="factor-bar-fill" style="width:75%;background:rgba(90,166,255,.7)"></div></div>
         </div>
-        <div class="factor-val" style="color:#1affaa">7.5</div>
+        <div class="factor-val" style="color:#5aa6ff">7.5</div>
       </div>
       <div class="factor-row">
         <div class="factor-icon"></div>
@@ -388,14 +418,14 @@ body{
       </div>
       <div class="hist-row" onclick="location.href='page-day.html'">
         <div class="hist-date">Mer 7 mai</div>
-        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:78%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.3))"></div></div>
-        <div class="hist-score" style="color:#1affaa">7.8</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:78%;background:rgba(90,166,255,.7)"></div></div>
+        <div class="hist-score" style="color:#5aa6ff">7.8</div>
         <div class="hist-mood"></div>
       </div>
       <div class="hist-row" onclick="location.href='page-day.html'">
         <div class="hist-date">Mar 6 mai</div>
-        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:74%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.3))"></div></div>
-        <div class="hist-score" style="color:#1affaa">7.4</div>
+        <div class="hist-bar-bg"><div class="hist-bar-fill" style="width:74%;background:rgba(90,166,255,.7)"></div></div>
+        <div class="hist-score" style="color:#5aa6ff">7.4</div>
         <div class="hist-mood"></div>
       </div>
       <div class="hist-row" onclick="location.href='page-day.html'">

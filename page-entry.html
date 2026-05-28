@@ -63,7 +63,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .section-label{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
 .selected-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .sel-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(26,255,170,.06);border:1px solid rgba(26,255,170,.18);border-radius:14px}
-.sel-emoji{font-size:18px;width:34px;height:34px;background:rgba(26,255,170,.08);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sel-emoji{font-size:18px;width:34px;height:34px;background:rgba(90,166,255,.1);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sel-info{flex:1;min-width:0}
 .sel-name{font-size:13px;font-weight:600;color:#f4f2ed}
 .sel-qty-row{display:flex;align-items:center;gap:6px;margin-top:3px}
@@ -78,7 +78,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .sug-item:hover{background:rgba(255,255,255,.08)}
 .sug-emoji{font-size:16px;width:30px;height:30px;background:rgba(255,255,255,.07);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sug-name{font-size:13px;color:#f4f2ed;flex:1}
-.sug-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);color:#1affaa;flex-shrink:0}
+.sug-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);color:#5aa6ff;flex-shrink:0}
 .add-icon{font-size:16px;color:rgba(255,255,255,.25);flex-shrink:0}
 
 /* Symptoms section */
@@ -88,10 +88,10 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .slider-row:last-child{margin-bottom:0}
 .slider-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .slider-name{font-size:13px;color:#f4f2ed}
-.slider-val{font-size:14px;font-weight:700;color:#1affaa;min-width:20px;text-align:right}
+.slider-val{font-size:14px;font-weight:700;color:#5aa6ff;min-width:20px;text-align:right}
 input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,.12);outline:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#1affaa;border:2px solid #232323;box-shadow:0 0 0 2px rgba(26,255,170,.3);cursor:pointer}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#1affaa;border:2px solid #232323;cursor:pointer;box-shadow:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#5aa6ff;border:2px solid #232323;box-shadow:0 0 0 2px rgba(26,255,170,.3);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#5aa6ff;border:2px solid #232323;cursor:pointer;box-shadow:none}
 
 /* Note */
 .note-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;font-size:13px;color:rgba(255,255,255,.7);font-family:inherit;outline:none;resize:none;height:76px;margin-bottom:16px;transition:border-color .2s}
@@ -221,6 +221,14 @@ body{background:#2d2d2d;color:#eeeeee}
 .success .s-title{color:#eeeeee}
 .success .s-sub{color:rgba(238,238,238,.45)}
 
+
+
+/* ── Spacing & body fix ── */
+html,body{background:#2d2d2d !important}
+.app{background:#2d2d2d !important}
+.content,.page-content,.main-content{padding-left:20px !important;padding-right:20px !important}
+.section-title{margin-top:22px !important;margin-bottom:12px !important}
+.card,.breakdown-card,.stat-card{margin-bottom:12px}
 
 /* ── H1: SF Pro Text Thin ── */
 .hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{

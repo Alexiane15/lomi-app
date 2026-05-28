@@ -45,7 +45,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .hero-info{flex:1}
 .hero-name{font-size:26px;font-weight:700;color:#f4f2ed;letter-spacing:-.5px}
 .hero-cat{font-size:13px;color:rgba(255,255,255,.45);margin-top:3px}
-.hero-badge{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;background:rgba(90,166,255,.12);border:1px solid rgba(26,255,170,.3);color:#5aa6ff}
 .hero-badge.mod{background:rgba(255,170,0,.12);border-color:rgba(255,170,0,.3);color:#ffaa00}
 .hero-badge.av{background:rgba(255,80,80,.12);border-color:rgba(255,80,80,.3);color:#ff5050}
 
@@ -73,7 +73,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .fodmap-bar-bg{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
 .fodmap-bar-fill{height:100%;border-radius:3px}
 .fodmap-lvl{font-size:11px;font-weight:600;width:40px;text-align:right;flex-shrink:0}
-.lvl-low{color:#1affaa}.lvl-mod{color:#ffaa00}.lvl-high{color:#ff5050}
+.lvl-low{color:#5aa6ff}.lvl-mod{color:#ffaa00}.lvl-high{color:#ff5050}
 
 /* Portion visual */
 .portion-visual{display:flex;align-items:center;gap:16px}
@@ -89,7 +89,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .similar-item:hover{background:rgba(255,255,255,.07)}
 .similar-emoji{font-size:18px;width:34px;height:34px;background:rgba(255,255,255,.06);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .similar-name{font-size:13px;font-weight:600;color:#f4f2ed;flex:1}
-.similar-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+.similar-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:rgba(90,166,255,.12);border:1px solid rgba(26,255,170,.3);color:#5aa6ff}
 
 /* Tip card */
 .tip-card{background:radial-gradient(ellipse 160px 80px at 100% 50%, rgba(74,176,255,.12) 0%, transparent 65%),rgba(255,255,255,.04);border:1px solid rgba(74,176,255,.12);border-radius:18px;padding:16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
@@ -220,6 +220,20 @@ body{background:#2d2d2d;color:#eeeeee}
 .success .s-sub{color:rgba(238,238,238,.45)}
 
 
+
+/* ── Food page overrides ── */
+html,body{background:#2d2d2d !important}
+.app{background:#2d2d2d !important}
+.phase-card.ok{background:rgba(90,166,255,.18) !important;border:1px solid rgba(90,166,255,.35) !important;box-shadow:none !important;color:#eeeeee}
+.phase-card.mod{background:rgba(179,101,0,.18) !important;border:1px solid rgba(179,101,0,.35) !important;box-shadow:none !important}
+.phase-card.av{background:rgba(192,57,43,.18) !important;border:1px solid rgba(192,57,43,.35) !important;box-shadow:none !important}
+.phase-lbl{color:rgba(238,238,238,.55);font-size:.75em}
+.phase-status{color:#eeeeee;font-weight:600}
+.phase-note{color:rgba(238,238,238,.55)}
+.content{padding:0 20px 40px}
+.card{background:#383838;border-color:rgba(255,255,255,.08)}
+.card+.card{margin-top:12px}
+
 /* ── H1: SF Pro Text Thin ── */
 .hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
@@ -307,27 +321,27 @@ body{
       <div class="fodmap-list">
         <div class="fodmap-row">
           <div class="fodmap-name">Fructose</div>
-          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:8%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:8%;background:rgba(90,166,255,.7)"></div></div>
           <div class="fodmap-lvl lvl-low">Faible</div>
         </div>
         <div class="fodmap-row">
           <div class="fodmap-name">Lactose</div>
-          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:0%;background:#1affaa"></div></div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:0%;background:#5aa6ff"></div></div>
           <div class="fodmap-lvl lvl-low">Nul</div>
         </div>
         <div class="fodmap-row">
           <div class="fodmap-name">Fructanes</div>
-          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:12%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:12%;background:rgba(90,166,255,.7)"></div></div>
           <div class="fodmap-lvl lvl-low">Faible</div>
         </div>
         <div class="fodmap-row">
           <div class="fodmap-name">GOS</div>
-          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:5%;background:#1affaa"></div></div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:5%;background:#5aa6ff"></div></div>
           <div class="fodmap-lvl lvl-low">Nul</div>
         </div>
         <div class="fodmap-row">
           <div class="fodmap-name">Polyols</div>
-          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:22%;background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.4))"></div></div>
+          <div class="fodmap-bar-bg"><div class="fodmap-bar-fill" style="width:22%;background:rgba(90,166,255,.7)"></div></div>
           <div class="fodmap-lvl lvl-low">Faible</div>
         </div>
       </div>

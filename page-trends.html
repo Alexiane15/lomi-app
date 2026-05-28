@@ -43,7 +43,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .metric-toggle{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
 .metric-toggle::-webkit-scrollbar{display:none}
 .mtag{height:28px;padding:0 12px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;display:flex;align-items:center;cursor:pointer;transition:all .2s;flex-shrink:0}
-.mtag.green{background:rgba(26,255,170,.12);border:1px solid rgba(26,255,170,.3);color:#1affaa}
+.mtag.green{background:rgba(90,166,255,.12);border:1px solid rgba(26,255,170,.3);color:#5aa6ff}
 .mtag.purple{background:rgba(208,48,255,.1);border:1px solid rgba(208,48,255,.2);color:rgba(208,48,255,.8);opacity:.5}
 .mtag.orange{background:rgba(255,150,50,.1);border:1px solid rgba(255,150,50,.2);color:rgba(255,150,50,.8);opacity:.5}
 .mtag.blue{background:rgba(74,176,255,.1);border:1px solid rgba(74,176,255,.2);color:rgba(74,176,255,.8);opacity:.5}
@@ -60,7 +60,7 @@ html,body{height:100%;background:#1a1a1a;font-family:-apple-system,'Helvetica Ne
 .chart-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
 .chart-score{font-size:38px;font-weight:700;color:#f4f2ed;letter-spacing:-1.5px;line-height:1}
 .chart-score span{font-size:16px;font-weight:400;color:rgba(255,255,255,.4)}
-.chart-delta{font-size:12px;color:#1affaa;font-weight:600;margin-top:4px}
+.chart-delta{font-size:12px;color:#5aa6ff;font-weight:600;margin-top:4px}
 .chart-period-lbl{font-size:11px;color:rgba(255,255,255,.35);text-align:right}
 .chart-area{width:100%;height:120px;margin-bottom:8px}
 .x-labels{display:flex;justify-content:space-between}
@@ -213,6 +213,14 @@ body{background:#2d2d2d;color:#eeeeee}
 .success .s-sub{color:rgba(238,238,238,.45)}
 
 
+
+/* ── Spacing & body fix ── */
+html,body{background:#2d2d2d !important}
+.app{background:#2d2d2d !important}
+.content,.page-content,.main-content{padding-left:20px !important;padding-right:20px !important}
+.section-title{margin-top:22px !important;margin-bottom:12px !important}
+.card,.breakdown-card,.stat-card{margin-bottom:12px}
+
 /* ── H1: SF Pro Text Thin ── */
 .hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
@@ -280,8 +288,8 @@ body{
         <svg width="100%" height="100%" viewBox="0 0 330 110" preserveAspectRatio="none">
           <defs>
             <linearGradient id="g-well" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1affaa" stop-opacity=".25"/>
-              <stop offset="100%" stop-color="#1affaa" stop-opacity="0"/>
+              <stop offset="0%" stop-color="#5aa6ff" stop-opacity=".25"/>
+              <stop offset="100%" stop-color="#5aa6ff" stop-opacity="0"/>
             </linearGradient>
             <linearGradient id="g-bloat" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#d030ff" stop-opacity=".2"/>
