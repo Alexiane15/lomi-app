@@ -5,1084 +5,900 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Lomi — Bienvenue</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gasoek+One&display=swap');
+
 /* ── Reset ── */
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{height:100%}
-body{
-  height:100%;background:#1a1a1a;
-  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
-  display:flex;justify-content:center;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;height:100dvh;background:#2d2d2d;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif}
+body{display:flex;justify-content:center;align-items:flex-start}
+
+/* ── App shell ── */
 .app{
-  width:100%;max-width:390px;height:100%;
-  background:#232323;
-  display:flex;flex-direction:column;overflow:hidden;position:relative;
+  width:100%;max-width:430px;
+  height:100vh;height:100dvh;
+  background:#2d2d2d;
+  display:flex;flex-direction:column;
+  overflow:hidden;position:relative;
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
 }
 
-/* ── Status bar ── */
-.sbar{
-  height:54px;flex-shrink:0;background:#232323;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 22px;position:relative;z-index:10;
+/* ── Background glow blob ── */
+.bg-blob{
+  position:absolute;width:802px;height:1410px;left:-204px;
+  pointer-events:none;z-index:0;
+  transition:top 0.7s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease;
 }
-.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
-.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
-.sbar-icons{display:flex;align-items:center;gap:6px}
-.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
-.sig b{display:block;width:3px;background:#fff;border-radius:1px}
-.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
-.wifi-icon{position:relative;width:15px;height:11px}
-.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
-.wifi-icon::before{width:15px;height:8px;bottom:2px}
-.wifi-icon::after{width:9px;height:5px;bottom:2px}
-.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
-.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
-.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
-.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
-
-/* ══════════════════════════════
-   ONBOARDING SHELL
-══════════════════════════════ */
-.ob{flex:1;display:flex;flex-direction:column;overflow:hidden}
-
-/* Top bar */
-.ob-top{
-  height:48px;flex-shrink:0;
-  display:flex;align-items:center;
-  padding:0 16px;gap:12px;
-  transition:opacity .2s;
-}
-.ob-back{
-  width:34px;height:34px;flex-shrink:0;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  border-radius:11px;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:18px;color:rgba(255,255,255,.7);
-  transition:background .15s;user-select:none;
-}
-.ob-back:hover{background:rgba(255,255,255,.11)}
-.ob-step-label{
-  flex:1;font-size:11px;font-weight:700;letter-spacing:.4px;
-  color:rgba(255,255,255,.35);
-}
-.ob-skip{
-  font-size:12px;color:rgba(255,255,255,.28);cursor:pointer;
-  padding:6px 0;transition:color .15s;user-select:none;
-}
-.ob-skip:hover{color:rgba(255,255,255,.5)}
-
-/* Progress bar */
-.ob-prog-wrap{
-  height:2px;flex-shrink:0;
-  background:rgba(255,255,255,.07);
-  margin:0 16px;border-radius:1px;
-}
-.ob-prog-fill{
-  height:100%;
-  background:linear-gradient(90deg,#1affaa,rgba(74,176,255,.85));
-  border-radius:1px;
-  transition:width .42s cubic-bezier(.4,0,.2,1);
-  width:0%;
+.bg-blob::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 55% 38% at 50% 30%,rgba(74,176,255,.20) 0%,transparent 65%),
+    radial-gradient(ellipse 38% 28% at 68% 58%,rgba(74,176,255,.13) 0%,transparent 60%),
+    radial-gradient(ellipse 42% 32% at 35% 70%,rgba(90,166,255,.09) 0%,transparent 55%);
 }
 
-/* Slides */
-.ob-slides{flex:1;position:relative;overflow:hidden}
-.ob-slide{
+.di-pill{
+  position:absolute;left:50%;top:12px;transform:translateX(-50%);
+  width:122px;height:36px;background:#000;border-radius:32px;
+}
+.batt{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
+.batt::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
+.batt-f{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
+
+/* ── Slides engine ── */
+.slides-wrap{flex:1;position:relative;overflow:hidden;z-index:1}
+.slide{
   position:absolute;inset:0;
   opacity:0;pointer-events:none;
-  overflow-y:auto;overflow-x:hidden;
+  transform:translateX(44px);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1);
+  /* flex column: header fixed, body scrolls */
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0)}
+
+/* Step body scrolls independently — header stays pinned */
+.step-body{
+  flex:1;overflow-y:auto;overflow-x:hidden;
   scrollbar-width:none;
-  padding:22px 16px 12px;
 }
-.ob-slide::-webkit-scrollbar{display:none}
-.ob-slide.active{opacity:1;pointer-events:all}
+.step-body::-webkit-scrollbar{display:none}
 
-/* Footer */
-.ob-foot{padding:10px 16px 30px;flex-shrink:0}
-.ob-btn{
-  width:100%;height:56px;
-  background:#5aa6ff;color:#0a120a;
-  font-size:15px;font-weight:700;
-  border:none;border-radius:16px;cursor:pointer;
-  font-family:inherit;letter-spacing:-.2px;
-  transition:opacity .2s,transform .1s,background .2s;
-}
-.ob-btn:active{transform:scale(.98);opacity:.88}
-.ob-btn:disabled{background:rgba(255,255,255,.08);color:rgba(255,255,255,.22);cursor:not-allowed;transform:none}
+/* Non-step slides (splash, welcome, legal, done) scroll as a whole */
+.slide.scroll-full{overflow-y:auto;overflow-x:hidden}
+.slide.scroll-full::-webkit-scrollbar{display:none}
 
-/* ══════════════════════════════
-   STEP HEADER
-══════════════════════════════ */
-.ob-icon{font-size:42px;line-height:1;margin-bottom:14px}
-.ob-title{font-size:24px;font-weight:700;color:#f4f2ed;line-height:1.15;margin-bottom:6px;letter-spacing:-.4px}
-.ob-subtitle{font-size:13px;color:rgba(255,255,255,.4);line-height:1.5;margin-bottom:24px}
+/* ── Logo ── */
+.logo-wrap{display:flex;align-items:center;justify-content:center}
+.logo-flower{object-fit:contain;flex-shrink:0}
+.logo-flower.lg{width:68px;height:68px}
+.logo-flower.sm{width:36px;height:36px}
+/* Fallback flower SVG via CSS in case asset expires */
+.logo-flower[data-fallback]{
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='20' r='14' fill='%235aa6ff' opacity='.8'/%3E%3Ccircle cx='50' cy='80' r='14' fill='%235aa6ff' opacity='.8'/%3E%3Ccircle cx='20' cy='50' r='14' fill='%235aa6ff' opacity='.8'/%3E%3Ccircle cx='80' cy='50' r='14' fill='%235aa6ff' opacity='.8'/%3E%3Ccircle cx='29' cy='29' r='12' fill='%235aa6ff' opacity='.6'/%3E%3Ccircle cx='71' cy='29' r='12' fill='%235aa6ff' opacity='.6'/%3E%3Ccircle cx='29' cy='71' r='12' fill='%235aa6ff' opacity='.6'/%3E%3Ccircle cx='71' cy='71' r='12' fill='%235aa6ff' opacity='.6'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%235aa6ff'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.logo-text{
+  font-family:'Gasoek One',sans-serif;color:#5aa6ff;line-height:1;white-space:nowrap;
+}
+.logo-text.lg{font-size:64px;margin-left:12px}
+.logo-text.sm{font-size:34px;margin-left:8px}
 
-/* Section heading */
-.ob-sect{
-  font-size:10px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;
-  color:rgba(255,255,255,.32);margin-bottom:10px;
-}
-.ob-sect+.ob-sect{margin-top:22px}
+/* ════════════════════════
+   S0 — SPLASH
+════════════════════════ */
+#s0{display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-/* ══════════════════════════════
-   WELCOME SCREEN (step 0)
-══════════════════════════════ */
-.welcome-wrap{
-  min-height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:20px 8px 0;text-align:center;
+/* ════════════════════════
+   S1 — WELCOME
+════════════════════════ */
+#s1 .inner{
+  display:flex;flex-direction:column;align-items:center;
+  gap:28px;padding:28px 16px 32px;min-height:100%;
 }
-.welcome-logo{
-  font-size:54px;font-weight:800;color:#f4f2ed;
-  letter-spacing:-3.5px;line-height:1;margin-bottom:10px;
-}
-.welcome-logo span{color:#5aa6ff}
 .welcome-tag{
-  font-size:14px;color:rgba(244,242,237,.42);line-height:1.55;
-  margin-bottom:36px;max-width:250px;
+  font-family:'DM Mono',monospace;font-weight:500;
+  font-size:15px;color:rgba(255,255,255,.6);
+  text-align:center;text-transform:uppercase;
+  line-height:1.45;letter-spacing:.04em;
 }
-.welcome-features{
-  display:flex;flex-direction:column;gap:9px;
-  width:100%;margin-bottom:10px;
+.feat-cards{display:flex;flex-direction:column;gap:10px;width:100%}
+.feat-card{
+  background:rgba(45,45,45,.45);
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:16px;padding:14px 14px;
+  display:flex;gap:14px;align-items:flex-start;
 }
-.wf{
-  display:flex;align-items:center;gap:13px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
-  border-radius:16px;padding:13px 15px;text-align:left;
+.feat-card-icon{
+  width:32px;height:32px;flex-shrink:0;
+  background:rgba(74,176,255,.12);border:1px solid rgba(74,176,255,.25);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;
 }
-.wf-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center}
-.wf-label{font-size:13px;font-weight:600;color:#f4f2ed;display:block;margin-bottom:2px}
-.wf-desc{font-size:11px;color:rgba(244,242,237,.38)}
+.feat-card-body .t{font-size:13px;font-weight:600;color:#fff;margin-bottom:3px}
+.feat-card-body .d{font-size:11px;color:rgba(255,255,255,.4);line-height:1.4}
 
-/* ══════════════════════════════
-   3-OPTION HORIZONTAL (diag / cook)
-══════════════════════════════ */
-.tri-row{display:flex;gap:8px}
-.tri-card{
+/* ════════════════════════
+   S2 — LEGAL
+════════════════════════ */
+#s2 .inner{padding:16px 16px 32px;display:flex;flex-direction:column;gap:20px}
+.legal-intro{
+  font-family:'DM Mono',monospace;font-weight:500;
+  font-size:13px;color:rgba(255,255,255,.6);
+  text-transform:uppercase;letter-spacing:.04em;line-height:1.5;
+}
+.legal-box{
+  background:rgba(45,45,45,.4);border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;padding:16px;
+  font-size:11px;color:rgba(255,255,255,.42);line-height:1.7;
+  max-height:390px;overflow-y:auto;
+}
+.legal-box::-webkit-scrollbar{width:3px}
+.legal-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+.legal-box strong{color:rgba(255,255,255,.7)}
+
+/* ════════════════════════
+   STEP HEADER (S3–S7)
+════════════════════════ */
+.step-hdr{padding:16px 16px 0;display:flex;flex-direction:column;gap:14px}
+.step-nav{display:flex;align-items:center;gap:14px}
+.step-back{
+  width:28px;height:28px;flex-shrink:0;border:none;
+  background:linear-gradient(104deg,rgba(74,176,255,.2),rgba(74,176,255,.6));
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#fff;font-size:18px;line-height:1;
+  transition:opacity .15s;
+}
+.step-back:hover{opacity:.8}
+.step-lbl{font-size:12px;color:#fff;font-weight:400}
+.prog-track{height:6px;background:#939393;border-radius:100px;overflow:hidden}
+.prog-fill{
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,#5aa6ff 0%,rgba(255,176,40,.5) 100%);
+  transition:width .42s cubic-bezier(.4,0,.2,1);
+}
+.step-title{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-weight:300;font-size:32px;color:#fff;
+  line-height:1.1;letter-spacing:-.02em;
+}
+.step-sub{
+  font-family:'DM Mono',monospace;font-weight:500;
+  font-size:13px;color:rgba(255,255,255,.55);
+  text-transform:uppercase;letter-spacing:.04em;line-height:1.45;
+}
+.step-body{padding:20px 16px 32px}
+
+/* ════════════════════════
+   CHOICE Oui/Non
+════════════════════════ */
+.q-lbl{font-size:14px;font-weight:500;color:rgba(255,255,255,.65);line-height:1.45;margin-bottom:10px;margin-top:20px}
+.q-lbl:first-child{margin-top:0}
+.choice-row{display:flex;gap:10px}
+.choice-btn{
   flex:1;
-  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
-  border-radius:14px;padding:14px 6px;
-  display:flex;flex-direction:column;align-items:center;gap:7px;
-  cursor:pointer;transition:all .18s;user-select:none;
-}
-.tri-card:hover{background:rgba(255,255,255,.07)}
-.tri-card.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.42)}
-.tri-emoji{font-size:22px;line-height:1}
-.tri-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);text-align:center;line-height:1.3}
-.tri-card.sel .tri-label{color:#5aa6ff}
-
-/* ══════════════════════════════
-   RED FLAG CHECKBOXES
-══════════════════════════════ */
-.cb-list{display:flex;flex-direction:column;gap:7px}
-.cb-item{
-  display:flex;align-items:center;gap:12px;
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
-  border-radius:13px;padding:12px 14px;cursor:pointer;
-  transition:all .18s;user-select:none;
-}
-.cb-item:hover{background:rgba(255,255,255,.06)}
-.cb-item.checked:not(.cb-none){background:rgba(255,50,50,.05);border-color:rgba(255,50,50,.18)}
-.cb-item.cb-none.checked{background:rgba(26,255,170,.05);border-color:rgba(26,255,170,.18)}
-.cb-box{
-  width:20px;height:20px;flex-shrink:0;
-  border:1.5px solid rgba(255,255,255,.22);border-radius:6px;
+  background:rgba(45,45,45,.45);border:1px solid rgba(255,255,255,.28);
+  border-radius:16px;padding:14px 12px;
   display:flex;align-items:center;justify-content:center;
-  transition:all .18s;
-}
-.cb-item.checked:not(.cb-none) .cb-box{background:#ff5050;border-color:#ff5050}
-.cb-item.cb-none.checked .cb-box{background:#5aa6ff;border-color:#5aa6ff}
-.cb-tick{color:#fff;font-size:11px;font-weight:700;display:none}
-.cb-item.checked .cb-tick{display:block}
-.cb-text{font-size:13px;color:rgba(244,242,237,.65);line-height:1.3}
-.cb-item.cb-none .cb-text{color:rgba(244,242,237,.4)}
-
-/* Alert card */
-.rf-alert{
-  margin-top:12px;display:none;
-  background:rgba(255,50,50,.07);border:1px solid rgba(255,50,50,.22);
-  border-radius:14px;padding:14px;
-  flex-direction:row;align-items:flex-start;gap:10px;
-}
-.rf-alert.show{display:flex}
-.rf-alert-icon{font-size:19px;flex-shrink:0;margin-top:1px}
-.rf-alert-head{font-size:12px;font-weight:700;color:#ff7070;margin-bottom:4px}
-.rf-alert-body{font-size:11px;color:rgba(255,150,150,.85);line-height:1.5}
-
-/* ══════════════════════════════
-   SII TYPE CARDS
-══════════════════════════════ */
-.type-cards{display:flex;flex-direction:column;gap:8px}
-.type-card{
-  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
-  border-radius:16px;padding:14px 16px;
-  display:flex;align-items:center;gap:13px;
   cursor:pointer;transition:all .18s;user-select:none;
 }
-.type-card:hover{background:rgba(255,255,255,.07)}
-.type-card.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.4)}
-.type-badge{
-  font-size:10px;font-weight:800;letter-spacing:.6px;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
-  border-radius:7px;padding:4px 8px;min-width:50px;text-align:center;
-  color:rgba(244,242,237,.55);flex-shrink:0;transition:all .18s;
+.choice-btn:hover{background:rgba(74,176,255,.08)}
+.choice-btn.sel{background:rgba(74,176,255,.15);border-color:rgba(74,176,255,.5)}
+.choice-label{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-weight:100;font-size:22px;color:#fff;text-align:center;
 }
-.type-card.sel .type-badge{background:rgba(90,166,255,.12);border-color:rgba(26,255,170,.3);color:#5aa6ff}
-.type-info{flex:1;min-width:0}
-.type-name{font-size:13px;font-weight:600;color:#f4f2ed;margin-bottom:2px}
-.type-desc{font-size:11px;color:rgba(244,242,237,.38);line-height:1.35}
-.radio{
-  width:20px;height:20px;flex-shrink:0;
-  border:1.5px solid rgba(255,255,255,.2);border-radius:50%;
+
+/* ════════════════════════
+   CHECKBOX ITEMS
+════════════════════════ */
+.chk-list{display:flex;flex-direction:column;gap:8px}
+.chk-item{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(45,45,45,.45);border:1px solid rgba(255,255,255,.28);
+  border-radius:16px;padding:13px 14px;
+  cursor:pointer;transition:all .18s;user-select:none;
+}
+.chk-item:hover{background:rgba(255,255,255,.06)}
+.chk-item.sel{background:rgba(74,176,255,.1);border-color:rgba(74,176,255,.4)}
+.chk-box{
+  width:24px;height:24px;flex-shrink:0;
+  background:rgba(0,0,0,.2);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .18s;
+}
+.chk-item.sel .chk-box{background:#5aa6ff}
+.chk-tick{color:#fff;font-size:12px;font-weight:700;opacity:0;transition:opacity .15s}
+.chk-item.sel .chk-tick{opacity:1}
+.chk-title{font-size:13px;font-weight:500;color:#fff}
+
+/* ════════════════════════
+   RADIO CARDS (SII types)
+════════════════════════ */
+.radio-cards{display:flex;flex-direction:column;gap:8px}
+.radio-card{
+  background:rgba(45,45,45,.45);border:1px solid rgba(255,255,255,.28);
+  border-radius:16px;padding:14px;
+  display:flex;gap:12px;align-items:center;
+  cursor:pointer;transition:all .18s;user-select:none;
+}
+.radio-card:hover{background:rgba(255,255,255,.06)}
+.radio-card.sel{background:rgba(74,176,255,.1);border-color:rgba(74,176,255,.4)}
+.rc-chip{
+  background:rgba(45,45,45,.5);border:1px solid rgba(255,255,255,.25);
+  border-radius:8px;padding:6px 10px;flex-shrink:0;
+  font-size:10px;font-weight:700;color:rgba(255,255,255,.55);
+  letter-spacing:.05em;transition:all .18s;
+}
+.radio-card.sel .rc-chip{background:rgba(74,176,255,.15);border-color:rgba(74,176,255,.4);color:#5aa6ff}
+.rc-info{flex:1;min-width:0}
+.rc-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:3px}
+.rc-desc{font-size:11px;color:rgba(255,255,255,.38);line-height:1.4}
+.rc-dot{
+  width:22px;height:22px;flex-shrink:0;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.28);
   display:flex;align-items:center;justify-content:center;
   transition:border-color .18s;
 }
-.radio-dot{
-  width:8px;height:8px;background:#5aa6ff;border-radius:50%;
+.radio-card.sel .rc-dot{border-color:#5aa6ff}
+.rc-dot::after{
+  content:'';width:10px;height:10px;background:#5aa6ff;border-radius:50%;
   transform:scale(0);transition:transform .2s cubic-bezier(.34,1.56,.64,1);
 }
-.type-card.sel .radio{border-color:#5aa6ff}
-.type-card.sel .radio-dot{transform:scale(1)}
+.radio-card.sel .rc-dot::after{transform:scale(1)}
 
-/* ══════════════════════════════
+/* ════════════════════════
    SLIDERS
-══════════════════════════════ */
-.slider-section{display:flex;flex-direction:column;gap:20px}
-.slider-row{display:flex;flex-direction:column;gap:9px}
-.slider-header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.slider-name{font-size:13px;font-weight:600;color:#f4f2ed}
-.slider-val{font-size:20px;font-weight:700;color:#5aa6ff;line-height:1}
-.slider-val-sub{font-size:11px;font-weight:400;color:rgba(255,255,255,.3)}
-.slider-track-wrap{position:relative;height:22px;display:flex;align-items:center}
-.slider-track{
-  position:absolute;left:0;right:0;height:6px;
-  background:rgba(255,255,255,.1);border-radius:3px;
+════════════════════════ */
+.slider-cards{display:flex;flex-direction:column;gap:10px}
+.slider-card{
+  background:rgba(45,45,45,.45);border:1px solid rgba(255,255,255,.28);
+  border-radius:16px;padding:14px;
+  display:flex;flex-direction:column;gap:10px;
 }
-.slider-fill{
-  position:absolute;left:0;height:100%;border-radius:3px;
-  background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.55));
+.sl-top{display:flex;justify-content:space-between;align-items:center}
+.sl-name{font-size:13px;font-weight:500;color:#fff}
+.sl-val{font-size:12px;color:rgba(255,255,255,.45)}
+.sl-val em{font-style:normal;font-size:18px;font-weight:600;color:#5aa6ff}
+.sl-track-wrap{position:relative;height:22px;display:flex;align-items:center}
+.sl-track{
+  position:absolute;left:0;right:0;height:6px;
+  background:#939393;border-radius:100px;
+}
+.sl-fill{
+  position:absolute;left:0;height:100%;border-radius:100px;
+  background:linear-gradient(90deg,#5aa6ff 0%,rgba(255,176,40,.5) 100%);
   pointer-events:none;
 }
-input[type=range].ob-range{
+input.range{
   -webkit-appearance:none;appearance:none;
   position:absolute;left:0;right:0;width:100%;height:22px;
   background:transparent;margin:0;cursor:pointer;
 }
-input[type=range].ob-range::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;
-  width:24px;height:24px;border-radius:50%;
-  background:#5aa6ff;cursor:pointer;
-  box-shadow:0 0 12px rgba(26,255,170,.45),0 0 0 3px rgba(26,255,170,.15);
-  transition:box-shadow .15s;
+input.range::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;
+  background:#5aa6ff;border-radius:50%;cursor:pointer;
+  box-shadow:0 0 10px rgba(74,176,255,.45);
 }
-input[type=range].ob-range::-webkit-slider-thumb:hover{
-  box-shadow:0 0 16px rgba(26,255,170,.6),0 0 0 5px rgba(26,255,170,.12);
+input.range::-moz-range-thumb{
+  width:22px;height:22px;border:none;
+  background:#5aa6ff;border-radius:50%;cursor:pointer;
 }
-input[type=range].ob-range::-moz-range-thumb{
-  width:24px;height:24px;border-radius:50%;border:none;
-  background:#5aa6ff;cursor:pointer;
-  box-shadow:0 0 12px rgba(26,255,170,.45);
-}
-.slider-labels{display:flex;justify-content:space-between}
-.slider-min,.slider-max{font-size:9px;color:rgba(255,255,255,.22)}
+.sl-labels{display:flex;justify-content:space-between}
+.sl-lbl{font-size:9px;color:rgba(255,255,255,.28)}
 
-/* Slider color helper — set via JS */
-.slider-row[data-level="low"] .slider-fill{background:linear-gradient(90deg,#1affaa,rgba(26,255,170,.5))}
-.slider-row[data-level="mid"] .slider-fill{background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.5))}
-.slider-row[data-level="high"] .slider-fill{background:linear-gradient(90deg,#ff5050,rgba(255,80,80,.5))}
-
-/* ══════════════════════════════
-   CHIPS MULTISELECT
-══════════════════════════════ */
-.ob-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
-.ob-chip{
-  height:32px;padding:0 14px;border-radius:20px;
-  font-size:11px;font-weight:600;white-space:nowrap;
-  display:flex;align-items:center;gap:5px;
-  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);
+/* ════════════════════════
+   CHIPS
+════════════════════════ */
+.sec-lbl{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.09em;
+  color:rgba(255,255,255,.4);margin-bottom:10px;margin-top:20px;
+}
+.sec-lbl:first-child{margin-top:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  height:28px;padding:0 12px;border-radius:8px;
+  font-size:10px;font-weight:700;white-space:nowrap;
+  display:flex;align-items:center;letter-spacing:.03em;
+  background:rgba(45,45,45,.5);border:1px solid rgba(255,255,255,.25);
   color:rgba(255,255,255,.55);cursor:pointer;
   transition:all .18s;user-select:none;
 }
-.ob-chip:hover{background:rgba(255,255,255,.09)}
-.ob-chip.on{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.4);color:#5aa6ff}
-.chip-tick{display:none;font-size:10px}
-.ob-chip.on .chip-tick{display:inline}
+.chip:hover{background:rgba(255,255,255,.08)}
+.chip.on{background:rgba(74,176,255,.15);border-color:rgba(74,176,255,.45);color:#5aa6ff}
 
-/* ══════════════════════════════
-   FODMAP LEVEL CARDS
-══════════════════════════════ */
-.level-cards{display:flex;flex-direction:column;gap:9px}
+/* ════════════════════════
+   LEVEL CARDS (Avancement)
+════════════════════════ */
+.level-cards{display:flex;flex-direction:column;gap:8px}
 .level-card{
-  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
-  border-radius:18px;padding:15px 16px;
-  display:flex;align-items:center;gap:13px;
+  background:rgba(45,45,45,.45);border:1px solid rgba(255,255,255,.28);
+  border-radius:16px;padding:14px;
+  display:flex;align-items:center;gap:12px;
   cursor:pointer;transition:all .18s;user-select:none;
 }
-.level-card:hover{background:rgba(255,255,255,.07)}
-.level-card.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.4)}
-.level-emoji-box{
-  width:48px;height:48px;flex-shrink:0;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;display:flex;align-items:center;justify-content:center;
-  font-size:22px;transition:all .18s;
-}
-.level-card.sel .level-emoji-box{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.25)}
-.level-body{flex:1;min-width:0}
-.level-title{font-size:14px;font-weight:700;color:#f4f2ed;margin-bottom:3px}
-.level-desc{font-size:11px;color:rgba(244,242,237,.38);line-height:1.4}
-.level-card.sel .radio{border-color:#5aa6ff}
-.level-card.sel .radio-dot{transform:scale(1)}
-
-/* ══════════════════════════════
-   STRESS SCALE
-══════════════════════════════ */
-.stress-row{display:flex;gap:7px}
-.stress-btn{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
-  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
-  border-radius:14px;padding:11px 4px;cursor:pointer;
-  transition:all .18s;user-select:none;
-}
-.stress-btn:hover{background:rgba(255,255,255,.07)}
-.stress-btn.sel{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.38)}
-.stress-face{font-size:22px;line-height:1}
-.stress-label{font-size:9px;color:rgba(255,255,255,.3);text-align:center;line-height:1.3}
-.stress-btn.sel .stress-label{color:rgba(26,255,170,.7)}
-
-/* ══════════════════════════════
-   DONE SCREEN (step 7)
-══════════════════════════════ */
-.done-wrap{
-  min-height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:20px 8px 0;text-align:center;
-}
-.done-ring{
-  width:86px;height:86px;border-radius:50%;
-  background:rgba(26,255,170,.09);
-  border:1.5px solid rgba(26,255,170,.25);
+.level-card:hover{background:rgba(255,255,255,.06)}
+.level-card.sel{background:rgba(74,176,255,.1);border-color:rgba(74,176,255,.4)}
+.lv-num{
+  width:36px;height:36px;flex-shrink:0;border-radius:10px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
   display:flex;align-items:center;justify-content:center;
-  font-size:38px;margin-bottom:20px;
-  animation:ringPop .5s cubic-bezier(.34,1.56,.64,1) forwards;
+  font-size:15px;font-weight:600;color:rgba(255,255,255,.5);
+  transition:all .18s;
 }
-@keyframes ringPop{
-  0%{transform:scale(.7);opacity:0}
-  100%{transform:scale(1);opacity:1}
+.level-card.sel .lv-num{background:rgba(74,176,255,.15);border-color:rgba(74,176,255,.3);color:#5aa6ff}
+.lv-info{flex:1}
+.lv-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:3px}
+.lv-desc{font-size:11px;color:rgba(255,255,255,.38);line-height:1.4}
+
+/* ════════════════════════
+   S8 — DONE
+════════════════════════ */
+#s8{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:40px 24px;
 }
-.done-title{font-size:26px;font-weight:700;color:#f4f2ed;margin-bottom:8px;letter-spacing:-.5px}
-.done-sub{font-size:13px;color:rgba(255,255,255,.38);line-height:1.5;margin-bottom:28px;max-width:270px}
-.done-list{display:flex;flex-direction:column;gap:8px;width:100%;margin-bottom:10px}
+.done-flower{width:80px;height:80px;object-fit:contain;margin-bottom:28px}
+@keyframes flowerPop{
+  0%{transform:scale(.4) rotate(-25deg);opacity:0}
+  100%{transform:scale(1) rotate(0deg);opacity:1}
+}
+.done-chip{
+  font-family:'DM Mono',monospace;font-weight:500;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:10px;
+}
+.done-title{
+  font-family:'Gasoek One',sans-serif;
+  font-size:52px;color:#5aa6ff;line-height:1;margin-bottom:12px;
+}
+.done-sub{font-size:13px;color:rgba(255,255,255,.38);line-height:1.6;max-width:260px;margin:0 auto 28px}
+.done-list{display:flex;flex-direction:column;gap:8px;width:100%;margin-bottom:8px}
 .done-row{
   display:flex;align-items:center;gap:11px;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  background:rgba(45,45,45,.4);border:1px solid rgba(255,255,255,.12);
   border-radius:13px;padding:11px 14px;text-align:left;
 }
-.done-dot{width:7px;height:7px;background:#5aa6ff;border-radius:50%;flex-shrink:0}
-.done-text{font-size:12px;color:rgba(244,242,237,.6)}
+.done-dot{width:6px;height:6px;background:#5aa6ff;border-radius:50%;flex-shrink:0}
+.done-text{font-size:12px;color:rgba(255,255,255,.55)}
 
-/* ══════════════════════════════
-   UTILITY
-══════════════════════════════ */
-.spacer{height:18px}
-
-/* ── DM Mono for titles & subtitles ── */
-.section-title,.missions-title,.suivi-section-title,.context-card-title,
-.fsh-section,.card-title,.ob-subtitle,
-.phase-badge-chip,.fab-menu-header{
-  font-family:"DM Mono",monospace;
-  font-weight:400;
-  text-transform:uppercase;
-  letter-spacing:.07em;
-  font-size:.85em;
+/* ════════════════════════
+   FOOTER BUTTON
+════════════════════════ */
+.footer{
+  padding:10px 16px 34px;flex-shrink:0;position:relative;z-index:10;
 }
-
-/* ════════════════════════════════════
-   DESIGN SYSTEM OVERRIDE — Light Neutral
-   ════════════════════════════════════ */
-body{background:#2d2d2d;color:#eeeeee}
-.app{background:#2d2d2d}
-/* Status bar */
-.sbar{background:#2d2d2d}
-.sbar-time{color:#ffffff}
-.sig b{background:#111111}
-.wifi-icon::before,.wifi-icon::after{border-color:#eeeeee}
-.wifi-dot{background:#111111}
-.batt-icon{border-color:rgba(238,238,238,.55)}
-.batt-icon::after{background:rgba(17,17,17,.35)}
-.batt-fill{background:#111111}
-/* Top bar / back buttons */
-.top-bar{background:#2d2d2d;border-bottom-color:rgba(0,0,0,.07)}
-.back-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
-.topbar{background:#2d2d2d}
-.topbar-title{color:#eeeeee}
-.top-title{color:#eeeeee}
-.bookmark-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
-/* Cards */
-.card{background:#383838;border-color:rgba(255,255,255,.08)}
-.card-title{color:rgba(238,238,238,.4)}
-/* Tips */
-.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
-.tip-green{background:rgba(90,166,255,.06);border-color:rgba(90,166,255,.18)}
-.tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
-.tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
-.tip-amber .tip-tag{color:rgba(179,101,0,.85)}
-.tip-green .tip-tag{color:rgba(90,166,255,.85)}
-.tip-blue .tip-tag{color:rgba(42,90,156,.85)}
-.tip-purple .tip-tag{color:rgba(120,50,180,.85)}
-.tip .tip-t{color:rgba(238,238,238,.65)}
-.tip-card{background:#383838;border-color:rgba(42,90,156,.15)}
-.tip-text{color:rgba(238,238,238,.65)}
-.tip-text strong{color:#eeeeee}
-/* Buttons */
-.cta-btn{background:#111111;color:#ffffff;border-radius:100px}
-.btn-primary{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.35);color:#5aa6ff}
-.btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(238,238,238,.5)}
-/* Section headings */
-.section-head{color:rgba(238,238,238,.4)}
-.stat-heading{color:#eeeeee}
-/* Overlays / sheets */
-.overlay{background:rgba(0,0,0,.4)}
-.sheet{background:#faf9f7}
-.sheet-handle{background:rgba(255,255,255,.1)}
-.sheet-title{color:#eeeeee}
-.sheet-sub{color:rgba(238,238,238,.4)}
-.grp-title{color:rgba(238,238,238,.45)}
-.grp-note{color:rgba(238,238,238,.35)}
-.sheet-close{background:rgba(255,255,255,.07);color:rgba(238,238,238,.55)}
-/* Chips */
-.chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
-.chip-green{background:rgba(90,166,255,.08);border-color:rgba(90,166,255,.22);color:#5aa6ff}
-/* Hero badge */
-.hero-badge{background:rgba(90,166,255,.12);border-color:rgba(90,166,255,.3);color:#5aa6ff}
-.hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
-.hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
-.hero-name{color:#eeeeee}
-.hero-cat{color:rgba(238,238,238,.5)}
-.hero-emoji-wrap{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-/* FODMAP bars */
-.fodmap-bar-bg{background:rgba(255,255,255,.08)}
-.fodmap-name{color:#eeeeee}
-.lvl-low{color:#5aa6ff}
-.lvl-mod{color:#b36500}
-.lvl-high{color:#c0392b}
-/* Portion */
-.portion-emoji-big{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-.portion-qty{color:#eeeeee}
-.portion-unit{color:rgba(238,238,238,.55)}
-.portion-tip{color:rgba(238,238,238,.5)}
-/* Similar items */
-.similar-item{background:rgba(255,255,255,.04);border-color:rgba(0,0,0,.06)}
-.similar-item:hover{background:rgba(255,255,255,.07)}
-.similar-emoji{background:rgba(255,255,255,.06)}
-.similar-name{color:#eeeeee}
-.similar-badge{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.25);color:#5aa6ff}
-/* Phase cards in food detail */
-.phase-card.ok{background:#5aa6ff;box-shadow:none}
-.phase-card.mod{background:#b36500;box-shadow:none}
-.phase-card.av{background:#c0392b;box-shadow:none}
-/* Log form */
-.log-q{color:#eeeeee}
-.check-q{color:#eeeeee}
-.check-opt{border-color:rgba(0,0,0,.1);color:rgba(238,238,238,.5)}
-.check-opt.sel{background:rgba(90,166,255,.13);border-color:rgba(90,166,255,.45);color:#5aa6ff}
-.btn-submit{background:#111111;color:#ffffff;border-radius:100px}
-.success .s-title{color:#eeeeee}
-.success .s-sub{color:rgba(238,238,238,.45)}
-
-
-
-/* ── Spacing & body fix ── */
-html,body{background:#2d2d2d !important}
-.app{background:#2d2d2d !important}
-.content,.page-content,.main-content{padding-left:20px !important;padding-right:20px !important}
-.section-title{margin-top:22px !important;margin-bottom:12px !important}
-.card,.breakdown-card,.stat-card{margin-bottom:12px}
-
-/* ── H1: SF Pro Text Thin ── */
-.hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-weight:100;
-  text-transform:none;
-  letter-spacing:-.02em;
+.btn{
+  width:100%;height:52px;border:none;border-radius:14px;
+  background:linear-gradient(116deg,rgba(74,176,255,.22) 0%,rgba(74,176,255,.62) 100%);
+  font-size:14px;font-weight:700;color:#fff;font-family:inherit;
+  cursor:pointer;letter-spacing:.01em;
+  transition:opacity .2s,transform .1s;
 }
-.topbar-title{font-size:22px}
-.hg-hi{font-size:28px}
-.fsh-title{font-size:24px}
-
-/* ── Body: SF Pro Text Normal ── */
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-weight:400;
-}
+.btn:active{transform:scale(.98);opacity:.85}
+.btn:disabled{background:rgba(255,255,255,.07);color:rgba(255,255,255,.22);cursor:not-allowed;transform:none}
 </style>
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Lomi"/>
+  <link rel="apple-touch-icon" href="/icon-192.png"/>
+  <meta name="theme-color" content="#2d2d2d"/>
 </head>
 <body>
 <div class="app">
 
-  <!-- Status Bar -->
-  <div class="sbar">
-    <span class="sbar-time" id="clock">9:41</span>
-    <div class="di"></div>
-    <div class="sbar-icons">
-      <div class="sig"><b></b><b></b><b></b><b></b></div>
-      <div class="wifi-icon"><div class="wifi-dot"></div></div>
-      <div class="batt-icon"><div class="batt-fill"></div></div>
-    </div>
-  </div>
+  <!-- Background glow -->
+  <div class="bg-blob" id="blob" style="top:-38px"></div>
 
-  <!-- Onboarding -->
-  <div class="ob">
+  <!-- Slides -->
+  <div class="slides-wrap">
 
-    <!-- Top bar -->
-    <div class="ob-top" id="ob-top" style="opacity:0;pointer-events:none">
-      <div class="ob-back" id="ob-back">‹</div>
-      <div class="ob-step-label" id="ob-step-label">Étape 1 sur 6</div>
-      <div class="ob-skip" id="ob-skip">Passer</div>
-    </div>
-    <div class="ob-prog-wrap" id="ob-prog-wrap" style="opacity:0">
-      <div class="ob-prog-fill" id="ob-prog-fill"></div>
+    <!-- ── S0 : SPLASH ── -->
+    <div class="slide scroll-full active" id="s0">
+      <div style="height:100%;display:flex;align-items:center;justify-content:center">
+        <div class="logo-wrap">
+          <img class="logo-flower lg" id="flower-splash"
+               src="https://www.figma.com/api/mcp/asset/4130119d-7ffb-444a-be68-817c79242db8"
+               alt="" onerror="this.setAttribute('data-fallback','1')">
+          <span class="logo-text lg">LOMI</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Slides -->
-    <div class="ob-slides">
+    <!-- ── S1 : WELCOME ── -->
+    <div class="slide scroll-full" id="s1">
+      <div class="inner">
+        <div class="logo-wrap">
+          <img class="logo-flower sm"
+               src="https://www.figma.com/api/mcp/asset/4130119d-7ffb-444a-be68-817c79242db8"
+               alt="" onerror="this.setAttribute('data-fallback','1')">
+          <span class="logo-text sm">LOMI</span>
+        </div>
 
-      <!-- ── SLIDE 0 : WELCOME ── -->
-      <div class="ob-slide active" id="slide-0">
-        <div class="welcome-wrap">
-          <div class="welcome-logo">lo<span>mi</span></div>
-          <div class="welcome-tag">Votre compagnon intelligent pour le protocole Low FODMAP</div>
-          <div class="welcome-features">
-            <div class="wf">
-              
-              <div>
-                <span class="wf-label">Protocole personnalisé</span>
-                <span class="wf-desc">Adapté à votre profil, vos symptômes et votre phase</span>
-              </div>
-            </div>
-            <div class="wf">
-              
-              <div>
-                <span class="wf-label">Suivi des symptômes</span>
-                <span class="wf-desc">Mesurez votre progression semaine après semaine</span>
-              </div>
-            </div>
-            <div class="wf">
-              
-              <div>
-                <span class="wf-label">Base FODMAP complète</span>
-                <span class="wf-desc">65+ aliments avec statut par phase de traitement</span>
-              </div>
+        <p class="welcome-tag">Votre compagnon intelligent<br>pour le protocole Low FODMAP</p>
+
+        <div class="feat-cards">
+          <div class="feat-card">
+            <div class="feat-card-body">
+              <div class="t">Protocole personnalisé</div>
+              <div class="d">Adapté à votre profil, vos symptômes et votre phase d'avancement</div>
             </div>
           </div>
-          <div class="spacer"></div>
+          <div class="feat-card">
+            <div class="feat-card-body">
+              <div class="t">Suivi des symptômes</div>
+              <div class="d">Mesurez votre progression semaine après semaine</div>
+            </div>
+          </div>
+          <div class="feat-card">
+            <div class="feat-card-body">
+              <div class="t">Base FODMAP complète</div>
+              <div class="d">65+ aliments avec statut par phase de traitement</div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <!-- ── SLIDE 1 : DIAGNOSTIC & SÉCURITÉ ── -->
-      <div class="ob-slide" id="slide-1">
-        
-        <div class="ob-title">Votre diagnostic</div>
-        <div class="ob-subtitle">Confirmons que lomi est bien adapté à votre situation.</div>
-
-        <div class="ob-sect">Avez-vous un diagnostic de SII par un médecin ?</div>
-        <div class="tri-row" id="diag-row">
-          <div class="tri-card" data-val="yes" onclick="pickTri('diag',this)">
-            <div class="tri-emoji">Oui</div>
-            <div class="tri-label">Oui</div>
-          </div>
-          <div class="tri-card" data-val="ongoing" onclick="pickTri('diag',this)">
-            <div class="tri-emoji">Parfois</div>
-            <div class="tri-label">En cours</div>
-          </div>
-          <div class="tri-card" data-val="no" onclick="pickTri('diag',this)">
-            <div class="tri-emoji">Non</div>
-            <div class="tri-label">Non</div>
-          </div>
+    <!-- ── S2 : MENTIONS LÉGALES ── -->
+    <div class="slide scroll-full" id="s2">
+      <div class="inner" style="padding-top:20px;padding-bottom:32px;display:flex;flex-direction:column;gap:16px">
+        <div class="logo-wrap" style="justify-content:flex-start">
+          <img class="logo-flower sm"
+               src="https://www.figma.com/api/mcp/asset/4130119d-7ffb-444a-be68-817c79242db8"
+               alt="" onerror="this.setAttribute('data-fallback','1')">
+          <span class="logo-text sm">LOMI</span>
         </div>
-
-        <div class="ob-sect" style="margin-top:22px">
-          Présentez-vous l'un de ces symptômes ?
-          <span style="color:rgba(255,80,80,.6);font-size:9px;letter-spacing:0;text-transform:none;font-weight:500"> (signaux d'alerte)</span>
+        <p class="legal-intro">Avant toute chose, nous avons besoin que vous preniez connaissance et acceptiez nos mentions légales</p>
+        <div class="legal-box">
+          <strong>Avertissement Médical et Conditions d'Utilisation</strong><br><br>
+          L'accès et l'utilisation de l'application LOMI sont soumis à l'acceptation sans réserve du présent avertissement médical. Veuillez le lire attentivement avant de poursuivre.<br><br>
+          <strong>1. Nature du service : Accompagnement et non-substitution médicale</strong><br>
+          LOMI est un outil numérique d'accompagnement diététique et d'aide à l'autogestion du Syndrome de l'Intestin Irritable (SII). LOMI n'est pas un dispositif médical et ne fournit aucun diagnostic, avis médical, ni prescription. Les informations et protocoles générés sont fournis à titre purement indicatif et éducatif.<br><br>
+          <strong>2. Obligation de suivi médical</strong><br>
+          Le suivi du protocole Low FODMAP doit impérativement s'inscrire dans le cadre d'un parcours de soins encadré. Vous ne devez jamais modifier, suspendre ou interrompre un traitement médical sur la base des informations reçues via l'application LOMI.<br><br>
+          <strong>3. Risques nutritionnels et limites du protocole</strong><br>
+          Le protocole Low FODMAP comporte une phase de restriction alimentaire stricte. Une application prolongée, incorrecte ou non supervisée présente des risques de carences nutritionnelles et d'altération du microbiote intestinal.<br><br>
+          <strong>4. Absence de prise en charge des urgences</strong><br>
+          LOMI n'est pas un système de surveillance médicale d'urgence. En cas de symptômes aigus, de douleurs intolérables ou de saignements, consultez immédiatement votre médecin ou contactez le 15.<br><br>
+          <strong>5. Confidentialité des données</strong><br>
+          Vos données de santé sont strictement confidentielles et sécurisées sur un serveur certifié HDS. Elles ne sont en aucun cas transmises à des tiers sans votre consentement explicite.<br><br>
+          Je certifie avoir pris connaissance de cet avertissement médical. Je comprends que LOMI est un outil d'accompagnement qui ne remplace pas mon médecin, et j'accepte que l'utilisation de l'application se fasse sous ma propre responsabilité dans le cadre d'un suivi médical adapté.
         </div>
-        <div class="cb-list" id="rf-list">
-          <div class="cb-item" onclick="toggleCb(this,'rf')">
-            <div class="cb-box"><div class="cb-tick">✓</div></div>
-            <div class="cb-text">Saignements inexpliqués</div>
-          </div>
-          <div class="cb-item" onclick="toggleCb(this,'rf')">
-            <div class="cb-box"><div class="cb-tick">✓</div></div>
-            <div class="cb-text">Perte de poids soudaine</div>
-          </div>
-          <div class="cb-item" onclick="toggleCb(this,'rf')">
-            <div class="cb-box"><div class="cb-tick">✓</div></div>
-            <div class="cb-text">Fièvre nocturne</div>
-          </div>
-          <div class="cb-item" onclick="toggleCb(this,'rf')">
-            <div class="cb-box"><div class="cb-tick">✓</div></div>
-            <div class="cb-text">Anémie</div>
-          </div>
-          <div class="cb-item cb-none" onclick="toggleCb(this,'rf')">
-            <div class="cb-box"><div class="cb-tick">✓</div></div>
-            <div class="cb-text">Aucun de ces symptômes</div>
-          </div>
-        </div>
-
-        <div class="rf-alert" id="rf-alert">
-          
-          <div>
-            <div class="rf-alert-head">Consultation médicale recommandée</div>
-            <div class="rf-alert-body">Ces symptômes nécessitent une évaluation médicale urgente avant de commencer tout protocole alimentaire. Veuillez consulter votre médecin.</div>
-          </div>
-        </div>
-        <div class="spacer"></div>
       </div>
+    </div>
 
-      <!-- ── SLIDE 2 : PROFIL SII ── -->
-      <div class="ob-slide" id="slide-2">
-        
-        <div class="ob-title">Votre profil de SII</div>
-        <div class="ob-subtitle">Chaque type de SII a des besoins spécifiques — les recommandations seront adaptées.</div>
-
-        <div class="type-cards" id="type-cards">
-          <div class="type-card" data-val="D" onclick="pickType(this)">
-            <div class="type-badge">SII-D</div>
-            <div class="type-info">
-              <div class="type-name">Diarrhée dominante</div>
-              <div class="type-desc">Selles molles ou liquides fréquentes, urgences défécatoires</div>
-            </div>
-            <div class="radio"><div class="radio-dot"></div></div>
-          </div>
-          <div class="type-card" data-val="C" onclick="pickType(this)">
-            <div class="type-badge">SII-C</div>
-            <div class="type-info">
-              <div class="type-name">Constipation dominante</div>
-              <div class="type-desc">Selles rares et dures, sensation d'évacuation incomplète</div>
-            </div>
-            <div class="radio"><div class="radio-dot"></div></div>
-          </div>
-          <div class="type-card" data-val="M" onclick="pickType(this)">
-            <div class="type-badge">SII-M</div>
-            <div class="type-info">
-              <div class="type-name">Mixte / Alternance</div>
-              <div class="type-desc">Alternance entre diarrhée et constipation</div>
-            </div>
-            <div class="radio"><div class="radio-dot"></div></div>
-          </div>
-          <div class="type-card" data-val="U" onclick="pickType(this)">
-            <div class="type-badge">SII-U</div>
-            <div class="type-info">
-              <div class="type-name">Inclassable</div>
-              <div class="type-desc">Transit ne correspond pas clairement aux autres profils</div>
-            </div>
-            <div class="radio"><div class="radio-dot"></div></div>
-          </div>
+    <!-- ── S3 : ÉTAPE 1 — DIAGNOSTIC ── -->
+    <div class="slide" id="s3">
+      <div class="step-hdr">
+        <div class="step-nav">
+          <button class="step-back" onclick="back()">‹</button>
+          <span class="step-lbl">Étape 1 sur 5</span>
         </div>
-        <div class="spacer"></div>
+        <div class="prog-track"><div class="prog-fill" style="width:20%"></div></div>
+        <div>
+          <div class="step-title">Votre diagnostic</div>
+          <div class="step-sub" style="margin-top:8px">Confirmons que lomi est bien adapté à votre situation</div>
+        </div>
       </div>
-
-      <!-- ── SLIDE 3 : SYMPTÔMES BASELINE ── -->
-      <div class="ob-slide" id="slide-3">
-        
-        <div class="ob-title">Votre état de base</div>
-        <div class="ob-subtitle">Ces données établissent votre point de départ pour mesurer votre progression.</div>
-
-        <div class="slider-section">
-
-          <div class="slider-row" id="row-bloat" data-level="mid">
-            <div class="slider-header">
-              <div class="slider-name">Ballonnements / Gaz</div>
-              <div>
-                <span class="slider-val" id="val-bloat">5</span><span class="slider-val-sub">/10</span>
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <div class="slider-track">
-                <div class="slider-fill" id="fill-bloat" style="width:44%"></div>
-              </div>
-              <input type="range" class="ob-range" id="range-bloat" min="1" max="10" value="5"
-                oninput="updateSlider('bloat',this.value)">
-            </div>
-            <div class="slider-labels">
-              <span class="slider-min">Aucun</span>
-              <span class="slider-max">Insupportable</span>
-            </div>
+      <div class="step-body">
+        <div class="q-lbl">Avez-vous obtenu un diagnostic de SII de la part d'un médecin ?</div>
+        <div class="choice-row" id="diag-row">
+          <div class="choice-btn" data-val="oui" onclick="pickChoice('diag',this)">
+            <span class="choice-label">Oui</span>
           </div>
-
-          <div class="slider-row" id="row-pain" data-level="mid">
-            <div class="slider-header">
-              <div class="slider-name">Douleurs abdominales</div>
-              <div>
-                <span class="slider-val" id="val-pain">5</span><span class="slider-val-sub">/10</span>
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <div class="slider-track">
-                <div class="slider-fill" id="fill-pain" style="width:44%"></div>
-              </div>
-              <input type="range" class="ob-range" id="range-pain" min="1" max="10" value="5"
-                oninput="updateSlider('pain',this.value)">
-            </div>
-            <div class="slider-labels">
-              <span class="slider-min">Aucune</span>
-              <span class="slider-max">Très intenses</span>
-            </div>
+          <div class="choice-btn" data-val="non" onclick="pickChoice('diag',this)">
+            <span class="choice-label">Non</span>
           </div>
-
-          <div class="slider-row" id="row-urgency" data-level="mid">
-            <div class="slider-header">
-              <div class="slider-name">Urgence défécatoire</div>
-              <div>
-                <span class="slider-val" id="val-urgency">5</span><span class="slider-val-sub">/10</span>
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <div class="slider-track">
-                <div class="slider-fill" id="fill-urgency" style="width:44%"></div>
-              </div>
-              <input type="range" class="ob-range" id="range-urgency" min="1" max="10" value="5"
-                oninput="updateSlider('urgency',this.value)">
-            </div>
-            <div class="slider-labels">
-              <span class="slider-min">Jamais</span>
-              <span class="slider-max">Très fréquente</span>
-            </div>
-          </div>
-
         </div>
-        <div class="spacer"></div>
+
+        <div class="q-lbl" style="margin-top:24px">Présentez-vous l'un de ces symptômes ?</div>
+        <div class="chk-list" id="rf-list">
+          <div class="chk-item" onclick="toggleRF(this)">
+            <div class="chk-box"><span class="chk-tick">✓</span></div>
+            <span class="chk-title">Saignements inexpliqués</span>
+          </div>
+          <div class="chk-item" onclick="toggleRF(this)">
+            <div class="chk-box"><span class="chk-tick">✓</span></div>
+            <span class="chk-title">Perte de poids soudaine</span>
+          </div>
+          <div class="chk-item" onclick="toggleRF(this)">
+            <div class="chk-box"><span class="chk-tick">✓</span></div>
+            <span class="chk-title">Fièvre nocturne</span>
+          </div>
+          <div class="chk-item" onclick="toggleRF(this)">
+            <div class="chk-box"><span class="chk-tick">✓</span></div>
+            <span class="chk-title">Anémie</span>
+          </div>
+          <div class="chk-item cb-none" onclick="toggleRF(this)">
+            <div class="chk-box"><span class="chk-tick">✓</span></div>
+            <span class="chk-title">Aucun de ces symptômes</span>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- ── SLIDE 4 : ALIMENTATION ── -->
-      <div class="ob-slide" id="slide-4">
-        
-        <div class="ob-title">Alimentation</div>
-        <div class="ob-subtitle">Pour filtrer les recommandations et exclure les aliments incompatibles.</div>
-
-        <div class="ob-sect">Régime actuel</div>
-        <div class="ob-chips">
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Végétarien</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Vegan</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Sans Gluten</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Sans Lactose</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Sans Œufs</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Halal</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Kosher</div>
+    <!-- ── S4 : ÉTAPE 2 — PROFIL SII ── -->
+    <div class="slide" id="s4">
+      <div class="step-hdr">
+        <div class="step-nav">
+          <button class="step-back" onclick="back()">‹</button>
+          <span class="step-lbl">Étape 2 sur 5</span>
         </div>
-
-        <div class="ob-sect" style="margin-top:20px">Allergies diagnostiquées</div>
-        <div class="ob-chips">
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Gluten (cœliaque)</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Lactose</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Œufs</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Soja</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Noix / Noisettes</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Arachides</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Poisson</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Crustacés</div>
-          <div class="ob-chip" onclick="this.classList.toggle('on')"><span class="chip-tick">✓&nbsp;</span>Aucune</div>
+        <div class="prog-track"><div class="prog-fill" style="width:40%"></div></div>
+        <div>
+          <div class="step-title">Votre profil de SII</div>
+          <div class="step-sub" style="margin-top:8px">Chaque forme de SII a des besoins spécifiques — les recommandations seront adaptées</div>
         </div>
-        <div class="spacer"></div>
       </div>
+      <div class="step-body">
+        <div class="radio-cards" id="sii-cards">
+          <div class="radio-card" data-val="D" onclick="pickRadio('sii',this)">
+            <div class="rc-chip">SII-D</div>
+            <div class="rc-info">
+              <div class="rc-title">Diarrhée dominante</div>
+              <div class="rc-desc">Selles molles ou liquides fréquentes, urgences défécatoires</div>
+            </div>
+            <div class="rc-dot"></div>
+          </div>
+          <div class="radio-card" data-val="C" onclick="pickRadio('sii',this)">
+            <div class="rc-chip">SII-C</div>
+            <div class="rc-info">
+              <div class="rc-title">Constipation dominante</div>
+              <div class="rc-desc">Selles rares et dures, sensation d'évacuation incomplète</div>
+            </div>
+            <div class="rc-dot"></div>
+          </div>
+          <div class="radio-card" data-val="M" onclick="pickRadio('sii',this)">
+            <div class="rc-chip">SII-M</div>
+            <div class="rc-info">
+              <div class="rc-title">Mixte / Alternance</div>
+              <div class="rc-desc">Alternance entre diarrhée et constipation</div>
+            </div>
+            <div class="rc-dot"></div>
+          </div>
+          <div class="radio-card" data-val="U" onclick="pickRadio('sii',this)">
+            <div class="rc-chip">SII-U</div>
+            <div class="rc-info">
+              <div class="rc-title">Inclassable</div>
+              <div class="rc-desc">Transit ne correspond pas clairement aux autres profils</div>
+            </div>
+            <div class="rc-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- ── SLIDE 5 : MATURITÉ FODMAP ── -->
-      <div class="ob-slide" id="slide-5">
-        
-        <div class="ob-title">Votre avancement</div>
-        <div class="ob-subtitle">Nous vous placerons directement dans la bonne phase du protocole Low FODMAP.</div>
+    <!-- ── S5 : ÉTAPE 3 — ÉTAT DE BASE ── -->
+    <div class="slide" id="s5">
+      <div class="step-hdr">
+        <div class="step-nav">
+          <button class="step-back" onclick="back()">‹</button>
+          <span class="step-lbl">Étape 3 sur 5</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:60%"></div></div>
+        <div>
+          <div class="step-title">Votre état de base</div>
+          <div class="step-sub" style="margin-top:8px">Ces données établissent votre point de départ pour mesurer votre progression</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="slider-cards">
+          <div class="slider-card">
+            <div class="sl-top">
+              <span class="sl-name">Ballonnements &amp; Gaz</span>
+              <span class="sl-val"><em id="v-bloat">5</em>/10</span>
+            </div>
+            <div class="sl-track-wrap">
+              <div class="sl-track"><div class="sl-fill" id="f-bloat" style="width:44%"></div></div>
+              <input type="range" class="range" min="1" max="10" value="5" oninput="updateSl('bloat',this.value)">
+            </div>
+            <div class="sl-labels"><span class="sl-lbl">Aucuns</span><span class="sl-lbl">Insupportable</span></div>
+          </div>
+          <div class="slider-card">
+            <div class="sl-top">
+              <span class="sl-name">Douleurs abdominales</span>
+              <span class="sl-val"><em id="v-pain">5</em>/10</span>
+            </div>
+            <div class="sl-track-wrap">
+              <div class="sl-track"><div class="sl-fill" id="f-pain" style="width:44%"></div></div>
+              <input type="range" class="range" min="1" max="10" value="5" oninput="updateSl('pain',this.value)">
+            </div>
+            <div class="sl-labels"><span class="sl-lbl">Aucune</span><span class="sl-lbl">Très intenses</span></div>
+          </div>
+          <div class="slider-card">
+            <div class="sl-top">
+              <span class="sl-name">Urgence défécatoire</span>
+              <span class="sl-val"><em id="v-urg">5</em>/10</span>
+            </div>
+            <div class="sl-track-wrap">
+              <div class="sl-track"><div class="sl-fill" id="f-urg" style="width:44%"></div></div>
+              <input type="range" class="range" min="1" max="10" value="5" oninput="updateSl('urg',this.value)">
+            </div>
+            <div class="sl-labels"><span class="sl-lbl">Jamais</span><span class="sl-lbl">Très fréquente</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- ── S6 : ÉTAPE 4 — ALIMENTATION ── -->
+    <div class="slide" id="s6">
+      <div class="step-hdr">
+        <div class="step-nav">
+          <button class="step-back" onclick="back()">‹</button>
+          <span class="step-lbl">Étape 4 sur 5</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:80%"></div></div>
+        <div>
+          <div class="step-title">Alimentation</div>
+          <div class="step-sub" style="margin-top:8px">Pour filtrer les recommandations et exclure les aliments incompatibles</div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="sec-lbl">Régime actuel</div>
+        <div class="chips">
+          <div class="chip" onclick="this.classList.toggle('on')">Végétarien</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Vegan</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Sans Gluten</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Sans Lactose</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Sans Œufs</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Halal</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Kosher</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Aucun</div>
+        </div>
+        <div class="sec-lbl">Allergies diagnostiquées</div>
+        <div class="chips">
+          <div class="chip" onclick="this.classList.toggle('on')">Gluten (cœliaque)</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Lactose</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Œufs</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Soja</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Noix / Noisettes</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Arachides</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Poisson</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Crustacés</div>
+          <div class="chip" onclick="this.classList.toggle('on')">Aucune</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── S7 : ÉTAPE 5 — AVANCEMENT ── -->
+    <div class="slide" id="s7">
+      <div class="step-hdr">
+        <div class="step-nav">
+          <button class="step-back" onclick="back()">‹</button>
+          <span class="step-lbl">Étape 5 sur 5</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:100%"></div></div>
+        <div>
+          <div class="step-title">Votre avancement</div>
+          <div class="step-sub" style="margin-top:8px">Nous vous placerons directement dans la bonne phase du protocole Low FODMAP</div>
+        </div>
+      </div>
+      <div class="step-body">
         <div class="level-cards" id="level-cards">
           <div class="level-card" data-val="beginner" onclick="pickLevel(this)">
-            <div class="level-emoji-box">1</div>
-            <div class="level-body">
-              <div class="level-title">Débutant</div>
-              <div class="level-desc">Je ne connais pas ou je commence tout juste le protocole.</div>
+            <div class="lv-num">1</div>
+            <div class="lv-info">
+              <div class="lv-title">Débutant</div>
+              <div class="lv-desc">Je ne connais pas ou je commence tout juste le protocole.</div>
             </div>
-            <div class="radio"><div class="radio-dot"></div></div>
+            <div class="rc-dot"></div>
           </div>
           <div class="level-card" data-val="ongoing" onclick="pickLevel(this)">
-            <div class="level-emoji-box">2</div>
-            <div class="level-body">
-              <div class="level-title">En cours</div>
-              <div class="level-desc">Je suis déjà en phase d'éviction depuis 2 à 6 semaines.</div>
+            <div class="lv-num">2</div>
+            <div class="lv-info">
+              <div class="lv-title">En cours</div>
+              <div class="lv-desc">Je suis déjà en phase d'éviction depuis 2 à 6 semaines.</div>
             </div>
-            <div class="radio"><div class="radio-dot"></div></div>
+            <div class="rc-dot"></div>
           </div>
           <div class="level-card" data-val="reintro" onclick="pickLevel(this)">
-            <div class="level-emoji-box">3</div>
-            <div class="level-body">
-              <div class="level-title">Réintroduction</div>
-              <div class="level-desc">Mes symptômes ont diminué, je veux tester mes seuils de tolérance.</div>
+            <div class="lv-num">3</div>
+            <div class="lv-info">
+              <div class="lv-title">Réintroduction</div>
+              <div class="lv-desc">Mes symptômes ont diminué, je veux tester mes seuils de tolérance.</div>
             </div>
-            <div class="radio"><div class="radio-dot"></div></div>
+            <div class="rc-dot"></div>
           </div>
-        </div>
-        <div class="spacer"></div>
-      </div>
-
-      <!-- ── SLIDE 6 : MODE DE VIE ── -->
-      <div class="ob-slide" id="slide-6">
-        
-        <div class="ob-title">Votre quotidien</div>
-        <div class="ob-subtitle">Pour personnaliser les notifications et les suggestions de repas.</div>
-
-        <div class="ob-sect">Vous cuisinez vos propres repas…</div>
-        <div class="tri-row" id="cook-row">
-          <div class="tri-card" data-val="never" onclick="pickTri('cook',this)">
-            <div class="tri-emoji">Rap</div>
-            <div class="tri-label">Jamais</div>
-          </div>
-          <div class="tri-card" data-val="sometimes" onclick="pickTri('cook',this)">
-            <div class="tri-emoji">Trd</div>
-            <div class="tri-label">Parfois</div>
-          </div>
-          <div class="tri-card" data-val="often" onclick="pickTri('cook',this)">
-            <div class="tri-emoji">Fait</div>
-            <div class="tri-label">Souvent</div>
-          </div>
-        </div>
-
-        <div class="ob-sect" style="margin-top:22px">
-          Votre niveau de stress actuel
-          <span style="font-size:9px;color:rgba(255,255,255,.25);letter-spacing:0;text-transform:none;font-weight:400"> — le stress amplifie le SII</span>
-        </div>
-        <div class="stress-row" id="stress-row">
-          <div class="stress-btn" data-val="1" onclick="pickStress(this)">
-            
-            <div class="stress-label">Très calme</div>
-          </div>
-          <div class="stress-btn" data-val="2" onclick="pickStress(this)">
-            
-            <div class="stress-label">Calme</div>
-          </div>
-          <div class="stress-btn" data-val="3" onclick="pickStress(this)">
-            
-            <div class="stress-label">Modéré</div>
-          </div>
-          <div class="stress-btn" data-val="4" onclick="pickStress(this)">
-            
-            <div class="stress-label">Élevé</div>
-          </div>
-          <div class="stress-btn" data-val="5" onclick="pickStress(this)">
-            
-            <div class="stress-label">Très élevé</div>
-          </div>
-        </div>
-        <div class="spacer"></div>
-      </div>
-
-      <!-- ── SLIDE 7 : DONE ── -->
-      <div class="ob-slide" id="slide-7">
-        <div class="done-wrap">
-          <div class="done-ring"></div>
-          <div class="done-title">Lomi est prêt !</div>
-          <div class="done-sub">Votre protocole Low FODMAP personnalisé commence maintenant.</div>
-          <div class="done-list">
-            <div class="done-row"><div class="done-dot"></div><div class="done-text" id="done-phase">Phase Élimination — 4 à 8 semaines</div></div>
-            <div class="done-row"><div class="done-dot"></div><div class="done-text" id="done-type">Profil SII adapté</div></div>
-            <div class="done-row"><div class="done-dot"></div><div class="done-text">65 aliments référencés disponibles</div></div>
-            <div class="done-row"><div class="done-dot"></div><div class="done-text">Notifications personnalisées activées</div></div>
-          </div>
-          <div class="spacer"></div>
         </div>
       </div>
-
-    </div><!-- /ob-slides -->
-
-    <!-- Footer -->
-    <div class="ob-foot">
-      <button class="ob-btn" id="ob-btn">Commencer →</button>
     </div>
 
-  </div><!-- /ob -->
+    <!-- ── S8 : LOMI EST PRÊT ── -->
+    <div class="slide scroll-full" id="s8">
+      <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px">
+        <img class="done-flower" id="done-flower"
+             src="https://www.figma.com/api/mcp/asset/4130119d-7ffb-444a-be68-817c79242db8"
+             alt="" style="opacity:0" onerror="this.setAttribute('data-fallback','1')">
+        <div class="done-chip">Protocole activé</div>
+        <div class="done-title">LOMI</div>
+        <div class="done-sub">Votre protocole Low FODMAP personnalisé commence maintenant.</div>
+        <div class="done-list">
+          <div class="done-row"><div class="done-dot"></div><div class="done-text" id="done-phase">Phase Élimination — 4 à 8 semaines</div></div>
+          <div class="done-row"><div class="done-dot"></div><div class="done-text" id="done-sii">Profil SII adapté</div></div>
+          <div class="done-row"><div class="done-dot"></div><div class="done-text">65 aliments référencés disponibles</div></div>
+          <div class="done-row"><div class="done-dot"></div><div class="done-text">Suivi des symptômes activé</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides-wrap -->
+
+  <!-- Footer -->
+  <div class="footer">
+    <button class="btn" id="main-btn">Commencer</button>
+  </div>
+
 </div><!-- /app -->
 
 <script>
-// ════════════════════════════════
-//  STATE
-// ════════════════════════════════
+/* ═══════════════════════════
+   STATE
+═══════════════════════════ */
 let step = 0;
-const TOTAL = 6;
 let busy = false;
+const LAST = 8;
 
 const state = {
-  diag: null, iisType: null,
-  symptoms: { bloat: 5, pain: 5, urgency: 5 },
-  diets: [], allergies: [],
-  fodmap: null, cooking: null, stress: null
+  diag: null,
+  siiType: null,
+  symptoms: { bloat: 5, pain: 5, urg: 5 },
+  level: null
 };
 
-// ════════════════════════════════
-//  NAVIGATION
-// ════════════════════════════════
+/* ═══════════════════════════
+   NAVIGATION
+═══════════════════════════ */
 function goTo(target) {
-  if (busy) return;
+  if (busy || target === step) return;
   busy = true;
 
-  const from = document.getElementById('slide-' + step);
-  const to   = document.getElementById('slide-' + target);
-  const fwd  = target > step;
-  const T    = '.26s ease';
+  const fwd = target > step;
+  const from = document.getElementById('s' + step);
+  const to   = document.getElementById('s' + target);
 
-  // Start: position 'to' off-screen with no transition
+  // Instant off-screen placement
   to.style.transition = 'none';
   to.style.opacity    = '0';
-  to.style.transform  = `translateX(${fwd ? 28 : -28}px)`;
+  to.style.transform  = `translateX(${fwd ? 44 : -44}px)`;
   to.style.pointerEvents = 'none';
-  to.getBoundingClientRect(); // force reflow
+  to.getBoundingClientRect();
 
-  // Animate out 'from'
-  from.style.transition = `opacity ${T},transform ${T}`;
+  // Animate out
+  from.style.transition = 'opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1)';
   from.style.opacity    = '0';
-  from.style.transform  = `translateX(${fwd ? -28 : 28}px)`;
+  from.style.transform  = `translateX(${fwd ? -44 : 44}px)`;
   from.style.pointerEvents = 'none';
 
-  // Animate in 'to'
-  to.style.transition = `opacity ${T},transform ${T}`;
+  // Animate in
+  to.style.transition = 'opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1)';
   to.style.opacity    = '1';
   to.style.transform  = 'translateX(0)';
-  to.style.pointerEvents = 'all';
+
+  // Blob vertical position
+  const blobTop = (target <= 2 || target === 8) ? -38 : 251;
+  document.getElementById('blob').style.top = blobTop + 'px';
 
   step = target;
-  updateUI();
+  syncBtn();
 
   setTimeout(() => {
-    // Clean up: let CSS class take over
     from.classList.remove('active');
     from.style.cssText = '';
     to.classList.add('active');
     to.style.cssText = '';
     to.scrollTop = 0;
     busy = false;
-  }, 290);
+    if (target === 8) triggerDoneAnim();
+  }, 310);
 }
 
 function next() {
-  if (step === 0)        goTo(1);
-  else if (step < TOTAL) goTo(step + 1);
-  else if (step === TOTAL) goTo(TOTAL + 1);
-  else window.location.href = 'index.html';
+  if (step === LAST) { sessionStorage.setItem('onboarding_done', '1'); window.location.href = 'index.html'; return; }
+  goTo(step + 1);
 }
 
-function back() { if (step > 1) goTo(step - 1); }
-
-// ════════════════════════════════
-//  UI UPDATE
-// ════════════════════════════════
-function updateUI() {
-  const top      = document.getElementById('ob-top');
-  const progWrap = document.getElementById('ob-prog-wrap');
-  const fill     = document.getElementById('ob-prog-fill');
-  const label    = document.getElementById('ob-step-label');
-  const backBtn  = document.getElementById('ob-back');
-  const skipBtn  = document.getElementById('ob-skip');
-  const btn      = document.getElementById('ob-btn');
-
-  const isWelcome = step === 0;
-  const isDone    = step === TOTAL + 1;
-  const isStep    = !isWelcome && !isDone;
-
-  // Top bar + progress
-  top.style.cssText      = isStep ? '' : 'opacity:0;pointer-events:none';
-  progWrap.style.cssText = isStep ? '' : 'opacity:0';
-
-  if (isStep) {
-    label.textContent       = `Étape ${step} sur ${TOTAL}`;
-    backBtn.style.visibility = step <= 1 ? 'hidden' : 'visible';
-    fill.style.width         = (step / TOTAL * 100) + '%';
-    const skippable = [1, 3, 4, 6].includes(step);
-    skipBtn.style.visibility = skippable ? 'visible' : 'hidden';
-  }
-
-  // Button
-  if (isWelcome)     { btn.textContent = 'Commencer →'; btn.disabled = false; }
-  else if (isDone)   { btn.textContent = 'Découvrir mon application'; btn.disabled = false; }
-  else if (step === TOTAL) { btn.textContent = 'Terminer'; btn.disabled = false; }
-  else               { btn.textContent = 'Continuer'; btn.disabled = isRequired(); }
+function back() {
+  if (step > 1) goTo(step - 1);
 }
 
-function isRequired() {
-  if (step === 2) return !state.iisType;
-  if (step === 5) return !state.fodmap;
-  return false;
+/* ═══════════════════════════
+   BUTTON SYNC
+═══════════════════════════ */
+function syncBtn() {
+  const btn = document.getElementById('main-btn');
+  const labels = {
+    0: 'Commencer',
+    1: 'Commencer →',
+    2: "J'accepte et je continue",
+    3: 'Continuer',
+    4: 'Continuer',
+    5: 'Continuer',
+    6: 'Continuer',
+    7: 'Terminer',
+    8: "Découvrir l'application →"
+  };
+  btn.textContent = labels[step] || 'Continuer';
+  btn.disabled = (step === 4 && !state.siiType) || (step === 7 && !state.level);
 }
 
-// ════════════════════════════════
-//  INTERACTIONS
-// ════════════════════════════════
-function pickTri(group, el) {
-  const row = group === 'diag' ? 'diag-row' : 'cook-row';
-  document.querySelectorAll('#' + row + ' .tri-card').forEach(c => c.classList.remove('sel'));
+/* ═══════════════════════════
+   INTERACTIONS
+═══════════════════════════ */
+function pickChoice(group, el) {
+  document.querySelectorAll('#diag-row .choice-btn').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
-  state[group === 'diag' ? 'diag' : 'cooking'] = el.dataset.val;
+  state.diag = el.dataset.val;
 }
 
-function toggleCb(el, group) {
-  if (group === 'rf') {
-    const isNone = el.classList.contains('cb-none');
-    if (isNone) {
-      // "Aucun" selected — uncheck all others
-      document.querySelectorAll('#rf-list .cb-item:not(.cb-none)').forEach(c => c.classList.remove('checked'));
-      el.classList.toggle('checked');
-    } else {
-      // Real symptom — uncheck "Aucun"
-      document.querySelector('#rf-list .cb-none').classList.remove('checked');
-      el.classList.toggle('checked');
-    }
-    const anyReal = document.querySelectorAll('#rf-list .cb-item.checked:not(.cb-none)').length > 0;
-    document.getElementById('rf-alert').classList.toggle('show', anyReal);
+function toggleRF(el) {
+  const isNone = el.classList.contains('cb-none');
+  if (isNone) {
+    document.querySelectorAll('#rf-list .chk-item:not(.cb-none)').forEach(c => c.classList.remove('sel'));
+    el.classList.toggle('sel');
+  } else {
+    document.querySelector('#rf-list .cb-none')?.classList.remove('sel');
+    el.classList.toggle('sel');
   }
 }
 
-function pickType(el) {
-  document.querySelectorAll('#type-cards .type-card').forEach(c => c.classList.remove('sel'));
+function pickRadio(group, el) {
+  document.querySelectorAll('#sii-cards .radio-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
-  state.iisType = el.dataset.val;
-  document.getElementById('done-type').textContent = `Profil SII-${el.dataset.val} adapté`;
-  updateUI();
+  state.siiType = el.dataset.val;
+  syncBtn();
 }
 
-function updateSlider(id, v) {
-  const n = parseInt(v);
-  document.getElementById('val-' + id).textContent = n;
-  document.getElementById('fill-' + id).style.width = ((n-1)/9*100) + '%';
-  state.symptoms[id] = n;
-  const row = document.getElementById('row-' + id);
-  row.dataset.level = n <= 3 ? 'low' : n <= 6 ? 'mid' : 'high';
+function updateSl(id, v) {
+  document.getElementById('v-' + id).textContent = v;
+  document.getElementById('f-' + id).style.width = ((v - 1) / 9 * 100) + '%';
+  state.symptoms[id] = +v;
 }
 
 function pickLevel(el) {
   document.querySelectorAll('#level-cards .level-card').forEach(c => c.classList.remove('sel'));
   el.classList.add('sel');
-  state.fodmap = el.dataset.val;
+  state.level = el.dataset.val;
   const phases = {
     beginner: 'Phase Élimination — 4 à 8 semaines',
     ongoing:  'Phase Élimination en cours',
     reintro:  'Phase Réintroduction — test des seuils'
   };
   document.getElementById('done-phase').textContent = phases[el.dataset.val];
-  updateUI();
+  syncBtn();
 }
 
-function pickStress(el) {
-  document.querySelectorAll('#stress-row .stress-btn').forEach(b => b.classList.remove('sel'));
-  el.classList.add('sel');
-  state.stress = parseInt(el.dataset.val);
+/* ═══════════════════════════
+   DONE ANIMATION
+═══════════════════════════ */
+function triggerDoneAnim() {
+  const flower = document.getElementById('done-flower');
+  if (!flower) return;
+  flower.style.animation = 'none';
+  flower.getBoundingClientRect();
+  flower.style.animation = 'flowerPop .65s cubic-bezier(.34,1.56,.64,1) forwards';
+  // Update SII label
+  const siiLabels = { D:'SII-D — Diarrhée dominante', C:'SII-C — Constipation dominante', M:'SII-M — Mixte', U:'SII-U — Inclassable' };
+  if (state.siiType) document.getElementById('done-sii').textContent = siiLabels[state.siiType];
 }
 
-// ════════════════════════════════
-//  INIT
-// ════════════════════════════════
-document.getElementById('ob-btn').addEventListener('click', next);
-document.getElementById('ob-back').addEventListener('click', back);
-document.getElementById('ob-skip').addEventListener('click', next);
+/* ═══════════════════════════
+   SPLASH AUTO-PROCEED
+═══════════════════════════ */
+setTimeout(() => { if (step === 0) goTo(1); }, 2200);
 
-// slide-0 already has .active class in HTML
+/* ═══════════════════════════
+   INIT
+═══════════════════════════ */
+document.getElementById('main-btn').addEventListener('click', next);
 
-// Clock
+// Live clock
 (function tick() {
   const d = new Date();
   const el = document.getElementById('clock');
-  if (el) el.textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0');
+  if (el) el.textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
   setTimeout(tick, 15000);
 })();
 </script>

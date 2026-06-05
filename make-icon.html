@@ -1,0 +1,30 @@
+<!DOCTYPE html><html><head><style>*{margin:0;padding:0}body{background:#000}</style></head>
+<body>
+<canvas id="c512" width="512" height="512" style="display:block"></canvas>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<script>
+const PATH = "M5.21802 5.21802C3.43126 7.00478 2.78826 9.49714 3.28331 11.796C1.30877 13.0707 0 15.2899 0 17.8135C0 20.3372 1.30877 22.5593 3.28331 23.8311C2.78826 26.1271 3.43126 28.6223 5.21802 30.4091C7.00478 32.1958 9.49714 32.8388 11.796 32.3438C13.0707 34.3183 15.2899 35.6271 17.8135 35.6271C20.3372 35.6271 22.5593 34.3183 23.8311 32.3438C26.1271 32.8388 28.6223 32.1958 30.4091 30.4091C32.1958 28.6223 32.8388 26.1299 32.3438 23.8311C34.3183 22.5564 35.6271 20.3372 35.6271 17.8135C35.6271 15.2899 34.3183 13.0678 32.3438 11.796C32.8388 9.49714 32.1958 7.00478 30.4091 5.21802C28.6223 3.43126 26.1299 2.78826 23.8311 3.28331C22.5564 1.30877 20.3372 0 17.8135 0C15.2899 0 13.0678 1.30877 11.796 3.28331C9.49714 2.78826 7.00478 3.43126 5.21802 5.21802Z";
+
+function draw(canvas) {
+  const s = canvas.width;
+  const ctx = canvas.getContext('2d');
+  // Fond noir complet
+  ctx.fillStyle = '#2d2d2d';
+  ctx.fillRect(0, 0, s, s);
+  // Fleur pleine taille centrée
+  const scale = s / 35.6271;
+  ctx.save();
+  ctx.scale(scale, scale);
+  ctx.fillStyle = '#5AA6FF';
+  ctx.fill(new Path2D(PATH), 'evenodd');
+  ctx.restore();
+}
+
+draw(document.getElementById('c512'));
+draw(document.getElementById('c192'));
+
+window._get512 = () => document.getElementById('c512').toDataURL('image/png').split(',')[1];
+window._get192 = () => document.getElementById('c192').toDataURL('image/png').split(',')[1];
+window._ready = true;
+</script>
+</body></html>

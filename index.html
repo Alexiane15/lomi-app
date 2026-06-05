@@ -7,44 +7,26 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{height:100%}
+html,body{height:100%;height:100dvh}
 body{
-  height:100%;
-  background:#232323;
-  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  background:#2d2d2d;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
   display:flex;justify-content:center;
 }
 
 .app{
-  width:100%;max-width:390px;
-  height:100%;
-  background:#232323;
+  width:100%;
+  /* Sur mobile : plein écran. Sur desktop : centré 430px */
+  max-width:430px;
+  height:100%;height:100dvh;
+  background:#2d2d2d;
   display:flex;flex-direction:column;
   overflow:hidden;
   position:relative;
+  /* Safe area pour les encoches iPhone */
+  padding-top:env(safe-area-inset-top);
+  padding-bottom:env(safe-area-inset-bottom);
 }
-
-/* ── Status bar ── */
-.sbar{
-  height:54px;flex-shrink:0;
-  background:#232323;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 22px;position:relative;z-index:10;
-}
-.sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
-.di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
-.sbar-icons{display:flex;align-items:center;gap:6px}
-.sig{display:flex;gap:1.5px;align-items:flex-end;height:11px}
-.sig b{display:block;width:3px;background:#fff;border-radius:1px}
-.sig b:nth-child(1){height:3px}.sig b:nth-child(2){height:5px}.sig b:nth-child(3){height:8px}.sig b:nth-child(4){height:11px}
-.wifi-icon{position:relative;width:15px;height:11px}
-.wifi-icon::before,.wifi-icon::after{content:'';position:absolute;border:1.8px solid #fff;border-bottom:none;border-radius:50% 50% 0 0/50% 50% 0 0;left:50%;transform:translateX(-50%)}
-.wifi-icon::before{width:15px;height:8px;bottom:2px}
-.wifi-icon::after{width:9px;height:5px;bottom:2px}
-.wifi-dot{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:3px;height:3px;background:#fff;border-radius:50%}
-.batt-icon{width:24px;height:12px;border:1.5px solid rgba(255,255,255,.65);border-radius:3px;position:relative}
-.batt-icon::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:3px;height:5px;background:rgba(255,255,255,.45);border-radius:0 1px 1px 0}
-.batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
 
 /* ── Nav ── */
 .nav{
@@ -82,13 +64,14 @@ body{
 
 /* ── FAB ── */
 .fab-btn{
-  position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+  position:fixed;bottom:calc(26px + env(safe-area-inset-bottom));
+  left:50%;transform:translateX(-50%);
   width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,#1affaa,#00c8ff);
+  background:#ffffff;
   border:none;
-  box-shadow:0 3px 14px rgba(26,255,170,.4),0 2px 6px rgba(0,0,0,.35);
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;z-index:50;
+  cursor:pointer;z-index:9999;
   transition:box-shadow .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
@@ -108,7 +91,7 @@ body{
 
 /* shared sheet base */
 .fab-sheet{
-  width:100%;max-width:390px;
+  width:100%;max-width:430px;
   background:#111916;border-radius:26px 26px 0 0;
   padding:0 0 40px;
   display:none;flex-direction:column;
@@ -255,13 +238,85 @@ body{
 /* ═══════════════════════════
    SCREEN 1 — CARNET
 ═══════════════════════════ */
-.s1-content{padding:10px 20px 80px;display:flex;flex-direction:column;gap:0}
+.s1-content{padding:10px 20px calc(140px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:0}
 
-/* ── Orb float animations ── */
+/* ── Greeting ── */
+.carn-greeting{
+  font-family:"DM Mono",monospace;font-weight:400;font-size:16px;
+  color:#f4f2ed;line-height:1.45;padding-top:4px;margin-bottom:16px;
+}
 
-/* ── HOME : Greeting ── */
+/* ── Carnet + Suivi — gradient background fixe ── */
+#screen-carnet,#screen-suivi{
+  background:linear-gradient(180deg,
+    #2d2d2d 0%,
+    #313d46 35%,
+    #3a5060 55%,
+    #384d5e 75%,
+    #2e3d48 100%
+  );
+}
+.s1-content{}
+
+/* ── Glass card ── */
+.carn-card{
+  background:rgba(45,45,45,.4);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:20px;
+  padding:16px 24px;
+  display:flex;flex-direction:column;gap:12px;
+  margin-bottom:16px;
+}
+.carn-cal-card{padding:16px;}
+
+/* ── Pill chips ── */
+.carn-pills{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.carn-pill{
+  background:rgba(74,176,255,.1);border:1px solid rgba(74,176,255,.4);
+  border-radius:100px;padding:5px 10px;
+  font-family:"DM Mono",monospace;font-size:10px;font-weight:400;
+  color:#4ab0ff;letter-spacing:-.2px;white-space:nowrap;
+}
+
+/* ── Phase name ── */
+.carn-phase-name{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-weight:100;font-size:32px;color:#fff;line-height:1;
+}
+
+/* ── Phase desc ── */
+.carn-phase-desc{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+
+/* ── Day label ── */
+.carn-day-row{display:flex;justify-content:space-between;align-items:center}
+.carn-day-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.6)}
+
+/* ── Progress bar ── */
+.carn-prog-track{height:7px;background:#2d2d2d;border-radius:100px;overflow:hidden}
+.carn-prog-fill{height:100%;background:#4ab0ff;border-radius:100px;transition:width .4s ease}
+
+/* ── Phase timeline ── */
+.carn-tl-wrap{display:flex;flex-direction:column;gap:6px}
+.carn-tl-row{display:flex;align-items:center}
+.carn-tl-dot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.15);
+}
+.carn-tl-dot.active{background:#4ab0ff}
+.carn-tl-line{flex:1;height:1px;background:rgba(255,255,255,.15);margin:0 4px}
+.carn-tl-labels{display:flex;justify-content:space-between}
+.carn-tl-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.carn-tl-active{color:#4ab0ff}
+
+/* ── Conseil card title ── */
+.carn-card-title{
+  font-family:"DM Mono",monospace;font-size:12px;font-weight:500;
+  color:#fff;letter-spacing:.04em;
+}
+.carn-card-text{font-size:14px;color:rgba(255,255,255,.6);line-height:1.55}
+
+/* ── HOME : Greeting (legacy, kept for compat) ── */
 .home-greeting{display:flex;align-items:center;justify-content:space-between;padding:4px 0 14px}
-.hg-left{}
 .hg-date{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
 .hg-hi{font-size:22px;font-weight:700;color:#f4f2ed;margin-top:2px;letter-spacing:-.4px}
 .hg-streak{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:700;color:#f4f2ed;background:rgba(255,120,0,.1);border:1px solid rgba(255,120,0,.25);border-radius:14px;padding:7px 13px}
@@ -473,13 +528,14 @@ body{
   flex:1;height:30px;
   display:flex;align-items:center;justify-content:center;
   font-size:10px;font-weight:500;
-  color:rgba(255,255,255,.4);cursor:pointer;
+  color:rgba(255,255,255,.28);cursor:pointer;
   transition:color .2s,background .2s;user-select:none;
 }
 .phase+.phase{border-left:1px solid rgba(255,255,255,.08)}
 .phase.active{
-  background:linear-gradient(135deg,rgba(26,255,170,.18),rgba(74,176,255,.12));
+  background:rgba(90,166,255,.18);
   color:#5aa6ff;font-weight:700;
+  border-radius:8px;
 }
 
 /* Filter chips */
@@ -496,11 +552,21 @@ body{
   transition:opacity .15s,transform .1s;user-select:none;
 }
 .chip:active{transform:scale(.95)}
-.c-ok{background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.3);color:#5aa6ff}
+.c-ok{background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.3);color:#1affaa}
 .c-mod{background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.3);color:#ffaa00}
 .c-av{background:rgba(255,60,60,.1);border:1px solid rgba(255,60,60,.3);color:#ff5050}
 .c-cat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
-.chip.on.c-cat{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+/* ── Chip inactive base ── */
+.c-ok{background:rgba(26,255,170,.06);border:1px solid rgba(26,255,170,.2);color:rgba(26,255,170,.55)}
+.c-mod{background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.2);color:rgba(255,170,0,.55)}
+.c-av{background:rgba(255,60,60,.06);border:1px solid rgba(255,60,60,.2);color:rgba(255,60,60,.55)}
+.c-cat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.38)}
+
+/* ── Chip active ── */
+.chip.on.c-ok {background:rgba(26,255,170,.22);border-color:#1affaa;color:#1affaa;font-weight:700}
+.chip.on.c-mod{background:rgba(255,170,0,.22);border-color:#ffaa00;color:#ffaa00;font-weight:700}
+.chip.on.c-av {background:rgba(255,60,60,.22);border-color:#ff5050;color:#ff5050;font-weight:700}
+.chip.on.c-cat{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.55);color:#fff;font-weight:700}
 
 /* Results list */
 .results{padding:0 14px;margin-top:12px;display:flex;flex-direction:column;padding-bottom:28px}
@@ -543,7 +609,7 @@ body{
   content:'';position:absolute;left:0;top:9px;bottom:9px;
   width:3px;border-radius:0 2px 2px 0;
 }
-.food.ok::before{background:#5aa6ff}
+.food.ok::before{background:#1affaa}
 .food.mod::before{background:#ffaa00}
 .food.av::before{background:#ff5050}
 .food-icon{
@@ -567,7 +633,7 @@ body{
   padding:4px 10px;border-radius:20px;
   font-size:10px;font-weight:700;flex-shrink:0;white-space:nowrap;
 }
-.b-ok{background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.28);color:#5aa6ff}
+.b-ok{background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.28);color:#1affaa}
 .b-mod{background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.28);color:#ffaa00}
 .b-av{background:rgba(255,60,60,.1);border:1px solid rgba(255,60,60,.28);color:#ff5050}
 
@@ -993,6 +1059,90 @@ body{
 .suivi-next-pills{display:flex;flex-wrap:wrap;gap:6px}
 .suivi-next-pill{font-size:10px;font-weight:600;color:rgba(255,255,255,.6);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:4px 10px}
 
+/* ── Suivi fusionné — tokens typo ── */
+
+/* SF Pro Thin — gros chiffres */
+.sv-num{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-weight:100;color:#fff;line-height:1;
+}
+.sv-num.lg{font-size:42px}
+.sv-num.md{font-size:28px}
+.sv-num.accent{color:#5aa6ff}
+
+/* DM Mono — labels section */
+.sv-label{
+  font-family:'DM Mono',monospace;font-weight:500;
+  font-size:10px;color:rgba(255,255,255,.4);
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.sv-label.sm{font-size:9px}
+
+/* SF Pro Regular — corps / sous-textes */
+.sv-body{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5;font-weight:400}
+.sv-sub{font-size:9px;color:rgba(255,255,255,.3);font-weight:400}
+
+/* Selector de période */
+.sv-period{
+  flex:1;height:28px;display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.06em;
+  color:rgba(255,255,255,.28);
+  border-radius:9px;cursor:pointer;user-select:none;transition:all .2s;
+}
+.sv-period.active{background:rgba(90,166,255,.18);color:#5aa6ff}
+
+/* Restrictions grid */
+.sv-restr{
+  padding:9px 12px;border-radius:12px;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-size:12px;font-weight:400;
+  display:flex;align-items:center;gap:8px;
+}
+.sv-restr::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sv-restr.high{background:rgba(255,60,60,.08);border:1px solid rgba(255,60,60,.2);color:rgba(255,190,190,.85)}
+.sv-restr.high::before{background:#ff4444}
+.sv-restr.mod{background:rgba(255,170,0,.08);border:1px solid rgba(255,170,0,.2);color:rgba(255,210,130,.85)}
+.sv-restr.mod::before{background:#ffaa00}
+
+/* Pills prochaine étape */
+.sv-pill{
+  padding:4px 11px;border-radius:20px;
+  font-family:'DM Mono',monospace;font-size:9px;font-weight:500;
+  letter-spacing:.04em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+}
+
+/* ── Stack de tasks superposées ── */
+.stack-tasks{
+  display:flex;flex-direction:column;
+  width:100%;
+}
+.stack-card{
+  border-radius:24px;padding:24px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  display:flex;flex-direction:column;gap:10px;
+  overflow:hidden;flex-shrink:0;width:100%;
+  margin-bottom:-62px;
+  cursor:pointer;transition:transform .2s;
+  position:relative;
+}
+.stack-card:last-child{margin-bottom:0;height:174px}
+.stack-card:not(:last-child){height:174px}
+.stack-card:active{transform:scale(.98)}
+.stack-check{
+  width:24px;height:24px;flex-shrink:0;
+  border-radius:6px;background:rgba(0,0,0,.2);
+  display:flex;align-items:center;justify-content:center;
+}
+.stack-check svg{width:14px;height:14px}
+.stack-title{
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-weight:100;font-size:32px;color:#fff;
+  line-height:1.1;letter-spacing:-.5px;
+}
+
 /* ── DM Mono for titles & subtitles ── */
 .section-title,.missions-title,.suivi-section-title,.context-card-title,
 .fsh-section,.card-title,.ob-subtitle,
@@ -1015,14 +1165,6 @@ body{background:#2d2d2d;color:#eeeeee}
 .screen{background:transparent}
 
 /* 2. Status bar */
-.sbar{background:#2d2d2d}
-.sbar-time{color:#ffffff}
-.sig b{background:#111111}
-.wifi-icon::before,.wifi-icon::after{border-color:#eeeeee}
-.wifi-dot{background:#111111}
-.batt-icon{border-color:rgba(238,238,238,.55)}
-.batt-icon::after{background:rgba(17,17,17,.35)}
-.batt-fill{background:#111111}
 
 /* 3. Nav */
 .nav{background:#2d2d2d;border-bottom:1px solid rgba(0,0,0,.07)}
@@ -1035,10 +1177,10 @@ body{background:#2d2d2d;color:#eeeeee}
 
 /* 5. FAB overlay / sheets */
 .fab-overlay{background:rgba(0,0,0,.4)}
-.fab-sheet{background:#faf9f7}
-.fab-handle{background:rgba(255,255,255,.1)}
+.fab-sheet{background:#212936;border-top:1px solid rgba(255,255,255,.1)}
+.fab-handle{background:rgba(255,255,255,.15)}
 .fab-menu-header{color:rgba(238,238,238,.4)}
-.fab-item{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.fab-item{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
 .fab-item:active{background:rgba(255,255,255,.07)}
 .fab-lbl{color:#eeeeee}
 .fab-sub{color:rgba(238,238,238,.45)}
@@ -1065,7 +1207,7 @@ body{background:#2d2d2d;color:#eeeeee}
 .mf-btn.sel{background:rgba(90,166,255,.08);border-color:rgba(90,166,255,.25)}
 .fab-textarea{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#eeeeee}
 .fab-textarea::placeholder{color:rgba(238,238,238,.35)}
-.fab-submit{background:#111111;color:#ffffff;border-radius:100px}
+.fab-submit{background:linear-gradient(116deg,rgba(74,176,255,.25),rgba(74,176,255,.65));color:#fff;border-radius:14px;font-weight:700}
 .fab-success .s-s{color:rgba(238,238,238,.45)}
 .fab-success .s-t{color:#eeeeee}
 
@@ -1112,10 +1254,52 @@ body{background:#2d2d2d;color:#eeeeee}
 .score-d{color:rgba(238,238,238,.5)}
 .score-sub{color:rgba(238,238,238,.5)}
 .score-mood{color:#eeeeee}
-.cal{background:#383838;border-radius:22px}
+/* ── Calendrier Figma exact ── */
+.figma-cal{
+  display:flex;align-items:stretch;
+  width:100%;overflow:hidden;
+}
+.figma-cal-month{
+  flex:0 0 36px;
+  display:flex;align-items:center;justify-content:center;
+  border-right:.5px solid rgba(255,255,255,.25);
+  padding-right:4px;
+}
+.figma-cal-month span{
+  font-size:13px;font-weight:700;color:#fff;
+  writing-mode:vertical-lr;
+  transform:rotate(180deg);
+  letter-spacing:.5px;
+}
+.figma-cal-col{
+  flex:1;
+  display:flex;flex-direction:column;justify-content:space-between;
+  align-items:center;
+  padding:2px 0;
+}
+.figma-cal-col:not(:last-child){
+  border-right:.5px solid rgba(255,255,255,.18);
+}
+.figma-cc{
+  width:100%;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;color:#fff;
+  cursor:pointer;position:relative;
+  transition:background .12s;
+  border-radius:4px;
+}
+.figma-cc.today::before{
+  content:'';
+  position:absolute;inset:-2px;
+  background:rgba(74,176,255,.38);
+  border-radius:5px;z-index:0;
+}
+.figma-cc span{position:relative;z-index:1}
+.figma-cc.empty{opacity:0;pointer-events:none}
+.figma-cc:not(.empty):hover{background:rgba(255,255,255,.06)}
 .cal-month span{color:#eeeeee}
-.cal-col{border-right-color:rgba(0,0,0,.08) !important}
-.cal-month{border-right-color:rgba(0,0,0,.15) !important}
+.cal-col{border-right-color:rgba(255,255,255,.15) !important}
+.cal-month{border-right-color:rgba(255,255,255,.2) !important}
 .cc{color:#eeeeee}
 .cc:hover:not(.empty){background:rgba(255,255,255,.06)}
 .cc.sel::before{background:rgba(90,166,255,.35)}
@@ -1132,7 +1316,7 @@ body{background:#2d2d2d;color:#eeeeee}
 /* 7. Screen 2 — Aliments */
 .search{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
 .search:focus-within{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.18)}
-.search svg path{stroke:#111111;opacity:.4}
+.search svg circle,.search svg path{stroke:rgba(255,255,255,.55);opacity:1}
 .search input{color:#eeeeee}
 .search input::placeholder{color:rgba(238,238,238,.4)}
 .search-x{background:rgba(255,255,255,.08);color:rgba(238,238,238,.55)}
@@ -1140,11 +1324,16 @@ body{background:#2d2d2d;color:#eeeeee}
 .phase{color:rgba(238,238,238,.45)}
 .phase+.phase{border-left-color:rgba(0,0,0,.08)}
 .phase.active{background:rgba(90,166,255,.1);color:#5aa6ff}
-.c-ok{background:rgba(90,166,255,.08);border-color:rgba(90,166,255,.25);color:#5aa6ff}
-.c-mod{background:rgba(179,101,0,.08);border-color:rgba(179,101,0,.25);color:#b36500}
-.c-av{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
-.c-cat{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:rgba(238,238,238,.6)}
-.chip.on.c-cat{background:rgba(255,255,255,.1);border-color:rgba(0,0,0,.2);color:#eeeeee}
+/* ── Chips inactifs ── */
+.c-ok {background:rgba(26,255,170,.06);border-color:rgba(26,255,170,.2);color:rgba(26,255,170,.45)}
+.c-mod{background:rgba(255,170,0,.06);border-color:rgba(255,170,0,.2);color:rgba(255,170,0,.45)}
+.c-av {background:rgba(255,60,60,.06);border-color:rgba(255,60,60,.2);color:rgba(255,60,60,.45)}
+.c-cat{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.32)}
+/* ── Chips actifs ── */
+.chip.on.c-ok {background:rgba(26,255,170,.2);border-color:rgba(26,255,170,.7);color:#1affaa;font-weight:700}
+.chip.on.c-mod{background:rgba(255,170,0,.2);border-color:rgba(255,170,0,.7);color:#ffaa00;font-weight:700}
+.chip.on.c-av {background:rgba(255,60,60,.2);border-color:rgba(255,60,60,.7);color:#ff5050;font-weight:700}
+.chip.on.c-cat{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5);color:#fff;font-weight:700}
 .res-count{color:rgba(238,238,238,.4)}
 .cat-lbl{color:rgba(238,238,238,.4)}
 .food{background:#383838;border-color:rgba(255,255,255,.08)}
@@ -1152,14 +1341,14 @@ body{background:#2d2d2d;color:#eeeeee}
 .food.mod{background:#383838;border-color:rgba(179,101,0,.12)}
 .food.av{background:#383838;border-color:rgba(192,57,43,.12)}
 .food:hover{background:rgba(0,0,0,.02)}
-.food.ok::before{background:#5aa6ff}
+.food.ok::before{background:#1affaa}
 .food.mod::before{background:#b36500}
 .food.av::before{background:#c0392b}
 .food-icon{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
 .food-name{color:#eeeeee}
 .food-sub{color:rgba(238,238,238,.45)}
 .food-tag{color:rgba(238,238,238,.45);background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-.b-ok{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.25);color:#5aa6ff}
+.b-ok{background:rgba(26,255,170,.1);border-color:rgba(26,255,170,.28);color:#1affaa}
 .b-mod{background:rgba(179,101,0,.1);border-color:rgba(179,101,0,.25);color:#b36500}
 .b-av{background:rgba(192,57,43,.1);border-color:rgba(192,57,43,.25);color:#c0392b}
 
@@ -1329,27 +1518,21 @@ body{
   font-weight:400;
 }
 </style>
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Lomi"/>
+  <link rel="apple-touch-icon" href="/icon-192.png"/>
+  <meta name="theme-color" content="#2d2d2d"/>
 </head>
 <body>
 <div class="app">
-
-  <!-- Status Bar -->
-  <div class="sbar">
-    <span class="sbar-time" id="clock">9:41</span>
-    <div class="di"></div>
-    <div class="sbar-icons">
-      <div class="sig"><b></b><b></b><b></b><b></b></div>
-      <div class="wifi-icon"><div class="wifi-dot"></div></div>
-      <div class="batt-icon"><div class="batt-fill"></div></div>
-    </div>
-  </div>
 
   <!-- Nav -->
   <nav class="nav" id="nav">
     <span class="nav-item active" data-screen="carnet">Carnet</span>
     <span class="nav-item" data-screen="aliments">Aliments</span>
     <span class="nav-item" data-screen="suivi">Suivi</span>
-    <span class="nav-item" data-screen="stats">Statistiques</span>
   </nav>
 
   <!-- Screens -->
@@ -1360,158 +1543,99 @@ body{
       <div class="s1-content">
 
         <!-- Greeting -->
-        <div class="home-greeting">
-          <div class="hg-left">
-            <div class="hg-date" id="hg-date">Samedi 10 mai</div>
-            <div class="hg-hi">Bonjour, Sarah</div>
-          </div>
-          <div class="hg-streak">17 jours</div>
+        <div class="carn-greeting">
+          BONJOUR AMÉLIE, COMMENT VOUS SENTEZ-VOUS AUJOURD'HUI&nbsp;?
         </div>
 
-        <!-- Phase hero -->
-        <div class="phase-hero" onclick="switchToSuivi()" style="cursor:pointer">
-          <div class="phase-top">
-            <div class="phase-badge-chip">Phase active</div>
+        <!-- Phase card -->
+        <div class="carn-card">
+          <div class="carn-pills">
+            <div class="carn-pill">PHASE ACTIVE</div>
+            <div class="carn-pill">RÉINTRODUCTION DANS 39 JOURS</div>
           </div>
-          <div class="phase-name">Élimination</div>
-          <div class="phase-desc">Évitez tous les FODMAPs pour identifier vos déclencheurs digestifs</div>
-          <div class="phase-day-row">
-            <span class="phase-day-label">Jour 17 · Semaine 3 sur 8</span>
-            <span class="phase-day-count">17 / 56</span>
+          <div class="carn-phase-name">Élimination</div>
+          <div class="carn-phase-desc">Évitez tous les FODMAPs pour identifier vos déclencheurs digestifs</div>
+          <div class="carn-day-row">
+            <span class="carn-day-label">Jour 17 - Semaine 3 sur 8</span>
           </div>
-          <div class="phase-bar-bg">
-            <div class="phase-bar-fill" style="width:30.4%"></div>
+          <div class="carn-prog-track">
+            <div class="carn-prog-fill" style="width:30.4%"></div>
           </div>
-          <div class="phase-timeline">
-            <div class="pt-step pt-active">
-              <div class="pt-dot"></div>
-              <div class="pt-lbl">Élimination</div>
+          <div class="carn-tl-wrap">
+            <div class="carn-tl-row">
+              <div class="carn-tl-dot active"></div>
+              <div class="carn-tl-line"></div>
+              <div class="carn-tl-dot"></div>
+              <div class="carn-tl-line"></div>
+              <div class="carn-tl-dot"></div>
             </div>
-            <div class="pt-connector done"></div>
-            <div class="pt-step pt-future">
-              <div class="pt-dot"></div>
-              <div class="pt-lbl">Réintro.</div>
-            </div>
-            <div class="pt-connector"></div>
-            <div class="pt-step pt-future">
-              <div class="pt-dot"></div>
-              <div class="pt-lbl">Maintenance</div>
+            <div class="carn-tl-labels">
+              <span class="carn-tl-lbl carn-tl-active">ÉLIMINATION</span>
+              <span class="carn-tl-lbl">RÉINTRO.</span>
+              <span class="carn-tl-lbl">MAINTENANCE</span>
             </div>
           </div>
-          <div class="phase-next" onclick="location.href='page-trends.html'">
-            Réintroduction dans 39 jours →
-          </div>
         </div>
 
-        <!-- Tip Carnet -->
-        <div class="tip tip-amber">
-          <div class="tip-b">
-            <div class="tip-tag">Conseil du jour</div>
-            <div class="tip-t">Semaine 3 est souvent une étape clé — la majorité des patients observent une réduction des ballonnements à ce stade. Continuez !</div>
-          </div>
+        <!-- Conseil du jour -->
+        <div class="carn-card">
+          <div class="carn-card-title">CONSEIL DU JOUR</div>
+          <div class="carn-card-text">La semaine 3 est souvent une étape clé — la majorité des patients observent une réduction des ballonnements à ce stade. Continuez&nbsp;!</div>
         </div>
 
-        <!-- Missions du jour -->
-        <div class="missions-header">
-          <span class="missions-title">Missions du jour</span>
-          <span class="missions-count" id="missions-count">2 / 6</span>
-        </div>
-
-        <div class="mission-item done" onclick="toggleMission(this)">
-          <div class="mission-check">✓</div>
-          <div class="mission-text">
-            <div class="mission-name">Loguer le petit-déjeuner</div>
-            <div class="mission-sub">Flocons d'avoine, banane, lait s. lactose</div>
-          </div>
-        </div>
-
-        <div class="mission-item" onclick="location.href='page-entry.html'">
-          <div class="mission-check"></div>
-          <div class="mission-text">
-            <div class="mission-name">Loguer le déjeuner</div>
-            <div class="mission-sub">Repas du midi à saisir</div>
-          </div>
-          <div class="mission-arrow">›</div>
-        </div>
-
-        <div class="mission-item" onclick="location.href='page-entry.html'">
-          <div class="mission-check"></div>
-          <div class="mission-text">
-            <div class="mission-name">Loguer le dîner</div>
-            <div class="mission-sub">Repas du soir à saisir</div>
-          </div>
-          <div class="mission-arrow">›</div>
-        </div>
-
-        <div class="mission-item done" onclick="toggleMission(this)">
-          <div class="mission-check">✓</div>
-          <div class="mission-text">
-            <div class="mission-name">S'hydrater suffisamment</div>
-            <div class="mission-sub">1.5 L sur 2 L objectif</div>
-          </div>
-        </div>
-
-        <div class="mission-item" onclick="switchToAliments()">
-          <div class="mission-check"></div>
-          <div class="mission-text">
-            <div class="mission-name">Vérifier mon repas du midi</div>
-            <div class="mission-sub">Consulter la liste FODMAP avant de manger</div>
-          </div>
-          <div class="mission-arrow">›</div>
-        </div>
-
-        <div class="mission-item" onclick="location.href='page-score.html'">
-          <div class="mission-check"></div>
-          <div class="mission-text">
-            <div class="mission-name">Évaluer mes symptômes du jour</div>
-            <div class="mission-sub">Bilan de fin de journée</div>
-          </div>
-          <div class="mission-arrow">›</div>
-        </div>
-
-        <!-- Mood rapide -->
-        <div class="mood-card">
-          <div class="mood-label">Comment vous sentez-vous là ?</div>
-          <div class="mood-emojis">
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Mal</div></div>
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Bof</div></div>
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Neutre</div></div>
-            <div class="mood-btn active" onclick="selectMood(this)"><div class="mood-lbl">Bien</div></div>
-            <div class="mood-btn" onclick="selectMood(this)"><div class="mood-lbl">Super</div></div>
-          </div>
-        </div>
-
-        <!-- Tendances -->
-        <div class="tend-section">
-          <span class="tend-title">Tendances</span>
-          <div class="tend-card" onclick="location.href='page-trends.html'" style="cursor:pointer">
-            <div class="chart-area">
-              <svg viewBox="0 0 362 68" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="gf" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#5aa6ff" stop-opacity=".32"/>
-                    <stop offset="100%" stop-color="#5aa6ff" stop-opacity="0"/>
-                  </linearGradient>
-                  <linearGradient id="pf" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#d030ff" stop-opacity=".22"/>
-                    <stop offset="100%" stop-color="#d030ff" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
-                <path d="M0,54 C60,50 120,40 181,27 C242,14 300,8 362,4 L362,68 L0,68 Z" fill="url(#gf)"/>
-                <path d="M0,54 C60,50 120,40 181,27 C242,14 300,8 362,4" fill="none" stroke="#1affaa" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M0,12 C60,17 120,27 181,40 C242,53 300,59 362,62 L362,68 L0,68 Z" fill="url(#pf)"/>
-                <path d="M0,12 C60,17 120,27 181,40 C242,53 300,59 362,62" fill="none" stroke="#d030ff" stroke-width="1.8" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="x-labels">
-              <span class="xl">Jeu</span><span class="xl">Ven</span><span class="xl">Sam</span>
-              <span class="xl">Dim</span><span class="xl">Lun</span><span class="xl">Mar</span><span class="xl">Mer</span>
-            </div>
-            <div class="legend">
-              <div class="leg"><div class="legline" style="background:#5aa6ff;box-shadow:0 0 4px rgba(26,255,170,.5)"></div><span class="legtxt">Bien-être</span></div>
-              <div class="leg"><div class="legline" style="background:#d030ff"></div><span class="legtxt">Symptômes</span></div>
+        <!-- Calendrier -->
+        <div class="carn-card" style="padding:14px 12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span id="cal-nav-label" style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase"></span>
+            <div style="display:flex;gap:14px">
+              <span onclick="prevMonth()" style="color:rgba(255,255,255,.4);font-size:20px;cursor:pointer;line-height:1;user-select:none">‹</span>
+              <span onclick="nextMonth()" style="color:rgba(255,255,255,.4);font-size:20px;cursor:pointer;line-height:1;user-select:none">›</span>
             </div>
           </div>
+          <div class="figma-cal" id="cal-grid">
+            <div class="figma-cal-month"><span id="cal-month-label">juin</span></div>
+            <!-- colonnes injectées par JS -->
+          </div>
+        </div>
+
+        <!-- ── STACK DE TASKS ── -->
+        <div class="stack-tasks">
+
+          <div class="stack-card" style="background:#381e4f">
+            <div class="stack-check">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stack-title">Loguer le petit-déjeuner</div>
+          </div>
+
+          <div class="stack-card" style="background:#a066d3">
+            <div class="stack-check">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stack-title">Loguer le déjeuner</div>
+          </div>
+
+          <div class="stack-card" style="background:#5955c9">
+            <div class="stack-check">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stack-title">Loguer le dîner</div>
+          </div>
+
+          <div class="stack-card" style="background:#35303a">
+            <div class="stack-check">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stack-title">Boire 2L d'eau</div>
+          </div>
+
+          <div class="stack-card" style="background:#3a82ac">
+            <div class="stack-check">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stack-title">Renseigner mes symptômes du jour</div>
+          </div>
+
         </div>
 
       </div>
@@ -1530,59 +1654,26 @@ body{
           <div class="search-x" onclick="document.getElementById('search-input').value=''">×</div>
         </div>
 
-        <!-- Historique & Favoris -->
-        <div class="hf-tabs">
-          <div class="hf-tab active" onclick="switchHfTab(this,'hf-history')">Historique</div>
-          <div class="hf-tab" onclick="switchHfTab(this,'hf-favs')">Favoris</div>
-        </div>
-        <div class="hf-panel active" id="hf-history">
-          <div class="hf-recent">
-            <div class="hf-chip" onclick="setSearch('Ail')">Ail</div>
-            <div class="hf-chip" onclick="setSearch('Pomme')">Pomme</div>
-            <div class="hf-chip" onclick="setSearch('Yaourt')">Yaourt</div>
-            <div class="hf-chip" onclick="setSearch('Lentilles')">Lentilles</div>
-          </div>
-        </div>
-        <div class="hf-panel" id="hf-favs">
-          <div class="hf-fav-list">
-            <div class="hf-fav-row">
-              <div class="hf-fav-emoji">R</div>
-              <div class="hf-fav-name">Riz blanc</div>
-              <div class="hf-fav-badge">OK</div>
-            </div>
-            <div class="hf-fav-row">
-              <div class="hf-fav-emoji">Po</div>
-              <div class="hf-fav-name">Poulet</div>
-              <div class="hf-fav-badge">OK</div>
-            </div>
-            <div class="hf-fav-row">
-              <div class="hf-fav-emoji">Av</div>
-              <div class="hf-fav-name">Avocat</div>
-              <div class="hf-fav-badge">OK</div>
-            </div>
-          </div>
-        </div>
-
         <div class="phases">
-          <div class="phase active" onclick="selectPhase(this)">Élimination</div>
-          <div class="phase" onclick="selectPhase(this)">Réintroduction</div>
-          <div class="phase" onclick="selectPhase(this)">Maintenance</div>
+          <div class="phase active">Élimination</div>
+          <div class="phase">Réintroduction</div>
+          <div class="phase">Maintenance</div>
         </div>
 
         <div class="chips">
-          <div class="chip c-ok" onclick="toggleChip(this)">OK</div>
-          <div class="chip c-mod" onclick="toggleChip(this)">Modéré</div>
-          <div class="chip c-av" onclick="toggleChip(this)">Éviter</div>
-          <div class="chip c-cat" onclick="toggleChip(this)">Légumes</div>
-          <div class="chip c-cat" onclick="toggleChip(this)">Fruits</div>
-          <div class="chip c-cat" onclick="toggleChip(this)">Céréales</div>
-          <div class="chip c-cat" onclick="toggleChip(this)">Protéines</div>
-          <div class="chip c-cat" onclick="toggleChip(this)">Laitiers</div>
-          <div class="chip c-cat" onclick="toggleChip(this)">Condiments</div>
+          <div class="chip c-ok">OK</div>
+          <div class="chip c-mod">Modéré</div>
+          <div class="chip c-av">Éviter</div>
+          <div class="chip c-cat">Légumes</div>
+          <div class="chip c-cat">Fruits</div>
+          <div class="chip c-cat">Céréales</div>
+          <div class="chip c-cat">Protéines</div>
+          <div class="chip c-cat">Laitiers</div>
+          <div class="chip c-cat">Condiments</div>
         </div>
 
         <!-- Tip Aliments -->
-        <div class="tip tip-amber" style="margin:0 14px 14px">
+        <div class="tip tip-amber" style="margin:12px 14px 14px">
           <div class="tip-b">
             <div class="tip-tag">Astuce</div>
             <div class="tip-t">Les produits industriels contiennent souvent de l'ail ou de l'oignon en poudre. Préférez les aliments bruts et cuisinez maison pendant la phase d'élimination.</div>
@@ -1593,582 +1684,189 @@ body{
       </div>
     </div>
 
-    <!-- ── SCREEN SUIVI ── -->
+    <!-- ── SCREEN SUIVI + STATS FUSIONNÉ ── -->
+    <!-- ── SCREEN SUIVI + STATS FUSIONNÉ ── -->
     <div class="screen" id="screen-suivi">
-      <div class="s4-content">
+      <div class="s1-content">
 
-        <!-- Hero phase -->
-        <div class="suivi-hero">
-          <div class="suivi-hero-top">
-            <div class="suivi-hero-chip">Phase active</div>
-            <div class="suivi-hero-week">Semaine 3 sur 8</div>
+        <!-- ── PHASE CARD ── -->
+        <div class="carn-card">
+          <div class="carn-pills">
+            <div class="carn-pill">PHASE ACTIVE</div>
+            <div class="carn-pill">RÉINTRODUCTION DANS 39 JOURS</div>
           </div>
-          <div class="suivi-hero-title">Élimination</div>
-          <div class="suivi-hero-sub">Tous les FODMAPs exclus · Phase 1 sur 3</div>
-          <div class="suivi-big-row">
-            <div class="suivi-big-n">17</div>
-            <div class="suivi-big-label">jours<br>accomplis</div>
-            <div class="suivi-big-sep"></div>
-            <div class="suivi-big-right">
-              <div>
-                <div class="suivi-big-right-n">39</div>
-                <div class="suivi-big-right-l">jours restants</div>
-              </div>
-              <div style="margin-top:4px">
-                <div class="suivi-big-right-n">56</div>
-                <div class="suivi-big-right-l">total</div>
-              </div>
+          <div class="carn-phase-name">Élimination</div>
+          <div class="carn-phase-desc">Tous les FODMAPs exclus · Phase 1 sur 3</div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:4px">
+            <div style="display:flex;align-items:baseline;gap:8px">
+              <span class="sv-num lg">17</span>
+              <span class="sv-body">jours accomplis</span>
+            </div>
+            <div style="text-align:right">
+              <div class="sv-num" style="font-size:18px;color:#5aa6ff">39 restants</div>
+              <div class="sv-sub">sur 56 au total</div>
             </div>
           </div>
-          <div class="suivi-bar-bg">
-            <div class="suivi-bar-fill" style="width:30.4%"></div>
-          </div>
-          <div class="suivi-timeline">
-            <div class="spt-step active">
-              <div class="spt-dot"></div>
-              <div class="spt-lbl">Élimination</div>
-              <div class="spt-date">25 avr → 19 juin</div>
+          <div class="carn-prog-track"><div class="carn-prog-fill" style="width:30.4%"></div></div>
+          <div class="carn-tl-wrap">
+            <div class="carn-tl-row">
+              <div class="carn-tl-dot active"></div>
+              <div class="carn-tl-line"></div>
+              <div class="carn-tl-dot"></div>
+              <div class="carn-tl-line"></div>
+              <div class="carn-tl-dot"></div>
             </div>
-            <div class="spt-connector done"></div>
-            <div class="spt-step future">
-              <div class="spt-dot"></div>
-              <div class="spt-lbl">Réintro.</div>
-              <div class="spt-date">19 juin → 20 août</div>
-            </div>
-            <div class="spt-connector"></div>
-            <div class="spt-step future">
-              <div class="spt-dot"></div>
-              <div class="spt-lbl">Maintenance</div>
-              <div class="spt-date">À vie</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stat tiles -->
-        <div class="suivi-tiles">
-          <div class="sv-tile sv-tile-1">
-            <div class="sv-tile-label">Score bien-être</div>
-            <div class="sv-tile-n">7.4</div>
-            <div class="sv-tile-sub">↑ +0.8 vs début</div>
-          </div>
-          <div class="sv-tile sv-tile-2">
-            <div class="sv-tile-label">Repas loggués</div>
-            <div class="sv-tile-n">46</div>
-            <div class="sv-tile-sub">sur 51 possibles</div>
-          </div>
-          <div class="sv-tile sv-tile-3">
-            <div class="sv-tile-label">Sans symptôme</div>
-            <div class="sv-tile-n">11</div>
-            <div class="sv-tile-sub">derniers jours</div>
-          </div>
-        </div>
-
-        <!-- Tip après tiles -->
-        <div class="tip tip-green">
-          <div class="tip-b">
-            <div class="tip-tag">Bonne régularité</div>
-            <div class="tip-t">Vous avez loggué 90 % de vos repas cette semaine. La régularité est essentielle pour identifier vos déclencheurs avec précision.</div>
-          </div>
-        </div>
-
-        <!-- FODMAPs actifs -->
-        <div>
-          <div class="suivi-section-title" style="display:flex;align-items:center;justify-content:space-between">
-            Restrictions actuelles
-            <span onclick="location.href='page-restrictions.html'" style="font-size:11px;font-weight:600;color:rgba(90,166,255,.7);cursor:pointer">Voir tout →</span>
-          </div>
-          <div class="suivi-fodmap-card" onclick="location.href='page-restrictions.html'" style="cursor:pointer">
-            <div class="suivi-fodmap-grid">
-              <div class="fodmap-item high">
-                <div class="fodmap-info">
-                  <div class="fodmap-name">Oignons</div>
-                </div>
-                <div class="fodmap-dot high"></div>
+            <div class="carn-tl-labels">
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <span class="carn-tl-lbl carn-tl-active">ÉLIMINATION</span>
+                <span class="sv-sub">25 avr → 19 juin</span>
               </div>
-              <div class="fodmap-item high">
-                <div class="fodmap-info">
-                  <div class="fodmap-name">Ail</div>
-                </div>
-                <div class="fodmap-dot high"></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+                <span class="carn-tl-lbl">RÉINTRO.</span>
+                <span class="sv-sub">19 juin → 20 août</span>
               </div>
-              <div class="fodmap-item high">
-                <div class="fodmap-info">
-                  <div class="fodmap-name">Lactose</div>
-                </div>
-                <div class="fodmap-dot high"></div>
-              </div>
-              <div class="fodmap-item high">
-                <div class="fodmap-info">
-                  <div class="fodmap-name">Gluten</div>
-                </div>
-                <div class="fodmap-dot high"></div>
-              </div>
-              <div class="fodmap-item mod">
-                <div class="fodmap-info">
-                  <div class="fodmap-name">Pomme</div>
-                </div>
-                <div class="fodmap-dot mod"></div>
-              </div>
-              <div class="fodmap-item mod">
-                <div class="fodmap-info">
-                  <div class="fodmap-name">Légumineuses</div>
-                </div>
-                <div class="fodmap-dot mod"></div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+                <span class="carn-tl-lbl">MAINTENANCE</span>
+                <span class="sv-sub">À vie</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Tip restrictions -->
-        <div class="tip tip-amber">
-          <div class="tip-b">
-            <div class="tip-tag">Attention aux traces</div>
-            <div class="tip-t">L'ail et l'oignon en poudre dans les sauces industrielles peuvent suffire à déclencher des symptômes. Lisez toujours les étiquettes.</div>
+        <!-- ── PERIOD SELECTOR ── -->
+        <div style="display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:4px;gap:0">
+          <div class="sv-period active" onclick="setSvPeriod(this)">7 jours</div>
+          <div class="sv-period" onclick="setSvPeriod(this)">30 jours</div>
+          <div class="sv-period" onclick="setSvPeriod(this)">Phase</div>
+        </div>
+
+        <!-- ── SCORE CARD ── -->
+        <div class="carn-card" style="flex-direction:row;align-items:center;gap:16px">
+          <div style="flex:1">
+            <div class="sv-label" style="margin-bottom:8px">Bien-être moyen</div>
+            <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:6px">
+              <span class="sv-num" style="font-size:40px">7.4</span>
+              <span class="sv-body">/10</span>
+            </div>
+            <div style="font-size:12px;font-weight:500;color:#1affaa">↑ +0.8 vs période préc.</div>
+            <div class="sv-sub" style="margin-top:3px">Meilleure semaine : sem. 3</div>
+          </div>
+          <div style="flex:1;height:60px">
+            <svg viewBox="0 0 120 60" preserveAspectRatio="none" fill="none" style="width:100%;height:100%">
+              <defs>
+                <linearGradient id="svsg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1affaa" stop-opacity=".3"/>
+                  <stop offset="100%" stop-color="#1affaa" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,52 C20,48 35,40 50,32 C65,24 80,18 95,10 L120,4 L120,60 L0,60Z" fill="url(#svsg)"/>
+              <path d="M0,52 C20,48 35,40 50,32 C65,24 80,18 95,10 L120,4" stroke="#1affaa" stroke-width="2" stroke-linecap="round"/>
+            </svg>
           </div>
         </div>
 
-        <!-- Notes contextuelles -->
-        <div class="context-card">
-          <div class="context-card-title">Notes contextuelles</div>
-          <div class="ctx-row">
-            <div class="ctx-label">Stress</div>
-            <div class="ctx-chips" id="stress-chips">
-              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-stress')">Élevé</div>
-              <div class="ctx-chip sel-ok" onclick="selectCtx(this,'stress-chips','sel-ok')">Normal</div>
-              <div class="ctx-chip" onclick="selectCtx(this,'stress-chips','sel-ok')">Bas</div>
-            </div>
+        <!-- ── 3 STAT TILES ── -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+          <div class="carn-card" style="padding:14px 12px;gap:5px">
+            <div class="sv-label sm">Repas loggués</div>
+            <div class="sv-num md">46</div>
+            <div class="sv-sub">sur 51 possibles</div>
           </div>
-          <div class="ctx-row">
-            <div class="ctx-label">Sommeil</div>
-            <div class="ctx-chips" id="sleep-chips">
-              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-stress')">&lt;6h</div>
-              <div class="ctx-chip sel-sleep" onclick="selectCtx(this,'sleep-chips','sel-sleep')">6-8h</div>
-              <div class="ctx-chip" onclick="selectCtx(this,'sleep-chips','sel-ok')">&gt;8h</div>
-            </div>
+          <div class="carn-card" style="padding:14px 12px;gap:5px">
+            <div class="sv-label sm">Streak</div>
+            <div class="sv-num md">17</div>
+            <div class="sv-sub">jours consécutifs</div>
+          </div>
+          <div class="carn-card" style="padding:14px 12px;gap:5px">
+            <div class="sv-label sm">Sans symptôme</div>
+            <div class="sv-num md accent">11</div>
+            <div class="sv-sub">derniers jours</div>
           </div>
         </div>
 
-        <!-- Derniers repas -->
-        <div>
-          <div class="suivi-section-title">Aujourd'hui</div>
-          <div class="suivi-meals-card">
-            <div class="suivi-meal-row">
-              <div class="suivi-meal-time">08h30</div>
-              <div class="suivi-meal-icon">Matin</div>
-              <div class="suivi-meal-info">
-                <div class="suivi-meal-name">Petit-déjeuner</div>
-                <div class="suivi-meal-detail">Flocons d'avoine, banane, lait s. lactose</div>
+        <!-- ── ÉVOLUTION SYMPTÔMES ── -->
+        <div class="carn-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <div class="sv-label">Évolution symptômes</div>
+            <div style="display:flex;gap:10px">
+              <div style="display:flex;align-items:center;gap:4px">
+                <div style="width:7px;height:7px;border-radius:2px;background:#5aa6ff"></div>
+                <span class="sv-sub">Ballonnem.</span>
               </div>
-              <div class="suivi-meal-badge smb-ok">OK</div>
-            </div>
-            <div class="suivi-meal-row">
-              <div class="suivi-meal-time">12h45</div>
-              <div class="suivi-meal-icon">Midi</div>
-              <div class="suivi-meal-info">
-                <div class="suivi-meal-name">Déjeuner</div>
-                <div class="suivi-meal-detail">Non renseigné</div>
+              <div style="display:flex;align-items:center;gap:4px">
+                <div style="width:7px;height:7px;border-radius:2px;background:rgba(255,170,0,.85)"></div>
+                <span class="sv-sub">Douleurs</span>
               </div>
-              <div class="suivi-meal-badge smb-warn">À saisir</div>
             </div>
-            <div class="suivi-meal-row">
-              <div class="suivi-meal-time">19h30</div>
-              <div class="suivi-meal-icon">Soir</div>
-              <div class="suivi-meal-info">
-                <div class="suivi-meal-name">Dîner</div>
-                <div class="suivi-meal-detail">Non renseigné</div>
-              </div>
-              <div class="suivi-meal-badge smb-warn">À saisir</div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:5px;height:72px;margin-top:12px">
+            <div style="flex:1;display:flex;gap:2px;align-items:flex-end;height:100%">
+              <div style="flex:1;background:rgba(90,166,255,.7);border-radius:3px 3px 0 0;height:80%"></div>
+              <div style="flex:1;background:rgba(255,170,0,.7);border-radius:3px 3px 0 0;height:70%"></div>
             </div>
+            <div style="flex:1;display:flex;gap:2px;align-items:flex-end;height:100%">
+              <div style="flex:1;background:rgba(90,166,255,.7);border-radius:3px 3px 0 0;height:90%"></div>
+              <div style="flex:1;background:rgba(255,170,0,.7);border-radius:3px 3px 0 0;height:60%"></div>
+            </div>
+            <div style="flex:1;display:flex;gap:2px;align-items:flex-end;height:100%">
+              <div style="flex:1;background:rgba(90,166,255,.7);border-radius:3px 3px 0 0;height:60%"></div>
+              <div style="flex:1;background:rgba(255,170,0,.7);border-radius:3px 3px 0 0;height:45%"></div>
+            </div>
+            <div style="flex:1;display:flex;gap:2px;align-items:flex-end;height:100%">
+              <div style="flex:1;background:rgba(90,166,255,.7);border-radius:3px 3px 0 0;height:40%"></div>
+              <div style="flex:1;background:rgba(255,170,0,.7);border-radius:3px 3px 0 0;height:30%"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:7px">
+            <div class="sv-sub" style="flex:1;text-align:center">S1</div>
+            <div class="sv-sub" style="flex:1;text-align:center">S2</div>
+            <div class="sv-sub" style="flex:1;text-align:center">S3</div>
+            <div class="sv-sub" style="flex:1;text-align:center">S4</div>
           </div>
         </div>
 
-        <!-- Tip réintroduction -->
-        <div class="tip tip-blue">
-          <div class="tip-b">
-            <div class="tip-tag">Méthode recommandée</div>
-            <div class="tip-t">En réintroduction, testez un seul groupe FODMAP à la fois sur 3 jours, puis revenez à la base avant de passer au suivant.</div>
+        <!-- ── RESTRICTIONS ACTUELLES ── -->
+        <div class="carn-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="sv-label">Restrictions actuelles</div>
+            <span onclick="location.href='page-restrictions.html'" style="font-size:11px;font-weight:500;color:rgba(90,166,255,.7);cursor:pointer;font-family:-apple-system,sans-serif">Voir tout →</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+            <div class="sv-restr high">Oignons</div>
+            <div class="sv-restr high">Ail</div>
+            <div class="sv-restr high">Lactose</div>
+            <div class="sv-restr high">Gluten</div>
+            <div class="sv-restr mod">Pomme</div>
+            <div class="sv-restr mod">Légumineuses</div>
           </div>
         </div>
 
-        <!-- Prochaine étape -->
-        <div>
-          <div class="suivi-section-title">Prochaine étape</div>
-          <div class="suivi-next-card">
-            <div class="suivi-next-label">Dans 39 jours · 19 juin 2026</div>
-            <div class="suivi-next-title">Phase Réintroduction</div>
-            <div class="suivi-next-desc">Vous testerez les groupes FODMAP un par un pour identifier vos déclencheurs personnels. Chaque groupe est réintroduit sur 3 jours avec un retour à la base entre chaque.</div>
-            <div class="suivi-next-pills">
-              <div class="suivi-next-pill">Fructose</div>
-              <div class="suivi-next-pill">Lactose</div>
-              <div class="suivi-next-pill">Fructanes</div>
-              <div class="suivi-next-pill">Galactanes</div>
-              <div class="suivi-next-pill">Polyols</div>
-            </div>
+        <!-- ── PROCHAINE ÉTAPE ── -->
+        <div class="carn-card" style="background:rgba(64,42,110,.35);border-color:rgba(120,82,210,.28)">
+          <div class="sv-label" style="color:rgba(180,130,255,.65);margin-bottom:4px">Dans 39 jours · 19 juin 2026</div>
+          <div class="carn-phase-name" style="font-size:24px;margin-bottom:6px">Phase Réintroduction</div>
+          <div class="sv-body" style="margin-bottom:12px">Vous testerez les groupes FODMAP un par un pour identifier vos déclencheurs personnels.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <div class="sv-pill">Fructose</div>
+            <div class="sv-pill">Lactose</div>
+            <div class="sv-pill">Fructanes</div>
+            <div class="sv-pill">Galactanes</div>
+            <div class="sv-pill">Polyols</div>
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- ── SCREEN 3 : STATISTIQUES (placeholder) ── -->
-    <div class="screen" id="screen-stats">
-      <div class="s3-content">
-
-        <!-- Period selector -->
-        <div class="period-sel">
-          <div class="p-tab">7 jours</div>
-          <div class="p-tab active">30 jours</div>
-          <div class="p-tab">3 mois</div>
-          <div class="p-tab">Phase</div>
-        </div>
-
-        <!-- Hero score card -->
-        <div class="hero-card">
-          <div class="hero-header">
-            <span class="hero-label">Bien-être moyen</span>
-            <span class="hero-period">30 derniers jours</span>
-          </div>
-          <div class="hero-body">
-            <div class="hero-score-wrap">
-              <div class="hero-score">7.4<span>/10</span></div>
-              <div class="hero-delta">↑ +0.8 vs période préc.</div>
-              <div class="hero-sub">Meilleure semaine&nbsp;: sem. 3</div>
-            </div>
-            <div class="hero-spark">
-              <svg viewBox="0 0 120 52" preserveAspectRatio="none" fill="none">
-                <defs>
-                  <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(26,255,170,0.25)"/>
-                    <stop offset="100%" stop-color="rgba(26,255,170,0)"/>
-                  </linearGradient>
-                </defs>
-                <path d="M0 42 C10 40 15 38 22 36 C30 34 32 30 40 26 C48 22 52 28 60 24 C68 20 72 16 80 14 C90 12 95 10 100 8 C108 6 112 6 120 4" stroke="#1affaa" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M0 42 C10 40 15 38 22 36 C30 34 32 30 40 26 C48 22 52 28 60 24 C68 20 72 16 80 14 C90 12 95 10 100 8 C108 6 112 6 120 4 L120 52 L0 52 Z" fill="url(#sg)"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Résumé -->
-        <div class="stat-section">
-          <div class="stat-heading">Résumé</div>
-          <div class="tiles">
-            <div class="tile tile-1">
-              <div class="tile-label">Jours loggés</div>
-              <div class="tile-n">23</div>
-              <div class="tile-sub">sur 30 jours</div>
-            </div>
-            <div class="tile tile-2">
-              <div class="tile-label">Repas saisis</div>
-              <div class="tile-n">64</div>
-              <div class="tile-sub">2.8 / jour en moy.</div>
-            </div>
-            <div class="tile tile-3">
-              <div class="tile-label">Aliments testés</div>
-              <div class="tile-n">12</div>
-              <div class="tile-sub">Phase réintro.</div>
-            </div>
-            <div class="tile tile-4">
-              <div class="tile-label">Streak actuel</div>
-              <div class="tile-n">17</div>
-              <div class="tile-sub">jours consécutifs</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Évolution symptômes -->
-        <div class="stat-section">
-          <div class="stat-heading">Évolution symptômes</div>
-          <div class="stat-card">
-            <div class="barchart-sub">
-              <div class="barchart-period">Par semaine</div>
-              <div class="barchart-legend">
-                <div class="bc-leg"><div class="bc-dot" style="background:#5aa6ff"></div>Ballonnem.</div>
-                <div class="bc-leg"><div class="bc-dot" style="background:rgba(255,150,50,.9)"></div>Douleurs</div>
-                <div class="bc-leg"><div class="bc-dot" style="background:rgba(74,176,255,.8)"></div>Fatigue</div>
-              </div>
-            </div>
-            <div class="bars-wrap">
-              <!-- S1 -->
-              <div class="bar-group">
-                <div class="bar-group-inner">
-                  <div class="bar green" style="height:60%"></div>
-                  <div class="bar orange" style="height:30%"></div>
-                  <div class="bar" style="height:45%;background:linear-gradient(180deg,rgba(74,176,255,.8),rgba(74,176,255,.3))"></div>
-                </div>
-              </div>
-              <!-- S2 -->
-              <div class="bar-group">
-                <div class="bar-group-inner">
-                  <div class="bar green" style="height:75%"></div>
-                  <div class="bar orange" style="height:40%"></div>
-                  <div class="bar" style="height:55%;background:linear-gradient(180deg,rgba(74,176,255,.8),rgba(74,176,255,.3))"></div>
-                </div>
-              </div>
-              <!-- S3 -->
-              <div class="bar-group">
-                <div class="bar-group-inner">
-                  <div class="bar green" style="height:40%"></div>
-                  <div class="bar orange" style="height:20%"></div>
-                  <div class="bar" style="height:30%;background:linear-gradient(180deg,rgba(74,176,255,.8),rgba(74,176,255,.3))"></div>
-                </div>
-              </div>
-              <!-- S4 -->
-              <div class="bar-group">
-                <div class="bar-group-inner">
-                  <div class="bar green" style="height:50%"></div>
-                  <div class="bar orange" style="height:25%"></div>
-                  <div class="bar" style="height:38%;background:linear-gradient(180deg,rgba(74,176,255,.8),rgba(74,176,255,.3))"></div>
-                </div>
-              </div>
-            </div>
-            <div class="bars-axis">
-              <div class="bars-axis-lbl">S1</div>
-              <div class="bars-axis-lbl">S2</div>
-              <div class="bars-axis-lbl">S3</div>
-              <div class="bars-axis-lbl">S4</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Détail symptômes -->
-        <div class="stat-section">
-          <div class="stat-heading">Détail symptômes</div>
-          <div class="stat-card">
-            <div class="symp-list">
-              <div class="symp-row">
-                <div class="symp-name">Ballonnements</div>
-                <div class="symp-bar-bg"><div class="symp-bar-fill" style="width:34%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.4))"></div></div>
-                <div class="symp-val">3.4</div>
-                <div class="symp-delta symp-down">↓</div>
-              </div>
-              <div class="symp-row">
-                <div class="symp-name">Douleurs</div>
-                <div class="symp-bar-bg"><div class="symp-bar-fill" style="width:18%;background:rgba(90,166,255,.7)"></div></div>
-                <div class="symp-val">1.8</div>
-                <div class="symp-delta symp-down">↓</div>
-              </div>
-              <div class="symp-row">
-                <div class="symp-name">Fatigue</div>
-                <div class="symp-bar-bg"><div class="symp-bar-fill" style="width:39%;background:linear-gradient(90deg,#ff5050,rgba(255,80,80,.4))"></div></div>
-                <div class="symp-val">3.9</div>
-                <div class="symp-delta symp-flat">—</div>
-              </div>
-              <div class="symp-row">
-                <div class="symp-name">Transit</div>
-                <div class="symp-bar-bg"><div class="symp-bar-fill" style="width:23%;background:linear-gradient(90deg,rgba(74,176,255,.9),rgba(74,176,255,.3))"></div></div>
-                <div class="symp-val">2.3</div>
-                <div class="symp-delta symp-down">↓</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Qualité de vie -->
-        <div class="stat-section">
-          <div class="stat-heading">Qualité de vie</div>
-          <div class="stat-card">
-            <div class="donut-wrap">
-              <div class="donut-svg-wrap">
-                <svg viewBox="0 0 90 90">
-                  <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="8"/>
-                  <circle cx="45" cy="45" r="36" fill="none" stroke="#1affaa" stroke-width="8"
-                    stroke-linecap="round"
-                    stroke-dasharray="158.3 226.2"
-                    stroke-dashoffset="0"/>
-                </svg>
-                <div class="donut-center">
-                  <div class="donut-pct">70%</div>
-                  <div class="donut-qlabel">qualité</div>
-                </div>
-              </div>
-              <div class="donut-legend">
-                <div class="dl-row">
-                  <div class="dl-dot dl-dot-green"></div>
-                  <div class="dl-label">Jours sans symptôme</div>
-                  <div class="dl-val">14</div>
-                </div>
-                <div class="dl-row">
-                  <div class="dl-dot dl-dot-blue"></div>
-                  <div class="dl-label">Jours modérés</div>
-                  <div class="dl-val">7</div>
-                </div>
-                <div class="dl-row">
-                  <div class="dl-dot dl-dot-red"></div>
-                  <div class="dl-label">Jours difficiles</div>
-                  <div class="dl-val">2</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Corrélations détectées -->
-        <div class="stat-section">
-          <div class="stat-heading">Corrélations détectées</div>
-          <div class="corr-list">
-            <div class="corr-row rh">
-              <div class="corr-header">
-                <div class="corr-emoji">On</div>
-                <div class="corr-info">
-                  <div class="corr-name">Oignon → ballonnements</div>
-                  <div class="corr-detail">Détecté 5× · délai ~1h30</div>
-                </div>
-                <div class="corr-pct-wrap">
-                  <div class="corr-pct corr-high">91%</div>
-                  <div class="corr-pct-label">corrél.</div>
-                </div>
-              </div>
-              <div class="corr-bar-bg"><div class="corr-bar-fill" style="width:91%;background:linear-gradient(90deg,#ff5050,rgba(255,80,80,.4))"></div></div>
-            </div>
-            <div class="corr-row rm">
-              <div class="corr-header">
-                <div class="corr-emoji">La</div>
-                <div class="corr-info">
-                  <div class="corr-name">Lait → douleurs</div>
-                  <div class="corr-detail">Détecté 4× · délai ~2h</div>
-                </div>
-                <div class="corr-pct-wrap">
-                  <div class="corr-pct corr-mid">84%</div>
-                  <div class="corr-pct-label">corrél.</div>
-                </div>
-              </div>
-              <div class="corr-bar-bg"><div class="corr-bar-fill" style="width:84%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.4))"></div></div>
-            </div>
-            <div class="corr-row rm">
-              <div class="corr-header">
-                <div class="corr-emoji">Ya</div>
-                <div class="corr-info">
-                  <div class="corr-name">Yaourt → ballonnements</div>
-                  <div class="corr-detail">Détecté 3× · délai ~1h</div>
-                </div>
-                <div class="corr-pct-wrap">
-                  <div class="corr-pct corr-mid">67%</div>
-                  <div class="corr-pct-label">corrél.</div>
-                </div>
-              </div>
-              <div class="corr-bar-bg"><div class="corr-bar-fill" style="width:67%;background:linear-gradient(90deg,#ffaa00,rgba(255,170,0,.3))"></div></div>
-            </div>
-            <div class="corr-row rl">
-              <div class="corr-header">
-                <div class="corr-emoji">Po</div>
-                <div class="corr-info">
-                  <div class="corr-name">Pomme → transit ralenti</div>
-                  <div class="corr-detail">Détecté 2× · à confirmer</div>
-                </div>
-                <div class="corr-pct-wrap">
-                  <div class="corr-pct corr-low">42%</div>
-                  <div class="corr-pct-label">corrél.</div>
-                </div>
-              </div>
-              <div class="corr-bar-bg"><div class="corr-bar-fill" style="width:42%;background:rgba(90,166,255,.7)"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Aliments les plus consommés -->
-        <div class="stat-section">
-          <div class="stat-heading">Aliments les plus consommés</div>
-          <div class="stat-card">
-            <div class="top-food-list">
-              <div class="top-food-row">
-                <div class="top-food-rank">1</div>
-                <div class="top-food-emoji">Ri</div>
-                <div class="top-food-info">
-                  <div class="top-food-name">Riz blanc</div>
-                  <div class="top-food-freq">18 fois ce mois</div>
-                </div>
-                <div class="top-food-bar-bg"><div class="top-food-bar-fill" style="width:100%"></div></div>
-              </div>
-              <div class="top-food-row">
-                <div class="top-food-rank">2</div>
-                <div class="top-food-emoji">Oe</div>
-                <div class="top-food-info">
-                  <div class="top-food-name">Œufs</div>
-                  <div class="top-food-freq">15 fois ce mois</div>
-                </div>
-                <div class="top-food-bar-bg"><div class="top-food-bar-fill" style="width:83%"></div></div>
-              </div>
-              <div class="top-food-row">
-                <div class="top-food-rank">3</div>
-                <div class="top-food-emoji">Po</div>
-                <div class="top-food-info">
-                  <div class="top-food-name">Poulet</div>
-                  <div class="top-food-freq">13 fois ce mois</div>
-                </div>
-                <div class="top-food-bar-bg"><div class="top-food-bar-fill" style="width:72%"></div></div>
-              </div>
-              <div class="top-food-row">
-                <div class="top-food-rank">4</div>
-                <div class="top-food-emoji">Ca</div>
-                <div class="top-food-info">
-                  <div class="top-food-name">Carotte</div>
-                  <div class="top-food-freq">11 fois ce mois</div>
-                </div>
-                <div class="top-food-bar-bg"><div class="top-food-bar-fill" style="width:61%"></div></div>
-              </div>
-              <div class="top-food-row">
-                <div class="top-food-rank">5</div>
-                <div class="top-food-emoji">Ba</div>
-                <div class="top-food-info">
-                  <div class="top-food-name">Banane</div>
-                  <div class="top-food-freq">10 fois ce mois</div>
-                </div>
-                <div class="top-food-bar-bg"><div class="top-food-bar-fill" style="width:56%"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Observance du protocole -->
-        <div class="observance-card">
-          <div class="obs-header">
-            <div class="obs-label">Observance du protocole</div>
-            <div class="obs-chip">30 jours</div>
-          </div>
-          <div class="obs-body">
-            <div class="obs-ring-wrap">
-              <svg viewBox="0 0 80 80">
-                <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="7"/>
-                <circle cx="40" cy="40" r="32" fill="none" stroke="#1affaa" stroke-width="7"
-                  stroke-linecap="round"
-                  stroke-dasharray="174.5 201"
-                  stroke-dashoffset="0"/>
-              </svg>
-              <div class="obs-center">
-                <div class="obs-pct">87%</div>
-                <div class="obs-pct-sub">observé</div>
-              </div>
-            </div>
-            <div class="obs-info">
-              <div class="obs-main">17 jours sur 20 respectés</div>
-              <div class="obs-sub">Excellent niveau d'observance sur la période</div>
-              <div class="obs-miss">3 jours d'écart détectés</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Export médical -->
-        <div class="export-card">
-          <div class="export-header">
-            <div class="export-info">
-              <div class="export-title">Export médical</div>
-              <div class="export-sub">Rapport au format CHU Bordeaux · Dernière génération : jamais</div>
-            </div>
-          </div>
-          <button class="export-btn" id="export-btn" onclick="generateReport()">
-            <span id="export-icon"></span>
-            <span id="export-label">Générer le rapport PDF</span>
-          </button>
-        </div>
-
-      </div><!-- /s3-content -->
-    </div>
-
   </div><!-- /screens-wrap -->
 </div><!-- /app -->
 
 <script>
+// ── Redirect vers l'onboarding à chaque lancement ──
+if (!sessionStorage.getItem('onboarding_done')) {
+  window.location.replace('onboarding.html');
+}
+
 // ═══════════════════════════════════════
 //  FOOD DATABASE
 // ═══════════════════════════════════════
@@ -2300,6 +1998,11 @@ function render() {
 // ═══════════════════════════════════════
 //  NAVIGATION
 // ═══════════════════════════════════════
+function setSvPeriod(el) {
+  document.querySelectorAll('.sv-period').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+
 function switchToSuivi() {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelector('[data-screen="suivi"]').classList.add('active');
@@ -2366,28 +2069,20 @@ document.querySelector('.search-x').addEventListener('click', () => {
   render();
 });
 
-// ── Live clock ──
-function updateClock() {
-  const now = new Date();
-  document.getElementById('clock').textContent =
-    now.getHours().toString().padStart(2,'0') + ':' +
-    now.getMinutes().toString().padStart(2,'0');
-}
-updateClock();
-setInterval(updateClock, 10000);
-
 // ── Initial render ──
 render();
 
 // ── Live clock ──
-function updateClock() {
-  const now = new Date();
-  const h = now.getHours().toString().padStart(2,'0');
-  const m = now.getMinutes().toString().padStart(2,'0');
-  document.getElementById('clock').textContent = h + ':' + m;
-}
-updateClock();
-setInterval(updateClock, 10000);
+(function() {
+  function updateClock() {
+    const now = new Date();
+    const h = now.getHours().toString().padStart(2,'0');
+    const m = now.getMinutes().toString().padStart(2,'0');
+    const cl = document.getElementById('clock'); if (cl) cl.textContent = h + ':' + m;
+  }
+  updateClock();
+  setInterval(updateClock, 10000);
+})();
 
 // ── Missions ──
 function toggleMission(el) {
@@ -2420,6 +2115,8 @@ function switchHfTab(el, panelId) {
   el.classList.add('active');
   document.getElementById(panelId).classList.add('active');
 }
+
+
 function setSearch(q) {
   const input = document.getElementById('search-input');
   input.value = q;
@@ -2459,31 +2156,16 @@ function generateReport() {
 // ── Greeting date ──
 (function() {
   const days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-  const months = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const months2 = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
   const d = new Date();
   const el = document.getElementById('hg-date');
-  if (el) el.textContent = days[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()];
-})();
+  if (el) el.textContent = days[d.getDay()] + ' ' + d.getDate() + ' ' + months2[d.getMonth()];
+  })();
 
-// ── FAB quick-add ──
-const FAB = {
-  open() {
-    document.getElementById('fab-overlay').classList.add('open');
-    document.getElementById('fab-btn').classList.add('active');
-    FAB.show('fab-menu');
-  },
-  close() {
-    document.getElementById('fab-overlay').classList.remove('open');
-    document.getElementById('fab-btn').classList.remove('active');
-  },
-  show(id) {
-    document.querySelectorAll('.fab-sheet').forEach(s=>s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
-};
+// FAB défini dans le 2nd script isolé
 
 // ── Repas ──
-let repasAliments = [];
+var repasAliments = [];
 function openRepas() { FAB.show('fab-repas'); repasAliments=[]; renderTags(); }
 function selType(btn) { document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); }
 function toggleQC(chip) {
@@ -2515,7 +2197,7 @@ function submitRepas() {
 }
 
 // ── Symptôme ──
-let symptIntensity=0, symptWhen='', symptTypes=[];
+var symptIntensity=0, symptWhen='', symptTypes=[];
 function selInt(btn,n) {
   document.querySelectorAll('.int-btn').forEach(b=>{ b.className='int-btn'; });
   btn.classList.add('sel-'+n); symptIntensity=n;
@@ -2537,7 +2219,7 @@ function submitSymptome() {
 }
 
 // ── Humeur ──
-let humeurSel='';
+var humeurSel='';
 function selMood(btn,v) { document.querySelectorAll('.mf-btn').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); humeurSel=v; }
 function submitHumeur() {
   if(!humeurSel) return;
@@ -2561,19 +2243,7 @@ function submitNote() {
   setTimeout(()=>{ FAB.close(); s.classList.remove('show'); document.getElementById('fab-note').querySelector('.fab-form').style.display=''; document.getElementById('note-text').value=''; },2000);
 }
 
-// ── Navigation vers sous-pages ──
-document.querySelector('.cal').addEventListener('click', e => {
-  const cc = e.target.closest('.cc');
-  if (cc && !cc.classList.contains('empty')) location.href = 'page-day.html';
-});
-
-document.querySelectorAll('.corr-row').forEach(r =>
-  r.addEventListener('click', () => location.href = 'page-correlation.html')
-);
-
-document.querySelectorAll('.top-food-row').forEach(r =>
-  r.addEventListener('click', () => location.href = 'page-food.html')
-);
+// ── Navigation sous-pages (déplacées dans le 2nd script) ──
 </script>
 
 <!-- ── FAB ── -->
@@ -2750,6 +2420,111 @@ document.querySelectorAll('.top-food-row').forEach(r =>
 
 </div>
 
+<script>
+/* ═══════════════════════════════════════════
+   INIT CRITIQUE — script isolé du crash principal
+   FAB, calendrier, hauteur responsive
+═══════════════════════════════════════════ */
+
+// ── FAB ──
+window.FAB = {
+  open: function() {
+    var ov = document.getElementById('fab-overlay');
+    var btn = document.getElementById('fab-btn');
+    if (ov) ov.classList.add('open');
+    if (btn) btn.classList.add('active');
+    FAB.show('fab-menu');
+  },
+  close: function() {
+    var ov = document.getElementById('fab-overlay');
+    var btn = document.getElementById('fab-btn');
+    if (ov) ov.classList.remove('open');
+    if (btn) btn.classList.remove('active');
+  },
+  show: function(id) {
+    document.querySelectorAll('.fab-sheet').forEach(function(s) { s.classList.remove('active'); });
+    var el = document.getElementById(id);
+    if (el) el.classList.add('active');
+  }
+};
+
+// ── Calendrier ──
+var MONTHS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+var calDate = new Date(); calDate.setDate(1);
+
+function buildCal() {
+  var grid = document.getElementById('cal-grid');
+  if (!grid) return;
+  var year = calDate.getFullYear(), month = calDate.getMonth();
+  var today = new Date();
+  var label = document.getElementById('cal-month-label');
+  if (label) label.textContent = MONTHS_FR[month];
+  var nav = document.getElementById('cal-nav-label');
+  if (nav) nav.textContent = MONTHS_FR[month] + ' ' + year;
+  // Supprime anciennes colonnes
+  [].slice.call(grid.querySelectorAll('.figma-cal-col')).forEach(function(c) { c.remove(); });
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var firstDay = new Date(year, month, 1).getDay();
+  firstDay = (firstDay + 6) % 7; // Mon=0
+  for (var col = 0; col < 7; col++) {
+    var colEl = document.createElement('div');
+    colEl.className = 'figma-cal-col';
+    for (var row = 0; row < 5; row++) {
+      var day = row * 7 + col - firstDay + 1;
+      var cc = document.createElement('div');
+      if (day < 1 || day > daysInMonth) {
+        cc.className = 'figma-cc empty';
+        cc.innerHTML = '<span></span>';
+      } else {
+        var isToday = year === today.getFullYear() && month === today.getMonth() && day === today.getDate();
+        cc.className = 'figma-cc' + (isToday ? ' today' : '');
+        cc.innerHTML = '<span>' + day + '</span>';
+        cc.onclick = function() { location.href = 'page-day.html'; };
+      }
+      colEl.appendChild(cc);
+    }
+    grid.appendChild(colEl);
+  }
+}
+
+function prevMonth() { calDate.setMonth(calDate.getMonth() - 1); buildCal(); }
+function nextMonth() { calDate.setMonth(calDate.getMonth() + 1); buildCal(); }
+
+function setSvPeriod(el) {
+  document.querySelectorAll('.sv-period').forEach(function(p) { p.classList.remove('active'); });
+  el.classList.add('active');
+}
+
+// ── Hauteur responsive ──
+function fixHeight() {
+  var vh = window.innerHeight;
+  document.querySelectorAll('.app').forEach(function(app) {
+    app.style.height = vh + 'px';
+  });
+}
+fixHeight();
+window.addEventListener('resize', fixHeight);
+
+// ── Init au chargement ──
+buildCal();
+
+// Navigation calendrier
+var calEl = document.querySelector('.figma-cal');
+if (calEl) {
+  calEl.addEventListener('click', function(e) {
+    var cc = e.target.closest('.figma-cc');
+    if (cc && !cc.classList.contains('empty')) location.href = 'page-day.html';
+  });
+}
+
+// Ferme overlay FAB en cliquant en dehors
+var overlay = document.getElementById('fab-overlay');
+if (overlay) {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) FAB.close();
+  });
+}
+</script>
 <script src="./orbs.js"></script>
 </body>
 </html>
