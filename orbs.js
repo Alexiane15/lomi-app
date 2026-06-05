@@ -89,9 +89,9 @@
       for (var k=1; k<5; k++) pts.push([rnd(rand(-AX,AX)), rnd(rand(-AY,AY))]);
       pts.push([x0,y0]);
 
-      var fDur = rand(28,50).toFixed(1);
-      var mDur = rand(20,36).toFixed(1);
-      var oDur = rand(16,30).toFixed(1);
+      var fDur = rand(56,100).toFixed(1);
+      var mDur = rand(40,72).toFixed(1);
+      var oDur = rand(32,60).toFixed(1);
       var fDel = rand(-parseFloat(fDur),0).toFixed(1);
       var mDel = rand(-parseFloat(mDur),0).toFixed(1);
       var oDel = rand(-parseFloat(oDur),0).toFixed(1);
@@ -148,7 +148,7 @@
       var travX  = rnd(rand(W * 0.4, W * 1.2) * (Math.random() > 0.5 ? 1 : -1));
       var travY  = rnd(rand(H * 0.3, H * 0.8) * (Math.random() > 0.5 ? 1 : -1));
 
-      var sDur = rand(14, 32).toFixed(1);
+      var sDur = rand(28, 64).toFixed(1);
       var sDel = rand(-parseFloat(sDur), 0).toFixed(1);
 
       var skName = 'sk'+j;
