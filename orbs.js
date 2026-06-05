@@ -1,104 +1,121 @@
-/* ─────────────────────────────────────────────
-   orbs.js — Fond animé ambiant Lomi
-   Injecte automatiquement les orbes dans .app
-   ───────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────
+   orbs.js — Fond animé ambiant Lomi  (v2)
+   Orbes en position:fixed sur body,
+   les écrans deviennent transparents pour les laisser passer.
+   ───────────────────────────────────────────────── */
 (function () {
 
-  /* ── Palette Lomi (fond sombre #2d2d2d) ── */
+  /* ── Palette Lomi dark ── */
   var COLORS = [
-    'rgba(90, 166, 255, 0.18)',   /* #5aa6ff — bleu principal  */
-    'rgba(74, 176, 255, 0.14)',   /* #4ab0ff — bleu clair      */
-    'rgba(13,  118, 242, 0.16)',  /* #0d76f2 — bleu profond    */
-    'rgba(26, 255, 170, 0.10)',   /* #1affaa — vert accent     */
-    'rgba(90, 166, 255, 0.12)',   /* bleu doux supplémentaire  */
-    'rgba(181, 228, 246, 0.10)',  /* bleu glacier très doux    */
+    'rgba(90,  166, 255, 0.55)',   /* #5aa6ff bleu principal   */
+    'rgba(74,  176, 255, 0.45)',   /* #4ab0ff bleu clair       */
+    'rgba(13,  118, 242, 0.50)',   /* #0d76f2 bleu profond     */
+    'rgba(26,  255, 170, 0.30)',   /* #1affaa vert accent      */
+    'rgba(90,  166, 255, 0.40)',   /* bleu doux                */
+    'rgba(181, 228, 246, 0.30)',   /* bleu glacier             */
   ];
 
   /* ── Config ── */
   var CFG = {
-    count:        6,
-    minSize:      220,
-    maxSize:      500,
-    blur:         90,     /* px */
-    moveRange:    0.18,   /* % de la fenêtre */
-    floatMin:     16,
-    floatMax:     30,
-    fadeMin:      10,
-    fadeMax:      20,
-    opLo:         0.55,
-    opHi:         0.95,
-    scaleMin:     0.88,
-    scaleMax:     1.18,
+    count:      6,
+    minSize:    250,
+    maxSize:    520,
+    blur:       110,
+    moveRange:  0.20,
+    floatMin:   14,
+    floatMax:   28,
+    fadeMin:    8,
+    fadeMax:    18,
+    opLo:       0.50,
+    opHi:       1.00,
+    scaleMin:   0.88,
+    scaleMax:   1.18,
   };
 
-  /* ── Utilitaires ── */
-  function rand(a, b)  { return a + Math.random() * (b - a); }
-  function pick(arr)   { return arr[Math.floor(Math.random() * arr.length)]; }
-  function px(n)       { return n.toFixed(1) + 'px'; }
+  /* ── Utils ── */
+  var rand = function(a,b){ return a + Math.random()*(b-a); };
+  var pick = function(arr){ return arr[Math.floor(Math.random()*arr.length)]; };
+  var px   = function(n){ return n.toFixed(1)+'px'; };
 
-  /* ── Keyframes (injectés une seule fois) ── */
+  /* ── Styles globaux (injectés une seule fois) ── */
   function injectStyles() {
-    if (document.getElementById('orbs-style')) return;
+    if (document.getElementById('lomi-orbs-style')) return;
     var s = document.createElement('style');
-    s.id = 'orbs-style';
+    s.id = 'lomi-orbs-style';
     s.textContent = [
+
+      /* Conteneur fixed sur tout l'écran */
+      '#lomi-orbs{',
+        'position:fixed;inset:0;',
+        'z-index:0;',
+        'pointer-events:none;',
+        'overflow:hidden;',
+      '}',
+
+      /* Chaque orbe */
       '.lomi-orb{',
         'position:absolute;',
         'border-radius:50%;',
-        'pointer-events:none;',
         'will-change:transform,opacity;',
         'animation:lomi-float linear infinite,lomi-fade linear infinite;',
       '}',
+
+      /* Rendre l'app et ses couches transparentes
+         pour que les orbes passent à travers        */
+      '.app{background:transparent !important}',
+      '.screens-wrap{background:transparent !important}',
+      '#screen-carnet,#screen-suivi{background:transparent !important}',
+      '.screen{background:transparent !important}',
+      '.nav{background:rgba(45,45,45,0.75) !important;',
+        'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}',
+
+      /* Keyframes */
       '@keyframes lomi-float{',
-        '0%  {transform:translate(0,0)           scale(1)}',
-        '25% {transform:translate(var(--tx1),var(--ty1)) scale(var(--s1))}',
-        '50% {transform:translate(var(--tx2),var(--ty2)) scale(var(--s2))}',
-        '75% {transform:translate(var(--tx1),var(--ty2)) scale(var(--s1))}',
-        '100%{transform:translate(0,0)           scale(1)}',
+        '0%  {transform:translate(0,0)                       scale(1)       }',
+        '25% {transform:translate(var(--tx1),var(--ty1))     scale(var(--s1))}',
+        '50% {transform:translate(var(--tx2),var(--ty2))     scale(var(--s2))}',
+        '75% {transform:translate(var(--tx1),var(--ty2))     scale(var(--s1))}',
+        '100%{transform:translate(0,0)                       scale(1)       }',
       '}',
       '@keyframes lomi-fade{',
         '0%,100%{opacity:var(--op-lo)}',
         '50%    {opacity:var(--op-hi)}',
       '}',
+
     ].join('');
     document.head.appendChild(s);
   }
 
-  /* ── Création du conteneur + orbes ── */
-  function buildOrbs(target) {
-    var W = target.offsetWidth  || window.innerWidth;
-    var H = target.offsetHeight || window.innerHeight;
+  /* ── Création des orbes ── */
+  function buildOrbs() {
+    if (document.getElementById('lomi-orbs')) return;
+
+    var W = window.innerWidth;
+    var H = window.innerHeight;
 
     var wrap = document.createElement('div');
     wrap.id = 'lomi-orbs';
-    wrap.style.cssText = [
-      'position:absolute',
-      'inset:0',
-      'z-index:0',
-      'pointer-events:none',
-      'overflow:hidden',
-    ].join(';');
 
     for (var i = 0; i < CFG.count; i++) {
       var size = rand(CFG.minSize, CFG.maxSize);
-      var cx   = rand(-size * 0.3, W - size * 0.7);
-      var cy   = rand(-size * 0.3, H - size * 0.7);
+      var cx   = rand(-size*0.3, W - size*0.7);
+      var cy   = rand(-size*0.3, H - size*0.7);
       var mx   = W * CFG.moveRange;
       var my   = H * CFG.moveRange;
 
-      var tx1 = px(rand(-mx, mx));
-      var ty1 = px(rand(-my, my));
-      var tx2 = px(rand(-mx, mx));
-      var ty2 = px(rand(-my, my));
-      var s1  = rand(CFG.scaleMin, CFG.scaleMax).toFixed(3);
-      var s2  = rand(CFG.scaleMin, CFG.scaleMax).toFixed(3);
-      var opLo = rand(CFG.opLo, CFG.opHi - 0.1).toFixed(3);
-      var opHi = Math.min(+opLo + rand(0.05, 0.2), CFG.opHi).toFixed(3);
+      var tx1  = px(rand(-mx, mx));
+      var ty1  = px(rand(-my, my));
+      var tx2  = px(rand(-mx, mx));
+      var ty2  = px(rand(-my, my));
+      var s1   = rand(CFG.scaleMin, CFG.scaleMax).toFixed(3);
+      var s2   = rand(CFG.scaleMin, CFG.scaleMax).toFixed(3);
+      var opLo = rand(CFG.opLo, CFG.opHi - 0.15).toFixed(3);
+      var opHi = Math.min(+opLo + rand(0.1, 0.3), CFG.opHi).toFixed(3);
 
       var fDur = rand(CFG.floatMin, CFG.floatMax).toFixed(1);
       var aDur = rand(CFG.fadeMin,  CFG.fadeMax).toFixed(1);
-      var fDel = (rand(0, -parseFloat(fDur))).toFixed(1);
-      var aDel = (rand(0, -parseFloat(aDur))).toFixed(1);
+      var fDel = rand(-parseFloat(fDur), 0).toFixed(1);
+      var aDel = rand(-parseFloat(aDur), 0).toFixed(1);
 
       var orb = document.createElement('div');
       orb.className = 'lomi-orb';
@@ -109,35 +126,24 @@
         'top:'    + px(cy),
         'background:' + pick(COLORS),
         'filter:blur(' + CFG.blur + 'px)',
-        '--tx1:' + tx1, '--ty1:' + ty1,
-        '--tx2:' + tx2, '--ty2:' + ty2,
-        '--s1:'  + s1,  '--s2:'  + s2,
-        '--op-lo:' + opLo, '--op-hi:' + opHi,
-        'animation-duration:' + fDur + 's,' + aDur + 's',
-        'animation-delay:'    + fDel + 's,' + aDel + 's',
+        '--tx1:'+tx1,'--ty1:'+ty1,
+        '--tx2:'+tx2,'--ty2:'+ty2,
+        '--s1:' +s1, '--s2:' +s2,
+        '--op-lo:'+opLo,'--op-hi:'+opHi,
+        'animation-duration:'+fDur+'s,'+aDur+'s',
+        'animation-delay:'  +fDel+'s,'+aDel+'s',
       ].join(';');
 
       wrap.appendChild(orb);
     }
 
-    /* Insère en premier enfant de .app */
-    target.insertBefore(wrap, target.firstChild);
+    document.body.insertBefore(wrap, document.body.firstChild);
   }
 
-  /* ── Init après chargement du DOM ── */
+  /* ── Init ── */
   function init() {
-    /* Évite les doublons si rechargement partiel */
-    if (document.getElementById('lomi-orbs')) return;
-
-    var app = document.querySelector('.app');
-    if (!app) return;
-
-    /* .app doit être en position relative ou absolute */
-    var pos = getComputedStyle(app).position;
-    if (pos === 'static') app.style.position = 'relative';
-
     injectStyles();
-    buildOrbs(app);
+    buildOrbs();
   }
 
   if (document.readyState === 'loading') {
