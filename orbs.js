@@ -1,125 +1,128 @@
 /* ─────────────────────────────────────────────────
-   orbs.js — Blobs organiques animés Lomi  (v4)
-   Keyframes uniques par blob avec vrais pixels
+   orbs.js — Blobs électriques + liserets Lomi  (v5)
+   Inspiré du moodboard : bleus profonds, centres
+   blancs lumineux, fins liserets qui traversent
    ───────────────────────────────────────────────── */
 (function () {
 
-  var COLORS = [
-    'rgba(90,  166, 255, 0.55)',
-    'rgba(74,  176, 255, 0.48)',
-    'rgba(13,  118, 242, 0.52)',
-    'rgba(26,  255, 170, 0.32)',
-    'rgba(90,  166, 255, 0.44)',
-    'rgba(181, 228, 246, 0.36)',
+  /* ── Palette moodboard : bleu profond / électrique ── */
+  var BLOB_COLORS = [
+    /* centre blanc lumineux → bleu électrique → transparent */
+    'radial-gradient(ellipse at 38% 38%, rgba(255,255,255,0.90) 0%, rgba(90,166,255,0.85) 18%, rgba(13,118,242,0.70) 38%, rgba(10,22,80,0.40) 65%, transparent 100%)',
+    'radial-gradient(ellipse at 55% 45%, rgba(255,255,255,0.80) 0%, rgba(74,176,255,0.80) 20%, rgba(0,80,200,0.65) 42%, rgba(5,15,60,0.35) 68%, transparent 100%)',
+    'radial-gradient(ellipse at 45% 55%, rgba(220,240,255,0.70) 0%, rgba(50,140,255,0.75) 22%, rgba(13,60,180,0.60) 45%, rgba(8,18,70,0.30) 70%, transparent 100%)',
+    'radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.85) 0%, rgba(120,190,255,0.75) 15%, rgba(30,100,230,0.60) 35%, transparent 80%)',
+    'radial-gradient(ellipse at 35% 60%, rgba(200,230,255,0.60) 0%, rgba(74,176,255,0.65) 25%, rgba(13,118,242,0.50) 50%, transparent 85%)',
   ];
 
   var SHAPES = [
     '60% 40% 30% 70% / 60% 30% 70% 40%',
     '40% 60% 70% 30% / 40% 70% 30% 60%',
     '50% 50% 33% 67% / 55% 27% 73% 45%',
-    '33% 67% 55% 45% / 40% 60% 40% 60%',
     '67% 33% 45% 55% / 30% 55% 45% 70%',
     '45% 55% 60% 40% / 70% 40% 60% 30%',
     '55% 45% 38% 62% / 48% 62% 38% 52%',
     '38% 62% 52% 48% / 65% 35% 55% 45%',
   ];
 
-  var CFG = {
-    count:    6,
-    minSize:  240,
-    maxSize:  460,
-    blur:     65,
-  };
-
   var rand = function(a,b){ return a + Math.random()*(b-a); };
   var pick = function(arr){ return arr[Math.floor(Math.random()*arr.length)]; };
   var rnd  = function(n){ return Math.round(n); };
 
+  /* ══════════════════════════════════════════
+     GÉNÉRATION
+  ══════════════════════════════════════════ */
   function init() {
     if (document.getElementById('lomi-orbs')) return;
 
     var W = window.innerWidth;
     var H = window.innerHeight;
-    /* Amplitude de mouvement : ~40% de la largeur/hauteur */
-    var AX = W * 0.40;
-    var AY = H * 0.40;
+    var AX = W * 0.38;
+    var AY = H * 0.38;
 
     var css = [
+      /* Conteneur fixe */
       '#lomi-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}',
+
+      /* Blobs */
       '.lomi-orb{position:absolute;will-change:transform,border-radius;}',
+
+      /* Liserets */
+      '.lomi-streak{',
+        'position:absolute;',
+        'pointer-events:none;',
+        'will-change:transform,opacity;',
+        'border-radius:100px;',
+      '}',
+
+      /* Rend les couches de l'app transparentes */
       '.app{background:transparent !important}',
       '.screens-wrap{background:transparent !important}',
       '#screen-carnet,#screen-suivi{background:transparent !important}',
       '.screen{background:transparent !important}',
-      '.nav{background:rgba(30,30,35,0.65)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}',
+      '.nav{',
+        'background:rgba(8,15,45,0.70)!important;',
+        'backdrop-filter:blur(16px);',
+        '-webkit-backdrop-filter:blur(16px);',
+      '}',
+
+      /* Fond body : bleu très sombre */
+      'body{background:#080f2d !important}',
     ];
 
     var wrap = document.createElement('div');
     wrap.id  = 'lomi-orbs';
 
-    for (var i = 0; i < CFG.count; i++) {
-      var size = rand(CFG.minSize, CFG.maxSize);
-      /* Position de départ centrée sur l'écran, décalée aléatoirement */
-      var sx = rand(0, W - size);
-      var sy = rand(0, H - size);
+    /* ── 1. BLOBS organiques ── */
+    var BLOB_COUNT = 5;
+    for (var i = 0; i < BLOB_COUNT; i++) {
+      var size = rand(200, 440);
+      var sx   = rand(-size*0.2, W - size*0.8);
+      var sy   = rand(-size*0.2, H - size*0.8);
 
-      /* 5 waypoints de déplacement différents (vrais pixels) */
-      var kf = [];
-      var pcts = [0, 20, 40, 60, 80, 100];
+      /* Waypoints */
+      var pcts = [0,20,40,60,80,100];
       var pts  = [];
-      /* Point 0 et 100 identiques pour la boucle */
-      var x0 = rnd(rand(-AX*0.5, AX*0.5));
-      var y0 = rnd(rand(-AY*0.5, AY*0.5));
-      pts.push([x0, y0]);
-      for (var k = 1; k < 5; k++) {
-        pts.push([rnd(rand(-AX, AX)), rnd(rand(-AY, AY))]);
+      var x0   = rnd(rand(-AX*0.5, AX*0.5));
+      var y0   = rnd(rand(-AY*0.5, AY*0.5));
+      pts.push([x0,y0]);
+      for (var k=1; k<5; k++) pts.push([rnd(rand(-AX,AX)), rnd(rand(-AY,AY))]);
+      pts.push([x0,y0]);
+
+      var fDur = rand(14,26).toFixed(1);
+      var mDur = rand(9,18).toFixed(1);
+      var oDur = rand(7,15).toFixed(1);
+      var fDel = rand(-parseFloat(fDur),0).toFixed(1);
+      var mDel = rand(-parseFloat(mDur),0).toFixed(1);
+      var oDel = rand(-parseFloat(oDur),0).toFixed(1);
+
+      var kfName = 'bf'+i;
+      var kf = '@keyframes '+kfName+'{';
+      for (var k=0; k<=5; k++) {
+        var sc = rand(0.90,1.15).toFixed(3);
+        kf += pcts[k]+'%{transform:translate('+pts[k][0]+'px,'+pts[k][1]+'px) scale('+sc+')}';
       }
-      pts.push([x0, y0]); /* ferme la boucle */
+      kf += '}';
 
-      /* Durées et forms uniques par blob */
-      var fDur  = rand(12, 22).toFixed(1);  /* flottement */
-      var mDur  = rand(8,  16).toFixed(1);  /* morph shape */
-      var oDur  = rand(6,  14).toFixed(1);  /* opacité */
-      var fDel  = rand(-parseFloat(fDur), 0).toFixed(1);
-      var mDel  = rand(-parseFloat(mDur), 0).toFixed(1);
-      var oDel  = rand(-parseFloat(oDur), 0).toFixed(1);
-      var opLo  = rand(0.4, 0.7).toFixed(2);
-      var opHi  = rand(0.8, 1.0).toFixed(2);
+      var kmName = 'bm'+i;
+      var km = '@keyframes '+kmName+'{0%,100%{border-radius:'+pick(SHAPES)+'}33%{border-radius:'+pick(SHAPES)+'}66%{border-radius:'+pick(SHAPES)+'}}';
 
-      /* Génère le @keyframes de float avec vraies valeurs */
-      var kfName = 'lomi-f'+i;
-      var kfStr  = '@keyframes '+kfName+'{';
-      for (var k = 0; k <= 5; k++) {
-        var sc = rand(0.88, 1.18).toFixed(3);
-        kfStr += pcts[k]+'%{transform:translate('+pts[k][0]+'px,'+pts[k][1]+'px) scale('+sc+')}';
-      }
-      kfStr += '}';
+      var koName = 'bo'+i;
+      var opLo = rand(0.55,0.75).toFixed(2);
+      var opHi = rand(0.85,1.00).toFixed(2);
+      var ko = '@keyframes '+koName+'{0%,100%{opacity:'+opLo+'}50%{opacity:'+opHi+'}}';
 
-      /* Génère le @keyframes de morph */
-      var kmName = 'lomi-m'+i;
-      var kmStr  = '@keyframes '+kmName+'{';
-      var steps  = [0,25,50,75,100];
-      for (var k = 0; k < steps.length; k++) {
-        kmStr += steps[k]+'%{border-radius:'+pick(SHAPES)+'}';
-      }
-      kmStr += '}';
+      css.push(kf, km, ko);
 
-      /* Génère le @keyframes d'opacité */
-      var koName = 'lomi-o'+i;
-      var koStr  = '@keyframes '+koName+'{0%,100%{opacity:'+opLo+'}50%{opacity:'+opHi+'}}';
-
-      css.push(kfStr, kmStr, koStr);
-
-      /* Crée le div */
       var orb = document.createElement('div');
       orb.className = 'lomi-orb';
       orb.style.cssText = [
         'width:'+rnd(size)+'px',
-        'height:'+rnd(size)+'px',
+        'height:'+rnd(size*rand(0.75,1.1))+'px',
         'left:'+rnd(sx)+'px',
         'top:'+rnd(sy)+'px',
-        'background:'+pick(COLORS),
-        'filter:blur('+CFG.blur+'px)',
+        'background:'+pick(BLOB_COLORS),
+        'filter:blur(28px)',
         'border-radius:'+pick(SHAPES),
         'animation:'+
           kfName+' '+fDur+'s ease-in-out '+fDel+'s infinite,'+
@@ -130,7 +133,52 @@
       wrap.appendChild(orb);
     }
 
-    /* Injecte les styles et le DOM */
+    /* ── 2. LISERETS blancs ── */
+    var STREAK_COUNT = 6;
+    for (var j = 0; j < STREAK_COUNT; j++) {
+      /* Longueur aléatoire, très fins */
+      var len   = rand(80, 280);
+      var thick = rand(0.6, 1.8);
+      /* Angle entre -60° et +60° */
+      var angle = rand(-60, 60);
+      /* Position de départ hors écran à gauche ou en haut */
+      var startX = rand(-len, W + len);
+      var startY = rand(-len, H + len);
+      /* Distance de traversée */
+      var travX  = rnd(rand(W * 0.4, W * 1.2) * (Math.random() > 0.5 ? 1 : -1));
+      var travY  = rnd(rand(H * 0.3, H * 0.8) * (Math.random() > 0.5 ? 1 : -1));
+
+      var sDur = rand(6, 16).toFixed(1);
+      var sDel = rand(-parseFloat(sDur), 0).toFixed(1);
+
+      var skName = 'sk'+j;
+      /* Opacité : apparaît, brille, disparaît */
+      var sk = '@keyframes '+skName+'{'+
+        '0%  {transform:translate(0,0);opacity:0}'+
+        '10% {opacity:'+rand(0.6,1.0).toFixed(2)+'}'+
+        '50% {transform:translate('+rnd(travX*0.5)+'px,'+rnd(travY*0.5)+'px);opacity:'+rand(0.3,0.7).toFixed(2)+'}'+
+        '90% {opacity:0.1}'+
+        '100%{transform:translate('+travX+'px,'+travY+'px);opacity:0}'+
+      '}';
+      css.push(sk);
+
+      var streak = document.createElement('div');
+      streak.className = 'lomi-streak';
+      streak.style.cssText = [
+        'width:'+rnd(len)+'px',
+        'height:'+thick.toFixed(1)+'px',
+        'left:'+rnd(startX)+'px',
+        'top:' +rnd(startY)+'px',
+        'transform:rotate('+angle.toFixed(1)+'deg)',
+        'background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.9) 40%, rgba(200,230,255,0.6) 70%, transparent 100%)',
+        'opacity:0',
+        'animation:'+skName+' '+sDur+'s ease-in-out '+sDel+'s infinite',
+      ].join(';');
+
+      wrap.appendChild(streak);
+    }
+
+    /* ── Injection ── */
     var style = document.createElement('style');
     style.id  = 'lomi-orbs-style';
     style.textContent = css.join('');
