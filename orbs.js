@@ -1,22 +1,18 @@
 /* ─────────────────────────────────────────────────
-   orbs.js — Formes organiques animées Lomi  (v3)
-   Blobs amoïdes qui morphent + flottent en continu
+   orbs.js — Blobs organiques animés Lomi  (v4)
+   Keyframes uniques par blob avec vrais pixels
    ───────────────────────────────────────────────── */
 (function () {
 
-  /* ── Palette Lomi dark ── */
   var COLORS = [
-    'rgba(90,  166, 255, 0.50)',
-    'rgba(74,  176, 255, 0.42)',
-    'rgba(13,  118, 242, 0.45)',
-    'rgba(26,  255, 170, 0.28)',
-    'rgba(90,  166, 255, 0.38)',
-    'rgba(181, 228, 246, 0.32)',
+    'rgba(90,  166, 255, 0.55)',
+    'rgba(74,  176, 255, 0.48)',
+    'rgba(13,  118, 242, 0.52)',
+    'rgba(26,  255, 170, 0.32)',
+    'rgba(90,  166, 255, 0.44)',
+    'rgba(181, 228, 246, 0.36)',
   ];
 
-  /* ── Formes de border-radius organiques ──
-     Format CSS : "a% b% c% d% / e% f% g% h%"
-     Chaque set donne un aspect différent au blob  */
   var SHAPES = [
     '60% 40% 30% 70% / 60% 30% 70% 40%',
     '40% 60% 70% 30% / 40% 70% 30% 60%',
@@ -28,158 +24,118 @@
     '38% 62% 52% 48% / 65% 35% 55% 45%',
   ];
 
-  /* ── Config ── */
   var CFG = {
-    count:     6,
-    minSize:   220,
-    maxSize:   480,
-    blur:      70,
-    moveRange: 0.18,
-    morphMin:  8,
-    morphMax:  18,
-    floatMin:  16,
-    floatMax:  32,
-    fadeMin:   10,
-    fadeMax:   22,
-    opLo:      0.45,
-    opHi:      1.00,
-    scaleMin:  0.85,
-    scaleMax:  1.20,
+    count:    6,
+    minSize:  240,
+    maxSize:  460,
+    blur:     65,
   };
 
   var rand = function(a,b){ return a + Math.random()*(b-a); };
   var pick = function(arr){ return arr[Math.floor(Math.random()*arr.length)]; };
-  var px   = function(n){ return n.toFixed(1)+'px'; };
+  var rnd  = function(n){ return Math.round(n); };
 
-  /* ── Styles globaux ── */
-  function injectStyles() {
-    if (document.getElementById('lomi-orbs-style')) return;
-
-    /* On génère les @keyframes de morph dynamiquement
-       pour que chaque blob ait son propre chemin de déformation */
-    var morphKF = '';
-    for (var i = 0; i < CFG.count; i++) {
-      var s0 = pick(SHAPES), s1 = pick(SHAPES), s2 = pick(SHAPES), s3 = pick(SHAPES);
-      morphKF += [
-        '@keyframes lomi-morph-'+i+'{',
-          '0%  {border-radius:'+s0+'}',
-          '25% {border-radius:'+s1+'}',
-          '50% {border-radius:'+s2+'}',
-          '75% {border-radius:'+s3+'}',
-          '100%{border-radius:'+s0+'}',
-        '}',
-      ].join('');
-    }
-
-    var s = document.createElement('style');
-    s.id = 'lomi-orbs-style';
-    s.textContent = [
-
-      '#lomi-orbs{',
-        'position:fixed;inset:0;',
-        'z-index:0;',
-        'pointer-events:none;',
-        'overflow:hidden;',
-      '}',
-
-      '.lomi-orb{',
-        'position:absolute;',
-        'will-change:transform,opacity,border-radius;',
-      '}',
-
-      /* Rend les couches de l'app transparentes */
-      '.app{background:transparent !important}',
-      '.screens-wrap{background:transparent !important}',
-      '#screen-carnet,#screen-suivi{background:transparent !important}',
-      '.screen{background:transparent !important}',
-      '.nav{',
-        'background:rgba(30,30,35,0.60) !important;',
-        'backdrop-filter:blur(14px);',
-        '-webkit-backdrop-filter:blur(14px);',
-      '}',
-
-      /* Keyframes flottement */
-      '@keyframes lomi-float{',
-        '0%  {transform:translate(0,0)                    scale(1)        }',
-        '25% {transform:translate(var(--tx1),var(--ty1))  scale(var(--s1))}',
-        '50% {transform:translate(var(--tx2),var(--ty2))  scale(var(--s2))}',
-        '75% {transform:translate(var(--tx1),var(--ty2))  scale(var(--s1))}',
-        '100%{transform:translate(0,0)                    scale(1)        }',
-      '}',
-
-      /* Keyframes opacité */
-      '@keyframes lomi-fade{',
-        '0%,100%{opacity:var(--op-lo)}',
-        '50%    {opacity:var(--op-hi)}',
-      '}',
-
-      morphKF,
-
-    ].join('');
-    document.head.appendChild(s);
-  }
-
-  /* ── Création des blobs ── */
-  function buildOrbs() {
+  function init() {
     if (document.getElementById('lomi-orbs')) return;
 
     var W = window.innerWidth;
     var H = window.innerHeight;
+    /* Amplitude de mouvement : ~40% de la largeur/hauteur */
+    var AX = W * 0.40;
+    var AY = H * 0.40;
+
+    var css = [
+      '#lomi-orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}',
+      '.lomi-orb{position:absolute;will-change:transform,border-radius;}',
+      '.app{background:transparent !important}',
+      '.screens-wrap{background:transparent !important}',
+      '#screen-carnet,#screen-suivi{background:transparent !important}',
+      '.screen{background:transparent !important}',
+      '.nav{background:rgba(30,30,35,0.65)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}',
+    ];
+
     var wrap = document.createElement('div');
-    wrap.id = 'lomi-orbs';
+    wrap.id  = 'lomi-orbs';
 
     for (var i = 0; i < CFG.count; i++) {
       var size = rand(CFG.minSize, CFG.maxSize);
-      var cx   = rand(-size*0.25, W - size*0.75);
-      var cy   = rand(-size*0.25, H - size*0.75);
-      var mx   = W * CFG.moveRange;
-      var my   = H * CFG.moveRange;
+      /* Position de départ centrée sur l'écran, décalée aléatoirement */
+      var sx = rand(0, W - size);
+      var sy = rand(0, H - size);
 
-      var tx1  = px(rand(-mx, mx));
-      var ty1  = px(rand(-my, my));
-      var tx2  = px(rand(-mx, mx));
-      var ty2  = px(rand(-my, my));
-      var s1   = rand(CFG.scaleMin, CFG.scaleMax).toFixed(3);
-      var s2   = rand(CFG.scaleMin, CFG.scaleMax).toFixed(3);
-      var opLo = rand(CFG.opLo, CFG.opHi - 0.2).toFixed(3);
-      var opHi = Math.min(+opLo + rand(0.15, 0.35), CFG.opHi).toFixed(3);
+      /* 5 waypoints de déplacement différents (vrais pixels) */
+      var kf = [];
+      var pcts = [0, 20, 40, 60, 80, 100];
+      var pts  = [];
+      /* Point 0 et 100 identiques pour la boucle */
+      var x0 = rnd(rand(-AX*0.5, AX*0.5));
+      var y0 = rnd(rand(-AY*0.5, AY*0.5));
+      pts.push([x0, y0]);
+      for (var k = 1; k < 5; k++) {
+        pts.push([rnd(rand(-AX, AX)), rnd(rand(-AY, AY))]);
+      }
+      pts.push([x0, y0]); /* ferme la boucle */
 
-      var fDur  = rand(CFG.floatMin, CFG.floatMax).toFixed(1);
-      var aDur  = rand(CFG.fadeMin,  CFG.fadeMax).toFixed(1);
-      var mDur  = rand(CFG.morphMin, CFG.morphMax).toFixed(1);
+      /* Durées et forms uniques par blob */
+      var fDur  = rand(12, 22).toFixed(1);  /* flottement */
+      var mDur  = rand(8,  16).toFixed(1);  /* morph shape */
+      var oDur  = rand(6,  14).toFixed(1);  /* opacité */
       var fDel  = rand(-parseFloat(fDur), 0).toFixed(1);
-      var aDel  = rand(-parseFloat(aDur), 0).toFixed(1);
       var mDel  = rand(-parseFloat(mDur), 0).toFixed(1);
+      var oDel  = rand(-parseFloat(oDur), 0).toFixed(1);
+      var opLo  = rand(0.4, 0.7).toFixed(2);
+      var opHi  = rand(0.8, 1.0).toFixed(2);
 
+      /* Génère le @keyframes de float avec vraies valeurs */
+      var kfName = 'lomi-f'+i;
+      var kfStr  = '@keyframes '+kfName+'{';
+      for (var k = 0; k <= 5; k++) {
+        var sc = rand(0.88, 1.18).toFixed(3);
+        kfStr += pcts[k]+'%{transform:translate('+pts[k][0]+'px,'+pts[k][1]+'px) scale('+sc+')}';
+      }
+      kfStr += '}';
+
+      /* Génère le @keyframes de morph */
+      var kmName = 'lomi-m'+i;
+      var kmStr  = '@keyframes '+kmName+'{';
+      var steps  = [0,25,50,75,100];
+      for (var k = 0; k < steps.length; k++) {
+        kmStr += steps[k]+'%{border-radius:'+pick(SHAPES)+'}';
+      }
+      kmStr += '}';
+
+      /* Génère le @keyframes d'opacité */
+      var koName = 'lomi-o'+i;
+      var koStr  = '@keyframes '+koName+'{0%,100%{opacity:'+opLo+'}50%{opacity:'+opHi+'}}';
+
+      css.push(kfStr, kmStr, koStr);
+
+      /* Crée le div */
       var orb = document.createElement('div');
       orb.className = 'lomi-orb';
       orb.style.cssText = [
-        'width:'  + px(size),
-        'height:' + px(size),
-        'left:'   + px(cx),
-        'top:'    + px(cy),
-        'background:' + pick(COLORS),
-        'filter:blur(' + CFG.blur + 'px)',
-        'border-radius:' + pick(SHAPES),
-        '--tx1:'+tx1,'--ty1:'+ty1,
-        '--tx2:'+tx2,'--ty2:'+ty2,
-        '--s1:' +s1, '--s2:' +s2,
-        '--op-lo:'+opLo,'--op-hi:'+opHi,
-        /* 3 animations indépendantes : float + fade + morph */
-        'animation:lomi-float '+fDur+'s linear '+fDel+'s infinite,'+
-                   'lomi-fade ' +aDur+'s linear '+aDel+'s infinite,'+
-                   'lomi-morph-'+i+' '+mDur+'s ease-in-out '+mDel+'s infinite',
+        'width:'+rnd(size)+'px',
+        'height:'+rnd(size)+'px',
+        'left:'+rnd(sx)+'px',
+        'top:'+rnd(sy)+'px',
+        'background:'+pick(COLORS),
+        'filter:blur('+CFG.blur+'px)',
+        'border-radius:'+pick(SHAPES),
+        'animation:'+
+          kfName+' '+fDur+'s ease-in-out '+fDel+'s infinite,'+
+          kmName+' '+mDur+'s ease-in-out '+mDel+'s infinite,'+
+          koName+' '+oDur+'s ease-in-out '+oDel+'s infinite',
       ].join(';');
 
       wrap.appendChild(orb);
     }
 
+    /* Injecte les styles et le DOM */
+    var style = document.createElement('style');
+    style.id  = 'lomi-orbs-style';
+    style.textContent = css.join('');
+    document.head.appendChild(style);
     document.body.insertBefore(wrap, document.body.firstChild);
-  }
-
-  function init() {
-    injectStyles();
-    buildOrbs();
   }
 
   if (document.readyState === 'loading') {
