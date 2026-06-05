@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Orbs Background</title>
+<style>
+  /* ─────────────────────────────────────────
+     RESET & PAGE
+  ───────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: #f4f3f0; /* fond blanc cassé — à personnaliser */
+    overflow: hidden;
+    font-family: system-ui, sans-serif;
+  }
+
+  /* ─────────────────────────────────────────
+     CONTENEUR DES ORBES
+     position:fixed pour rester en dessous
+     du contenu qui sera posé par-dessus
+  ───────────────────────────────────────── */
+  #orbs-container {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* ─────────────────────────────────────────
+     ORBE — base
+  ───────────────────────────────────────── */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    /* Le blur fort + l'opacité basse = effet vaporeux */
+    filter: blur(80px);
+    opacity: 0;                         /* démarre invisible */
+    animation: float linear infinite,
+               fade  linear infinite;   /* 2 anims indépendantes */
+    will-change: transform, opacity;
+  }
+
+  /* ─────────────────────────────────────────
+     KEYFRAMES GLOBAUX
+     Les durées et décalages sont injectés
+     en ligne par le JS sur chaque orbe
+  ───────────────────────────────────────── */
+
+  /* Flottement — le JS surcharge les valeurs via --tx1/2 et --ty1/2 */
+  @keyframes float {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(var(--tx1), var(--ty1)) scale(var(--s1)); }
+    50%  { transform: translate(var(--tx2), var(--ty2)) scale(var(--s2)); }
+    75%  { transform: translate(var(--tx1), var(--ty2)) scale(var(--s1)); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  /* Pulsation d'opacité douce */
+  @keyframes fade {
+    0%, 100% { opacity: var(--op-lo); }
+    50%       { opacity: var(--op-hi); }
+  }
+
+  /* ─────────────────────────────────────────
+     DÉMO — contenu par-dessus (facultatif)
+  ───────────────────────────────────────── */
+  #demo-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 12px;
+    color: #3a3a4a;
+  }
+  #demo-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -.04em;
+    opacity: .85;
+  }
+  #demo-content p {
+    font-size: .95rem;
+    opacity: .45;
+    letter-spacing: .01em;
+  }
+</style>
+</head>
+<body>
+
+<!-- Conteneur injecté par le JS -->
+<div id="orbs-container"></div>
+
+<!-- Contenu demo par-dessus — remplace par ton UI -->
+<div id="demo-content">
+  <h1>Ton interface ici</h1>
+  <p>Les orbes sont en dessous, z-index: 0</p>
+</div>
+
+<script>
+  /* ═══════════════════════════════════════════
+     CONFIGURATION — ajuste librement
+  ═══════════════════════════════════════════ */
+  const CONFIG = {
+    count     : 8,          // nombre d'orbes
+    minSize   : 180,        // taille min en px
+    maxSize   : 480,        // taille max en px
+
+    // Palette pastel — ajoute / retire des couleurs
+    colors: [
+      'rgba(180, 200, 255, 0.55)',   // bleu lavande
+      'rgba(200, 180, 255, 0.50)',   // violet doux
+      'rgba(180, 220, 250, 0.50)',   // bleu ciel
+      'rgba(220, 200, 255, 0.45)',   // lilas
+      'rgba(190, 235, 255, 0.45)',   // bleu glacier
+      'rgba(210, 190, 255, 0.40)',   // mauve pâle
+    ],
+
+    // Durée des animations (secondes)
+    floatDurMin : 14,
+    floatDurMax : 28,
+    fadeDurMin  : 8,
+    fadeDurMax  : 18,
+
+    // Amplitude du déplacement (% de la fenêtre)
+    moveRange   : 0.22,
+
+    // Fourchette d'opacité (lo = min, hi = max)
+    opacityLo   : 0.25,
+    opacityHi   : 0.65,
+
+    // Fourchette de scaling
+    scaleMin    : 0.85,
+    scaleMax    : 1.20,
+  };
+
+  /* ═══════════════════════════════════════════
+     UTILITAIRES
+  ═══════════════════════════════════════════ */
+  const rand  = (a, b) => a + Math.random() * (b - a);
+  const pick  = arr   => arr[Math.floor(Math.random() * arr.length)];
+  const px    = n     => `${n.toFixed(1)}px`;
+  const pct   = n     => `${(n * 100).toFixed(1)}%`;
+
+  /* ═══════════════════════════════════════════
+     GÉNÉRATION DES ORBES
+  ═══════════════════════════════════════════ */
+  function createOrbs() {
+    const container = document.getElementById('orbs-container');
+    const W = window.innerWidth, H = window.innerHeight;
+
+    for (let i = 0; i < CONFIG.count; i++) {
+
+      /* Taille et position initiale aléatoires */
+      const size = rand(CONFIG.minSize, CONFIG.maxSize);
+      const cx   = rand(-size * 0.2, W - size * 0.8);  // peut déborder légèrement
+      const cy   = rand(-size * 0.2, H - size * 0.8);
+
+      /* Déplacement aléatoire pour chaque waypoint */
+      const mx = W * CONFIG.moveRange;
+      const my = H * CONFIG.moveRange;
+      const tx1 = px(rand(-mx, mx));
+      const ty1 = px(rand(-my, my));
+      const tx2 = px(rand(-mx, mx));
+      const ty2 = px(rand(-my, my));
+
+      /* Scale aléatoire pour chaque waypoint */
+      const s1 = rand(CONFIG.scaleMin, CONFIG.scaleMax).toFixed(3);
+      const s2 = rand(CONFIG.scaleMin, CONFIG.scaleMax).toFixed(3);
+
+      /* Opacité */
+      const opLo = rand(CONFIG.opacityLo, CONFIG.opacityHi - 0.1).toFixed(3);
+      const opHi = rand(+opLo + 0.05, CONFIG.opacityHi).toFixed(3);
+
+      /* Durées et décalages */
+      const floatDur = rand(CONFIG.floatDurMin, CONFIG.floatDurMax).toFixed(1);
+      const fadeDur  = rand(CONFIG.fadeDurMin,  CONFIG.fadeDurMax).toFixed(1);
+      const floatDel = rand(0, -parseFloat(floatDur)); // démarre à un point aléatoire
+      const fadeDel  = rand(0, -parseFloat(fadeDur));
+
+      /* Création du div */
+      const orb = document.createElement('div');
+      orb.className = 'orb';
+      orb.style.cssText = `
+        width:  ${px(size)};
+        height: ${px(size)};
+        left:   ${px(cx)};
+        top:    ${px(cy)};
+        background: ${pick(CONFIG.colors)};
+        --tx1: ${tx1}; --ty1: ${ty1};
+        --tx2: ${tx2}; --ty2: ${ty2};
+        --s1:  ${s1};  --s2:  ${s2};
+        --op-lo: ${opLo}; --op-hi: ${opHi};
+        animation-duration:     ${floatDur}s, ${fadeDur}s;
+        animation-delay:        ${floatDel}s, ${fadeDel}s;
+      `;
+
+      container.appendChild(orb);
+    }
+  }
+
+  /* ═══════════════════════════════════════════
+     RESIZE — recrée les orbes si la fenêtre
+     change de taille (debounce 300ms)
+  ═══════════════════════════════════════════ */
+  function rebuild() {
+    const c = document.getElementById('orbs-container');
+    c.innerHTML = '';
+    createOrbs();
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(rebuild, 300);
+  });
+
+  /* ─── Init ─── */
+  createOrbs();
+</script>
+</body>
+</html>
