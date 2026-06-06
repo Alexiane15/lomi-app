@@ -65,15 +65,18 @@ body{
 /* ── FAB ── */
 .fab-btn{
   position:fixed;bottom:calc(26px + env(safe-area-inset-bottom));
-  left:50%;transform:translateX(-50%);
+  left:50%;transform:translateX(-50%) scale(1);
   width:44px;height:44px;border-radius:50%;
   background:#ffffff;
   border:none;
   box-shadow:0 4px 16px rgba(0,0,0,.25);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;z-index:9999;
-  transition:box-shadow .2s ease;
+  transition:box-shadow .2s ease, opacity .25s ease, transform .25s ease;
   -webkit-tap-highlight-color:transparent;
+}
+.fab-btn.hidden{
+  opacity:0;transform:translateX(-50%) scale(0.8);pointer-events:none;
 }
 .fab-btn .fab-plus{
   font-size:22px;font-weight:300;color:#071510;line-height:1;
@@ -2442,14 +2445,14 @@ window.FAB = {
     var ov = document.getElementById('fab-overlay');
     var btn = document.getElementById('fab-btn');
     if (ov) ov.classList.add('open');
-    if (btn) btn.classList.add('active');
+    if (btn) { btn.classList.add('active'); btn.classList.add('hidden'); }
     FAB.show('fab-menu');
   },
   close: function() {
     var ov = document.getElementById('fab-overlay');
     var btn = document.getElementById('fab-btn');
     if (ov) ov.classList.remove('open');
-    if (btn) btn.classList.remove('active');
+    if (btn) { btn.classList.remove('active'); btn.classList.remove('hidden'); }
   },
   show: function(id) {
     document.querySelectorAll('.fab-sheet').forEach(function(s) { s.classList.remove('active'); });
@@ -2457,6 +2460,31 @@ window.FAB = {
     if (el) el.classList.add('active');
   }
 };
+
+// ── FAB scroll hide/show ──
+(function() {
+  var lastY = 0;
+  var ticking = false;
+  document.querySelectorAll('.screen').forEach(function(screen) {
+    screen.addEventListener('scroll', function() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function() {
+        var btn = document.getElementById('fab-btn');
+        var ov  = document.getElementById('fab-overlay');
+        if (!btn || (ov && ov.classList.contains('open'))) { ticking = false; return; }
+        var currentY = screen.scrollTop;
+        if (currentY > lastY && currentY > 40) {
+          btn.classList.add('hidden');
+        } else {
+          btn.classList.remove('hidden');
+        }
+        lastY = currentY;
+        ticking = false;
+      });
+    });
+  });
+})();
 
 // ── Calendrier ──
 var MONTHS_FR = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
