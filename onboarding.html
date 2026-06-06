@@ -120,21 +120,45 @@ body{display:flex;justify-content:center;align-items:flex-start}
 /* ════════════════════════
    S2 — LEGAL
 ════════════════════════ */
-#s2 .inner{padding:16px 16px 32px;display:flex;flex-direction:column;gap:20px}
+#s2{overflow:hidden}
+#s2 .inner{padding:16px 16px 16px;display:flex;flex-direction:column;gap:16px;height:100%}
 .legal-intro{
   font-family:'DM Mono',monospace;font-weight:500;
   font-size:13px;color:rgba(255,255,255,.6);
   text-transform:uppercase;letter-spacing:.04em;line-height:1.5;
+  flex-shrink:0;
 }
 .legal-box{
   background:rgba(45,45,45,.4);border:1px solid rgba(255,255,255,.18);
   border-radius:16px;padding:16px;
   font-size:11px;color:rgba(255,255,255,.42);line-height:1.7;
-  max-height:390px;overflow-y:auto;
+  flex:1;overflow-y:auto;min-height:0;
 }
 .legal-box::-webkit-scrollbar{width:3px}
 .legal-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
 .legal-box strong{color:rgba(255,255,255,.7)}
+.legal-check-row{
+  display:flex;align-items:flex-start;gap:10px;
+  flex-shrink:0;padding:2px 0 4px;
+}
+.legal-check-row input[type=checkbox]{
+  appearance:none;-webkit-appearance:none;
+  width:18px;height:18px;flex-shrink:0;margin-top:1px;
+  border:1.5px solid rgba(255,255,255,.3);border-radius:5px;
+  background:rgba(45,45,45,.5);cursor:pointer;
+  transition:background .2s,border-color .2s;position:relative;
+}
+.legal-check-row input[type=checkbox]:checked{
+  background:#4ab0ff;border-color:#4ab0ff;
+}
+.legal-check-row input[type=checkbox]:checked::after{
+  content:'';position:absolute;left:4px;top:1px;width:5px;height:9px;
+  border:2px solid #fff;border-top:none;border-left:none;
+  transform:rotate(45deg);display:block;
+}
+.legal-check-label{
+  font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;cursor:pointer;
+}
 
 /* ════════════════════════
    STEP HEADER (S3–S7)
@@ -443,9 +467,9 @@ input.range::-moz-range-thumb{
     </div>
 
     <!-- ── S2 : MENTIONS LÉGALES ── -->
-    <div class="slide scroll-full" id="s2">
-      <div class="inner" style="padding-top:20px;padding-bottom:32px;display:flex;flex-direction:column;gap:16px">
-        <div class="logo-wrap" style="justify-content:flex-start">
+    <div class="slide" id="s2">
+      <div class="inner">
+        <div class="logo-wrap" style="justify-content:flex-start;flex-shrink:0">
           <img class="logo-flower sm"
                src="https://www.figma.com/api/mcp/asset/4130119d-7ffb-444a-be68-817c79242db8"
                alt="" onerror="this.setAttribute('data-fallback','1')">
@@ -464,8 +488,11 @@ input.range::-moz-range-thumb{
           <strong>4. Absence de prise en charge des urgences</strong><br>
           LOMI n'est pas un système de surveillance médicale d'urgence. En cas de symptômes aigus, de douleurs intolérables ou de saignements, consultez immédiatement votre médecin ou contactez le 15.<br><br>
           <strong>5. Confidentialité des données</strong><br>
-          Vos données de santé sont strictement confidentielles et sécurisées sur un serveur certifié HDS. Elles ne sont en aucun cas transmises à des tiers sans votre consentement explicite.<br><br>
-          Je certifie avoir pris connaissance de cet avertissement médical. Je comprends que LOMI est un outil d'accompagnement qui ne remplace pas mon médecin, et j'accepte que l'utilisation de l'application se fasse sous ma propre responsabilité dans le cadre d'un suivi médical adapté.
+          Vos données de santé sont strictement confidentielles et sécurisées sur un serveur certifié HDS. Elles ne sont en aucun cas transmises à des tiers sans votre consentement explicite.
+        </div>
+        <div class="legal-check-row">
+          <input type="checkbox" id="legal-cb" onchange="syncBtn()">
+          <label class="legal-check-label" for="legal-cb">Je certifie avoir pris connaissance de cet avertissement médical et j'accepte que l'utilisation de l'application se fasse sous ma propre responsabilité dans le cadre d'un suivi médical adapté.</label>
         </div>
       </div>
     </div>
@@ -821,7 +848,8 @@ function syncBtn() {
     8: "Découvrir l'application →"
   };
   btn.textContent = labels[step] || 'Continuer';
-  btn.disabled = (step === 4 && !state.siiType) || (step === 7 && !state.level);
+  const legalCb = document.getElementById('legal-cb');
+  btn.disabled = (step === 2 && !legalCb?.checked) || (step === 4 && !state.siiType) || (step === 7 && !state.level);
 }
 
 /* ═══════════════════════════
