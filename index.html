@@ -504,12 +504,12 @@ body{
   transition:border-color .2s,background .2s;
 }
 .search:focus-within{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
-.search svg{flex-shrink:0;opacity:.5}
+.search svg{flex-shrink:0;opacity:1}
 .search input{
   flex:1;background:none;border:none;outline:none;
   font-size:14px;color:#fff;font-family:inherit;
 }
-.search input::placeholder{color:rgba(255,255,255,.35)}
+.search input::placeholder{color:rgba(255,255,255,.85)}
 .search-x{
   width:19px;height:19px;background:rgba(255,255,255,.12);
   border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -528,7 +528,7 @@ body{
   flex:1;height:30px;
   display:flex;align-items:center;justify-content:center;
   font-size:10px;font-weight:500;
-  color:rgba(255,255,255,.28);cursor:pointer;
+  color:rgba(255,255,255,.9);cursor:pointer;
   transition:color .2s,background .2s;user-select:none;
 }
 .phase+.phase{border-left:1px solid rgba(255,255,255,.08)}
@@ -557,10 +557,10 @@ body{
 .c-av{background:rgba(255,60,60,.1);border:1px solid rgba(255,60,60,.3);color:#ff5050}
 .c-cat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
 /* ── Chip inactive base ── */
-.c-ok{background:rgba(26,255,170,.06);border:1px solid rgba(26,255,170,.2);color:rgba(26,255,170,.55)}
-.c-mod{background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.2);color:rgba(255,170,0,.55)}
-.c-av{background:rgba(255,60,60,.06);border:1px solid rgba(255,60,60,.2);color:rgba(255,60,60,.55)}
-.c-cat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.38)}
+.c-ok{background:rgba(26,255,170,.08);border:1px solid rgba(26,255,170,.5);color:#1affaa}
+.c-mod{background:rgba(255,170,0,.08);border:1px solid rgba(255,170,0,.5);color:#ffaa00}
+.c-av{background:rgba(255,60,60,.08);border:1px solid rgba(255,60,60,.5);color:#ff5050}
+.c-cat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.5);color:#fff}
 
 /* ── Chip active ── */
 .chip.on.c-ok {background:rgba(26,255,170,.22);border-color:#1affaa;color:#1affaa;font-weight:700}
@@ -874,7 +874,7 @@ body{
 
 /* ── Tip bubbles ── */
 .tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
-.tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}
+.tip-amber{background:rgba(255,180,0,.18);border-color:rgba(255,180,0,.55)}
 .tip-green{background:rgba(26,255,170,.07);border-color:rgba(26,255,170,.2)}
 .tip-blue{background:rgba(74,176,255,.07);border-color:rgba(74,176,255,.2)}
 .tip-purple{background:rgba(180,60,255,.07);border-color:rgba(180,60,255,.2)}
@@ -885,7 +885,7 @@ body{
 .tip-green .tip-tag{color:rgba(26,255,170,.85)}
 .tip-blue .tip-tag{color:rgba(74,176,255,.85)}
 .tip-purple .tip-tag{color:rgba(180,60,255,.85)}
-.tip .tip-t{font-size:12px;color:rgba(255,255,255,.6);line-height:1.5}
+.tip .tip-t{font-size:12px;color:rgba(255,255,255,.9);line-height:1.5}
 
 /* ── Historique / Favoris ── */
 .hf-tabs{display:flex;margin:10px 14px 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:3px;gap:0}
@@ -1327,14 +1327,14 @@ body{background:#2d2d2d;color:#eeeeee}
 .search input::placeholder{color:rgba(238,238,238,.4)}
 .search-x{background:rgba(255,255,255,.08);color:rgba(238,238,238,.55)}
 .phases{border-color:rgba(255,255,255,.09)}
-.phase{color:rgba(238,238,238,.45)}
+.phase{color:rgba(238,238,238,.95)}
 .phase+.phase{border-left-color:rgba(0,0,0,.08)}
 .phase.active{background:rgba(90,166,255,.1);color:#5aa6ff}
 /* ── Chips inactifs ── */
-.c-ok {background:rgba(26,255,170,.06);border-color:rgba(26,255,170,.2);color:rgba(26,255,170,.45)}
-.c-mod{background:rgba(255,170,0,.06);border-color:rgba(255,170,0,.2);color:rgba(255,170,0,.45)}
-.c-av {background:rgba(255,60,60,.06);border-color:rgba(255,60,60,.2);color:rgba(255,60,60,.45)}
-.c-cat{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.32)}
+.c-ok {background:rgba(26,255,170,.08);border-color:rgba(26,255,170,.5);color:#1affaa}
+.c-mod{background:rgba(255,170,0,.08);border-color:rgba(255,170,0,.5);color:#ffaa00}
+.c-av {background:rgba(255,60,60,.08);border-color:rgba(255,60,60,.5);color:#ff5050}
+.c-cat{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:#fff}
 /* ── Chips actifs ── */
 .chip.on.c-ok {background:rgba(26,255,170,.2);border-color:rgba(26,255,170,.7);color:#1affaa;font-weight:700}
 .chip.on.c-mod{background:rgba(255,170,0,.2);border-color:rgba(255,170,0,.7);color:#ffaa00;font-weight:700}
@@ -1417,7 +1417,7 @@ body{background:#2d2d2d;color:#eeeeee}
 .top-food-bar-bg{background:rgba(255,255,255,.08)}
 .top-food-bar-fill{background:#5aa6ff}
 .top-food-row{border-bottom-color:rgba(0,0,0,.05)}
-.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
+.tip-amber{background:rgba(255,180,0,.18);border-color:rgba(255,180,0,.55)}
 .tip-green{background:rgba(90,166,255,.06);border-color:rgba(90,166,255,.18)}
 .tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
 .tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
@@ -1425,7 +1425,7 @@ body{background:#2d2d2d;color:#eeeeee}
 .tip-green .tip-tag{color:rgba(90,166,255,.85)}
 .tip-blue .tip-tag{color:rgba(42,90,156,.85)}
 .tip-purple .tip-tag{color:rgba(120,50,180,.85)}
-.tip .tip-t{color:rgba(238,238,238,.65)}
+.tip .tip-t{color:rgba(238,238,238,.95)}
 
 /* 9. Historique / Favoris */
 .hf-tabs{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
