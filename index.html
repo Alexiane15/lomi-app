@@ -603,8 +603,7 @@ body{
     rgba(255,255,255,.04);
   border-color:rgba(255,80,80,.1);
 }
-.food:hover{background:rgba(255,255,255,.07)}
-.food:active{background:rgba(255,255,255,.1)}
+.food:active{background:rgba(255,255,255,.18)}
 .food::before{
   content:'';position:absolute;left:0;top:9px;bottom:9px;
   width:3px;border-radius:0 2px 2px 0;
@@ -1342,11 +1341,10 @@ body{background:#2d2d2d;color:#eeeeee}
 .chip.on.c-cat{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.5);color:#fff;font-weight:700}
 .res-count{color:rgba(238,238,238,.4)}
 .cat-lbl{color:rgba(238,238,238,.4)}
-.food{background:#383838;border-color:rgba(255,255,255,.08)}
-.food.ok{background:#383838;border-color:rgba(90,166,255,.12)}
-.food.mod{background:#383838;border-color:rgba(179,101,0,.12)}
-.food.av{background:#383838;border-color:rgba(192,57,43,.12)}
-.food:hover{background:rgba(0,0,0,.02)}
+.food{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18)}
+.food.ok{background:radial-gradient(ellipse 170px 65px at -2% 50%,rgba(26,255,170,.2) 0%,transparent 65%),rgba(255,255,255,.12);border-color:rgba(26,255,170,.3)}
+.food.mod{background:radial-gradient(ellipse 170px 65px at -2% 50%,rgba(255,170,0,.2) 0%,transparent 65%),rgba(255,255,255,.12);border-color:rgba(255,170,0,.3)}
+.food.av{background:radial-gradient(ellipse 170px 65px at -2% 50%,rgba(255,80,80,.2) 0%,transparent 65%),rgba(255,255,255,.12);border-color:rgba(255,80,80,.3)}
 .food.ok::before{background:#1affaa}
 .food.mod::before{background:#b36500}
 .food.av::before{background:#c0392b}
