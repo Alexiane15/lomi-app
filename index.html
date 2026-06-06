@@ -1137,10 +1137,16 @@ body{
   display:flex;align-items:center;justify-content:center;
 }
 .stack-check svg{width:14px;height:14px}
+.stack-check.checked{background:rgba(255,255,255,.25)}
 .stack-title{
   font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
   font-weight:100;font-size:32px;color:#fff;
   line-height:1.1;letter-spacing:-.5px;
+  transition:opacity .2s,text-decoration .2s;
+}
+.stack-card.done .stack-title{
+  text-decoration:line-through;text-decoration-color:rgba(255,255,255,.5);
+  opacity:.45;
 }
 
 /* ── DM Mono for titles & subtitles ── */
@@ -1601,35 +1607,35 @@ body{
         <!-- ── STACK DE TASKS ── -->
         <div class="stack-tasks">
 
-          <div class="stack-card" style="background:#381e4f">
+          <div class="stack-card" style="background:#381e4f" onclick="toggleStackCard(this)">
             <div class="stack-check">
               <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="stack-title">Loguer le petit-déjeuner</div>
           </div>
 
-          <div class="stack-card" style="background:#a066d3">
+          <div class="stack-card" style="background:#a066d3" onclick="toggleStackCard(this)">
             <div class="stack-check">
               <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="stack-title">Loguer le déjeuner</div>
           </div>
 
-          <div class="stack-card" style="background:#5955c9">
+          <div class="stack-card" style="background:#5955c9" onclick="toggleStackCard(this)">
             <div class="stack-check">
               <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="stack-title">Loguer le dîner</div>
           </div>
 
-          <div class="stack-card" style="background:#35303a">
+          <div class="stack-card" style="background:#35303a" onclick="toggleStackCard(this)">
             <div class="stack-check">
               <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="stack-title">Boire 2L d'eau</div>
           </div>
 
-          <div class="stack-card" style="background:#3a82ac">
+          <div class="stack-card" style="background:#3a82ac" onclick="toggleStackCard(this)">
             <div class="stack-check">
               <svg viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -2083,6 +2089,12 @@ render();
   updateClock();
   setInterval(updateClock, 10000);
 })();
+
+// ── Stack cards (missions du jour) ──
+function toggleStackCard(el) {
+  el.classList.toggle('done');
+  el.querySelector('.stack-check').classList.toggle('checked', el.classList.contains('done'));
+}
 
 // ── Missions ──
 function toggleMission(el) {
