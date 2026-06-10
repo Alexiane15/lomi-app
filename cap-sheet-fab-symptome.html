@@ -1869,10 +1869,7 @@ body{
 </div><!-- /app -->
 
 <script>
-// ── Redirect vers l'onboarding à chaque lancement ──
-if (!sessionStorage.getItem('onboarding_done')) {
-  window.location.replace('onboarding.html');
-}
+
 
 // ═══════════════════════════════════════
 //  FOOD DATABASE
@@ -2564,5 +2561,14 @@ if (overlay) {
 }
 </script>
 <script src="./orbs.js?v=2"></script>
+
+<script>
+window.addEventListener('load', function() {
+  var ov = document.getElementById('fab-overlay');
+  ov.classList.add('open');
+  document.querySelectorAll('.fab-sheet').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('fab-symptome').classList.add('active');
+});
+</script>
 </body>
 </html>

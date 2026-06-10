@@ -7,24 +7,33 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#2d2d2d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;min-height:100vh;padding-bottom:48px}
+  body{
+    background:linear-gradient(160deg,#0d1728 0%,#0a1f3a 40%,#0d1728 100%);
+    background-attachment:fixed;
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+    min-height:100vh;padding-bottom:48px;
+  }
 
   /* ── HEADER ── */
   .top-bar{
     display:flex;align-items:center;gap:12px;
     padding:54px 20px 14px;
     position:sticky;top:0;z-index:20;
-    background:#2d2d2d;
+    background:linear-gradient(180deg,#0d1728 80%,transparent 100%);
     border-bottom:1px solid rgba(255,255,255,.05);
   }
   .back-btn{
     width:34px;height:34px;border-radius:10px;
-    background:rgba(255,255,255,.08);border:none;
-    color:#fff;font-size:18px;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+    color:rgba(255,255,255,.7);font-size:18px;
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;flex-shrink:0;line-height:1;
   }
-  .top-title{font-size:17px;font-weight:700;letter-spacing:-.2px}
+  .top-title{
+    font-size:22px;font-weight:100;letter-spacing:-.02em;
+    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  }
 
   /* ── STREAK ROW ── */
   .streak-row{
@@ -193,8 +202,8 @@
   .today-card{
     margin:0 20px 6px;
     border-radius:20px;overflow:hidden;
-    background:#383838;
-    border:1px solid rgba(90,166,255,.28);
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(74,176,255,.25);
     position:relative;
   }
   .today-card-inner{padding:17px 17px 15px}
@@ -265,7 +274,8 @@
   }
   .overlay.open{display:flex}
   .sheet{
-    background:#141c18;border-radius:24px 24px 0 0;
+    background:linear-gradient(160deg,rgba(30,38,60,.98),rgba(18,22,40,.98));
+    border-radius:24px 24px 0 0;
     padding:22px 20px 44px;width:100%;max-height:88vh;overflow-y:auto;
   }
   .sheet-handle{width:34px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 18px}
@@ -301,9 +311,10 @@
   }
   .check-opt.sel{background:rgba(90,166,255,.13);border-color:rgba(90,166,255,.45);color:#5aa6ff}
   .btn-submit{
-    width:100%;background:#5aa6ff;border:none;
-    border-radius:14px;padding:15px;
-    font-size:16px;font-weight:800;color:#071510;cursor:pointer;
+    width:100%;
+    background:linear-gradient(116deg,rgba(74,176,255,.22) 0%,rgba(74,176,255,.62) 100%);
+    border:1px solid rgba(74,176,255,.35);border-radius:14px;padding:15px;
+    font-size:16px;font-weight:700;color:#fff;cursor:pointer;
     letter-spacing:-.2px;
   }
 
@@ -331,151 +342,13 @@
   font-size:.85em;
 }
 
-/* ════════════════════════════════════
-   DESIGN SYSTEM OVERRIDE — Light Neutral
-   ════════════════════════════════════ */
-body{background:#2d2d2d;color:#eeeeee}
-.app{background:#2d2d2d}
-/* Status bar */
-.sbar{background:#2d2d2d}
-.sbar-time{color:#ffffff}
-.sig b{background:#111111}
-.wifi-icon::before,.wifi-icon::after{border-color:#eeeeee}
-.wifi-dot{background:#111111}
-.batt-icon{border-color:rgba(238,238,238,.55)}
-.batt-icon::after{background:rgba(17,17,17,.35)}
-.batt-fill{background:#111111}
-/* Top bar / back buttons */
-.top-bar{background:#2d2d2d;border-bottom-color:rgba(0,0,0,.07)}
-.back-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
-.topbar{background:#2d2d2d}
-.topbar-title{color:#eeeeee}
-.top-title{color:#eeeeee}
-.bookmark-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
-/* Cards */
-.card{background:#383838;border-color:rgba(255,255,255,.08)}
-.card-title{color:rgba(238,238,238,.4)}
-/* Tips */
-.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
-.tip-green{background:rgba(90,166,255,.06);border-color:rgba(90,166,255,.18)}
-.tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
-.tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
-.tip-amber .tip-tag{color:rgba(179,101,0,.85)}
-.tip-green .tip-tag{color:rgba(90,166,255,.85)}
-.tip-blue .tip-tag{color:rgba(42,90,156,.85)}
-.tip-purple .tip-tag{color:rgba(120,50,180,.85)}
-.tip .tip-t{color:rgba(238,238,238,.65)}
-.tip-card{background:#383838;border-color:rgba(42,90,156,.15)}
-.tip-text{color:rgba(238,238,238,.65)}
-.tip-text strong{color:#eeeeee}
-/* Buttons */
-.cta-btn{background:#111111;color:#ffffff;border-radius:100px}
-.btn-primary{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.35);color:#5aa6ff}
-.btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(238,238,238,.5)}
-/* Section headings */
-.section-head{color:rgba(238,238,238,.4)}
-.stat-heading{color:#eeeeee}
-/* Overlays / sheets */
-.overlay{background:rgba(0,0,0,.4)}
-.sheet{background:#faf9f7}
-.sheet-handle{background:rgba(255,255,255,.1)}
-.sheet-title{color:#eeeeee}
-.sheet-sub{color:rgba(238,238,238,.4)}
-.grp-title{color:rgba(238,238,238,.45)}
-.grp-note{color:rgba(238,238,238,.35)}
-.sheet-close{background:rgba(255,255,255,.07);color:rgba(238,238,238,.55)}
-/* Chips */
-.chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
-.chip-green{background:rgba(90,166,255,.08);border-color:rgba(90,166,255,.22);color:#5aa6ff}
-/* Hero badge */
-.hero-badge{background:rgba(90,166,255,.12);border-color:rgba(90,166,255,.3);color:#5aa6ff}
-.hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
-.hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
-.hero-name{color:#eeeeee}
-.hero-cat{color:rgba(238,238,238,.5)}
-.hero-emoji-wrap{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-/* FODMAP bars */
-.fodmap-bar-bg{background:rgba(255,255,255,.08)}
-.fodmap-name{color:#eeeeee}
-.lvl-low{color:#5aa6ff}
-.lvl-mod{color:#b36500}
-.lvl-high{color:#c0392b}
-/* Portion */
-.portion-emoji-big{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-.portion-qty{color:#eeeeee}
-.portion-unit{color:rgba(238,238,238,.55)}
-.portion-tip{color:rgba(238,238,238,.5)}
-/* Similar items */
-.similar-item{background:rgba(255,255,255,.04);border-color:rgba(0,0,0,.06)}
-.similar-item:hover{background:rgba(255,255,255,.07)}
-.similar-emoji{background:rgba(255,255,255,.06)}
-.similar-name{color:#eeeeee}
-.similar-badge{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.25);color:#5aa6ff}
-/* Phase cards in food detail */
-.phase-card.ok{background:#5aa6ff;box-shadow:none}
-.phase-card.mod{background:#b36500;box-shadow:none}
-.phase-card.av{background:#c0392b;box-shadow:none}
-/* Log form */
-.log-q{color:#eeeeee}
-.check-q{color:#eeeeee}
-.check-opt{border-color:rgba(0,0,0,.1);color:rgba(238,238,238,.5)}
-.check-opt.sel{background:rgba(90,166,255,.13);border-color:rgba(90,166,255,.45);color:#5aa6ff}
-.btn-submit{background:#111111;color:#ffffff;border-radius:100px}
-.success .s-title{color:#eeeeee}
-.success .s-sub{color:rgba(238,238,238,.45)}
-
-
-
-/* ── Restrictions page overrides ── */
-html,body{background:#2d2d2d !important;color:#eeeeee !important}
-.top-bar{background:#2d2d2d !important;border-bottom-color:rgba(255,255,255,.06) !important}
-.back-btn{background:rgba(255,255,255,.07) !important;color:rgba(238,238,238,.55) !important}
-.top-title{color:#eeeeee !important}
-.xp-fill{background:#5aa6ff !important}
-.xp-val{color:rgba(238,238,238,.5)}
-.xp-track{background:rgba(255,255,255,.08)}
-.section-head{color:rgba(238,238,238,.4) !important}
-.section-head::after{background:rgba(255,255,255,.08) !important}
-.expand-trigger{background:rgba(255,255,255,.04) !important;border-color:rgba(255,255,255,.08) !important}
-.expand-title{color:#eeeeee !important}
-.expand-sub{color:rgba(238,238,238,.4) !important}
-.expand-chevron{color:rgba(238,238,238,.28) !important}
-.expand-body{background:rgba(255,255,255,.02) !important;border-color:rgba(255,255,255,.07) !important}
-.today-card{background:#383838 !important;border-color:rgba(255,255,255,.09) !important;box-shadow:none !important}
-.today-card *[style*='radial-gradient']{background:#383838 !important}
-.grp-title{color:rgba(238,238,238,.38) !important}
-.grp-note{color:rgba(238,238,238,.35) !important}
-.chip-red{color:#c0392b !important;background:rgba(192,57,43,.1) !important;border-color:rgba(192,57,43,.25) !important}
-.chip-green{color:#5aa6ff !important;background:rgba(90,166,255,.1) !important;border-color:rgba(90,166,255,.25) !important}
-.check-opt{border-color:rgba(255,255,255,.12) !important;color:rgba(238,238,238,.5) !important;background:rgba(255,255,255,.04) !important}
-.check-opt.sel{background:rgba(90,166,255,.12) !important;border-color:rgba(90,166,255,.4) !important;color:#5aa6ff !important}
-.btn-submit,.cta-btn{background:#5aa6ff !important;color:#111111 !important;border-radius:100px !important}
-.today-node-ring{stroke:#5aa6ff !important;filter:none !important}
-.day-node.today .node-dot{background:#5aa6ff !important;box-shadow:none !important}
-
-/* ── H1: SF Pro Text Thin ── */
-.hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-weight:100;
-  text-transform:none;
-  letter-spacing:-.02em;
-}
-.topbar-title{font-size:22px}
-.hg-hi{font-size:28px}
-.fsh-title{font-size:24px}
-
-/* ── Body: SF Pro Text Normal ── */
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-weight:400;
-}
 </style>
   <link rel="manifest" href="/manifest.json"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Lomi"/>
   <link rel="apple-touch-icon" href="/icon-192.png"/>
-  <meta name="theme-color" content="#2d2d2d"/>
+  <meta name="theme-color" content="#0d1728"/>
 </head>
 <body>
 
@@ -502,7 +375,7 @@ body{
 
 <div class="expand-panel">
   <div class="expand-trigger" onclick="togglePanel(this)">
-    <div class="expand-icon"></div>
+    <div class="expand-icon">🗓️</div>
     <div class="expand-meta">
       <div class="expand-title">39 jours restants</div>
       <div class="expand-sub">Prochain milestone : Jour 21</div>
@@ -591,7 +464,7 @@ body{
 
 <div class="expand-panel">
   <div class="expand-trigger" onclick="togglePanel(this)">
-    <div class="expand-icon"></div>
+    <div class="expand-icon">⭐</div>
     <div class="expand-meta">
       <div class="expand-title">16 jours complétés</div>
       <div class="expand-sub">620 XP accumulés · 2 milestones</div>
@@ -646,7 +519,7 @@ body{
 <div class="section-head" style="margin-top:28px">Phases à venir</div>
 
 <div class="locked-phase" style="margin-bottom:10px">
-  <div class="locked-phase-icon"></div>
+  <div class="locked-phase-icon">🔬</div>
   <div>
     <div class="locked-phase-title">Phase 2 · Réintroduction</div>
     <div class="locked-phase-sub">Tu testeras chaque groupe FODMAP un par un pour identifier tes intolérances</div>
@@ -654,7 +527,7 @@ body{
   </div>
 </div>
 <div class="locked-phase">
-  <div class="locked-phase-icon"></div>
+  <div class="locked-phase-icon">🏁</div>
   <div>
     <div class="locked-phase-title">Phase 3 · Maintenance</div>
     <div class="locked-phase-sub">Un régime personnalisé basé sur tes résultats</div>
@@ -716,11 +589,11 @@ body{
     <div id="logForm">
       <div class="log-q">Comment tu te sens aujourd'hui ?</div>
       <div class="emo-row">
-        <button class="emo-btn" onclick="sel(this)"><span class="el">Très mal</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="el">Pas top</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="el">Neutre</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="el">Bien</span></button>
-        <button class="emo-btn" onclick="sel(this)"><span class="el">Super</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😣</span><span class="el">Très mal</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😕</span><span class="el">Pas top</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😐</span><span class="el">Neutre</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">🙂</span><span class="el">Bien</span></button>
+        <button class="emo-btn" onclick="sel(this)"><span class="e">😄</span><span class="el">Super</span></button>
       </div>
       <div class="check-q">Tu as respecté le régime ?</div>
       <div class="check-row">

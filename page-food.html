@@ -98,8 +98,14 @@ html,body{height:100%;height:100dvh;background:#0d1728;font-family:-apple-system
 .tip-text strong{color:#f4f2ed}
 
 /* CTA */
-.cta-btn{width:100%;height:52px;background:linear-gradient(135deg,#1affaa,rgba(74,176,255,.9));border:none;border-radius:16px;font-size:15px;font-weight:700;color:#1a1a1a;cursor:pointer;margin-top:4px;transition:opacity .2s}
-.cta-btn:hover{opacity:.9}
+.cta-btn{
+  width:100%;height:52px;border:none;border-radius:14px;
+  background:linear-gradient(116deg,rgba(74,176,255,.22) 0%,rgba(74,176,255,.62) 100%);
+  font-size:14px;font-weight:700;color:#fff;font-family:inherit;
+  cursor:pointer;letter-spacing:.01em;margin-top:4px;
+  transition:opacity .2s,transform .1s;
+}
+.cta-btn:active{transform:scale(.98);opacity:.85}
 
 .tip{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:14px;border:1px solid}
 .tip-amber{background:rgba(255,180,0,.07);border-color:rgba(255,180,0,.22)}

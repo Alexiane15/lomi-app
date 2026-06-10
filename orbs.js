@@ -60,11 +60,7 @@
       '.screens-wrap{background:transparent !important}',
       '#screen-carnet,#screen-suivi{background:transparent !important}',
       '.screen{background:transparent !important}',
-      '.nav{',
-        'background:rgba(8,15,45,0.70)!important;',
-        'backdrop-filter:blur(16px);',
-        '-webkit-backdrop-filter:blur(16px);',
-      '}',
+      '.nav{background:transparent!important;backdrop-filter:none;-webkit-backdrop-filter:none}',
 
       /* Fond body : bleu très sombre */
       'body{background:#080f2d !important}',

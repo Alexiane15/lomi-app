@@ -1537,16 +1537,16 @@ body{
 
   <!-- Nav -->
   <nav class="nav" id="nav">
-    <span class="nav-item active" data-screen="carnet">Carnet</span>
+    <span class="nav-item" data-screen="carnet">Carnet</span>
     <span class="nav-item" data-screen="aliments">Aliments</span>
-    <span class="nav-item" data-screen="suivi">Suivi</span>
+    <span class="nav-item active" data-screen="suivi">Suivi</span>
   </nav>
 
   <!-- Screens -->
   <div class="screens-wrap">
 
     <!-- ── SCREEN 1 : CARNET ── -->
-    <div class="screen active" id="screen-carnet">
+    <div class="screen" id="screen-carnet">
       <div class="s1-content">
 
         <!-- Greeting -->
@@ -1693,7 +1693,7 @@ body{
 
     <!-- ── SCREEN SUIVI + STATS FUSIONNÉ ── -->
     <!-- ── SCREEN SUIVI + STATS FUSIONNÉ ── -->
-    <div class="screen" id="screen-suivi">
+    <div class="screen active" id="screen-suivi">
       <div class="s1-content">
 
         <!-- ── PHASE CARD ── -->
@@ -1869,10 +1869,7 @@ body{
 </div><!-- /app -->
 
 <script>
-// ── Redirect vers l'onboarding à chaque lancement ──
-if (!sessionStorage.getItem('onboarding_done')) {
-  window.location.replace('onboarding.html');
-}
+// redirect disabled for capture
 
 // ═══════════════════════════════════════
 //  FOOD DATABASE

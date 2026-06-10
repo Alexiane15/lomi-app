@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <filter id="blob" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"
+        result="matrix"/>
+    </filter>
+  </defs>
+  <g filter="url(#blob)">
+    <circle cx="50" cy="50" r="27" fill="#5AA6FF"/>
+    <circle cx="50" cy="18" r="14" fill="#5AA6FF"/>
+    <circle cx="73" cy="27" r="14" fill="#5AA6FF"/>
+    <circle cx="82" cy="50" r="14" fill="#5AA6FF"/>
+    <circle cx="73" cy="73" r="14" fill="#5AA6FF"/>
+    <circle cx="50" cy="82" r="14" fill="#5AA6FF"/>
+    <circle cx="27" cy="73" r="14" fill="#5AA6FF"/>
+    <circle cx="18" cy="50" r="14" fill="#5AA6FF"/>
+    <circle cx="27" cy="27" r="14" fill="#5AA6FF"/>
+  </g>
+</svg>

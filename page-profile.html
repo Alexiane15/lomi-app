@@ -7,22 +7,39 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;height:100dvh;background:#0b0f0e;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;display:flex;justify-content:center}
+
+html,body{
+  height:100%;height:100dvh;
+  background:#0d1728;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  display:flex;justify-content:center;
+}
 
 .app{
   width:100%;max-width:430px;min-height:100%;
-  background:#0b0f0e;
+  background:linear-gradient(160deg,#0d1728 0%,#0a1f3a 40%,#0d1728 100%);
   display:flex;flex-direction:column;
-  position:relative;
+  position:relative;overflow:hidden;
 }
 
 /* Bokeh */
-.bk1{position:absolute;top:-60px;right:-40px;pointer-events:none;z-index:0;
+.bk1{
+  position:absolute;top:-60px;right:-40px;pointer-events:none;z-index:0;
   width:260px;height:260px;
-  background:radial-gradient(ellipse 260px 260px at 60% 40%, rgba(26,255,170,.1) 0%, transparent 58%)}
+  background:radial-gradient(ellipse 260px 260px at 60% 40%,rgba(74,176,255,.12) 0%,transparent 58%);
+}
+.bk2{
+  position:absolute;bottom:80px;left:-60px;pointer-events:none;z-index:0;
+  width:220px;height:220px;
+  background:radial-gradient(ellipse 220px 220px at 40% 60%,rgba(26,255,170,.07) 0%,transparent 60%);
+}
 
 /* Status bar */
-.sbar{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:relative;z-index:10}
+.sbar{
+  height:54px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;position:relative;z-index:10;
+}
 .sbar-time{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
 .di{position:absolute;left:50%;top:9px;transform:translateX(-50%);width:118px;height:34px;background:#000;border-radius:22px}
 .sbar-icons{display:flex;align-items:center;gap:6px}
@@ -39,53 +56,99 @@ html,body{height:100%;height:100dvh;background:#0b0f0e;font-family:-apple-system
 .batt-fill{position:absolute;left:2px;top:2px;bottom:2px;width:68%;background:#fff;border-radius:1px}
 
 /* Topbar */
-.topbar{height:48px;flex-shrink:0;display:flex;align-items:center;padding:0 16px;gap:12px;position:relative;z-index:10}
-.back-btn{width:34px;height:34px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);user-select:none;transition:background .15s}
+.topbar{
+  height:48px;flex-shrink:0;
+  display:flex;align-items:center;padding:0 16px;gap:12px;
+  position:relative;z-index:10;
+}
+.back-btn{
+  width:34px;height:34px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:20px;color:rgba(255,255,255,.7);
+  user-select:none;transition:background .15s;
+}
 .back-btn:active{background:rgba(255,255,255,.14)}
-.topbar-title{flex:1;font-size:17px;font-weight:700;color:#f4f2ed}
+.topbar-title{
+  flex:1;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;
+  font-weight:100;font-size:22px;
+  color:#fff;letter-spacing:-.02em;
+}
 
 /* Content */
-.content{flex:1;overflow-y:auto;padding:0 16px 48px;scrollbar-width:none;position:relative;z-index:1}
+.content{
+  flex:1;overflow-y:auto;
+  padding:0 16px 48px;
+  scrollbar-width:none;position:relative;z-index:1;
+}
 .content::-webkit-scrollbar{display:none}
 
-/* Section */
-.section{margin-bottom:8px}
-.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:rgba(255,255,255,.3);padding:18px 4px 8px}
+/* Section label */
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:rgba(255,255,255,.35);
+  padding:20px 2px 8px;
+}
 
-/* Card container */
-.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden}
+/* Card */
+.card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;overflow:hidden;
+  margin-bottom:8px;
+}
 
-/* Profile hero row */
+/* Profile hero */
 .profile-hero{
   background:
-    radial-gradient(ellipse 200px 120px at 90% 20%, rgba(26,255,170,.18) 0%, transparent 62%),
-    rgba(255,255,255,.04);
-  border:1px solid rgba(26,255,170,.15);border-radius:20px;
+    radial-gradient(ellipse 200px 120px at 90% 20%,rgba(74,176,255,.18) 0%,transparent 62%),
+    rgba(255,255,255,.06);
+  border:1px solid rgba(74,176,255,.2);
+  border-radius:20px;
   padding:18px 16px 16px;margin-bottom:8px;
   display:flex;flex-direction:column;gap:12px;
 }
 .profile-top{display:flex;align-items:center;gap:14px}
 .avatar{
   width:56px;height:56px;border-radius:16px;
-  background:linear-gradient(135deg,rgba(26,255,170,.3),rgba(74,176,255,.25));
-  border:1.5px solid rgba(26,255,170,.3);
+  background:linear-gradient(135deg,rgba(74,176,255,.3),rgba(26,255,170,.2));
+  border:1.5px solid rgba(74,176,255,.35);
   display:flex;align-items:center;justify-content:center;
-  font-size:20px;font-weight:800;color:#5aa6ff;
+  font-size:20px;font-weight:700;color:#4ab0ff;
   flex-shrink:0;
 }
 .profile-info{flex:1;min-width:0}
-.profile-name{font-size:18px;font-weight:700;color:#f4f2ed;letter-spacing:-.3px}
-.profile-age{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px}
-.profile-pathol{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:4px 10px;border-radius:12px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);font-size:11px;font-weight:700;color:#5aa6ff}
-.profile-doctor{display:flex;align-items:center;gap:8px;padding:10px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px}
-.profile-doctor-icon{font-size:16px;flex-shrink:0}
-.profile-doctor-info{flex:1;min-width:0}
-.profile-doctor-name{font-size:12px;font-weight:600;color:#f4f2ed}
-.profile-doctor-sub{font-size:10px;color:rgba(255,255,255,.35);margin-top:1px}
-.edit-btn{padding:6px 14px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;color:rgba(255,255,255,.6);cursor:pointer;transition:background .15s}
+.profile-name{font-size:18px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.profile-age{font-size:12px;color:rgba(255,255,255,.4);margin-top:2px}
+.profile-pathol{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:6px;padding:4px 10px;border-radius:12px;
+  background:rgba(74,176,255,.12);border:1px solid rgba(74,176,255,.3);
+  font-size:11px;font-weight:700;color:#4ab0ff;
+  font-family:'DM Mono',monospace;letter-spacing:.04em;
+}
+.edit-btn{
+  padding:6px 14px;border-radius:10px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  font-size:12px;font-weight:600;color:rgba(255,255,255,.6);
+  cursor:pointer;transition:background .15s;
+}
 .edit-btn:active{background:rgba(255,255,255,.14)}
 
-/* Row list items */
+.profile-doctor{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;
+}
+.profile-doctor-icon{font-size:16px;flex-shrink:0}
+.profile-doctor-info{flex:1;min-width:0}
+.profile-doctor-name{font-size:12px;font-weight:600;color:#fff}
+.profile-doctor-sub{font-size:10px;color:rgba(255,255,255,.35);margin-top:1px}
+
+/* Row items */
 .row-item{
   display:flex;align-items:center;gap:12px;
   padding:13px 16px;
@@ -94,14 +157,17 @@ html,body{height:100%;height:100dvh;background:#0b0f0e;font-family:-apple-system
 }
 .row-item:last-child{border-bottom:none}
 .row-item:active{background:rgba(255,255,255,.04)}
-.row-icon{font-size:18px;width:34px;height:34px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.row-label{flex:1;font-size:14px;font-weight:500;color:#f4f2ed}
+.row-icon{
+  font-size:16px;width:34px;height:34px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.row-label{flex:1;font-size:14px;font-weight:500;color:#fff}
 .row-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px}
-.row-arrow{font-size:18px;color:rgba(255,255,255,.2)}
 .row-value{font-size:12px;font-weight:600;color:rgba(255,255,255,.4)}
+.row-arrow{font-size:18px;color:rgba(255,255,255,.2)}
 
-/* Toggle switch */
-.toggle-wrap{display:flex;align-items:center;gap:0}
+/* Toggle */
 .toggle{position:relative;width:44px;height:26px;flex-shrink:0}
 .toggle input{opacity:0;width:0;height:0;position:absolute}
 .toggle-track{
@@ -109,7 +175,7 @@ html,body{height:100%;height:100dvh;background:#0b0f0e;font-family:-apple-system
   background:rgba(255,255,255,.12);
   transition:background .2s;cursor:pointer;position:relative;
 }
-.toggle input:checked + .toggle-track{background:#5aa6ff}
+.toggle input:checked + .toggle-track{background:#4ab0ff}
 .toggle-track::after{
   content:'';position:absolute;
   left:3px;top:3px;width:20px;height:20px;
@@ -128,163 +194,40 @@ html,body{height:100%;height:100dvh;background:#0b0f0e;font-family:-apple-system
 }
 .link-row:last-child{border-bottom:none}
 .link-row:active{background:rgba(255,255,255,.04)}
-.link-label{flex:1;font-size:14px;font-weight:500;color:#f4f2ed}
-.link-chip{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:3px 7px;border-radius:6px;background:rgba(26,255,170,.1);border:1px solid rgba(26,255,170,.25);color:#5aa6ff}
-.link-ext{font-size:14px;color:rgba(255,255,255,.2)}
+.link-label{flex:1;font-size:14px;font-weight:500;color:#fff}
+.link-chip{
+  font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;
+  padding:3px 7px;border-radius:6px;
+  background:rgba(74,176,255,.1);border:1px solid rgba(74,176,255,.25);color:#4ab0ff;
+  font-family:'DM Mono',monospace;
+}
+.link-ext{font-size:16px;color:rgba(255,255,255,.2)}
 
-/* Data rows */
-.data-green{color:#5aa6ff !important}
-.data-red{color:rgba(255,80,80,.8) !important}
-
-/* Logout button */
+/* Logout */
 .logout-btn{
   width:100%;height:52px;
-  background:rgba(255,60,60,.1);border:1.5px solid rgba(255,60,60,.25);border-radius:14px;
-  font-size:15px;font-weight:700;color:rgba(255,80,80,.9);
-  cursor:pointer;margin-top:20px;transition:background .2s;
+  background:rgba(255,60,60,.08);border:1.5px solid rgba(255,60,60,.22);border-radius:14px;
+  font-size:15px;font-weight:600;color:rgba(255,80,80,.9);
+  cursor:pointer;margin-top:16px;transition:background .2s;
 }
-.logout-btn:active{background:rgba(255,60,60,.18)}
-
-/* ── DM Mono for titles & subtitles ── */
-.section-title,.missions-title,.suivi-section-title,.context-card-title,
-.fsh-section,.card-title,.ob-subtitle,
-.phase-badge-chip,.fab-menu-header{
-  font-family:"DM Mono",monospace;
-  font-weight:400;
-  text-transform:uppercase;
-  letter-spacing:.07em;
-  font-size:.85em;
-}
-
-/* ════════════════════════════════════
-   DESIGN SYSTEM OVERRIDE — Light Neutral
-   ════════════════════════════════════ */
-body{background:#2d2d2d;color:#eeeeee}
-.app{background:#2d2d2d}
-/* Status bar */
-.sbar{background:#2d2d2d}
-.sbar-time{color:#ffffff}
-.sig b{background:#111111}
-.wifi-icon::before,.wifi-icon::after{border-color:#eeeeee}
-.wifi-dot{background:#111111}
-.batt-icon{border-color:rgba(238,238,238,.55)}
-.batt-icon::after{background:rgba(17,17,17,.35)}
-.batt-fill{background:#111111}
-/* Top bar / back buttons */
-.top-bar{background:#2d2d2d;border-bottom-color:rgba(0,0,0,.07)}
-.back-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
-.topbar{background:#2d2d2d}
-.topbar-title{color:#eeeeee}
-.top-title{color:#eeeeee}
-.bookmark-btn{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.09);color:rgba(238,238,238,.55)}
-/* Cards */
-.card{background:#383838;border-color:rgba(255,255,255,.08)}
-.card-title{color:rgba(238,238,238,.4)}
-/* Tips */
-.tip-amber{background:rgba(179,101,0,.06);border-color:rgba(179,101,0,.2)}
-.tip-green{background:rgba(90,166,255,.06);border-color:rgba(90,166,255,.18)}
-.tip-blue{background:rgba(42,90,156,.06);border-color:rgba(42,90,156,.18)}
-.tip-purple{background:rgba(120,50,180,.06);border-color:rgba(120,50,180,.18)}
-.tip-amber .tip-tag{color:rgba(179,101,0,.85)}
-.tip-green .tip-tag{color:rgba(90,166,255,.85)}
-.tip-blue .tip-tag{color:rgba(42,90,156,.85)}
-.tip-purple .tip-tag{color:rgba(120,50,180,.85)}
-.tip .tip-t{color:rgba(238,238,238,.65)}
-.tip-card{background:#383838;border-color:rgba(42,90,156,.15)}
-.tip-text{color:rgba(238,238,238,.65)}
-.tip-text strong{color:#eeeeee}
-/* Buttons */
-.cta-btn{background:#111111;color:#ffffff;border-radius:100px}
-.btn-primary{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.35);color:#5aa6ff}
-.btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:rgba(238,238,238,.5)}
-/* Section headings */
-.section-head{color:rgba(238,238,238,.4)}
-.stat-heading{color:#eeeeee}
-/* Overlays / sheets */
-.overlay{background:rgba(0,0,0,.4)}
-.sheet{background:#faf9f7}
-.sheet-handle{background:rgba(255,255,255,.1)}
-.sheet-title{color:#eeeeee}
-.sheet-sub{color:rgba(238,238,238,.4)}
-.grp-title{color:rgba(238,238,238,.45)}
-.grp-note{color:rgba(238,238,238,.35)}
-.sheet-close{background:rgba(255,255,255,.07);color:rgba(238,238,238,.55)}
-/* Chips */
-.chip-red{background:rgba(192,57,43,.08);border-color:rgba(192,57,43,.25);color:#c0392b}
-.chip-green{background:rgba(90,166,255,.08);border-color:rgba(90,166,255,.22);color:#5aa6ff}
-/* Hero badge */
-.hero-badge{background:rgba(90,166,255,.12);border-color:rgba(90,166,255,.3);color:#5aa6ff}
-.hero-badge.mod{background:rgba(179,101,0,.12);border-color:rgba(179,101,0,.3);color:#b36500}
-.hero-badge.av{background:rgba(192,57,43,.12);border-color:rgba(192,57,43,.3);color:#c0392b}
-.hero-name{color:#eeeeee}
-.hero-cat{color:rgba(238,238,238,.5)}
-.hero-emoji-wrap{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-/* FODMAP bars */
-.fodmap-bar-bg{background:rgba(255,255,255,.08)}
-.fodmap-name{color:#eeeeee}
-.lvl-low{color:#5aa6ff}
-.lvl-mod{color:#b36500}
-.lvl-high{color:#c0392b}
-/* Portion */
-.portion-emoji-big{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}
-.portion-qty{color:#eeeeee}
-.portion-unit{color:rgba(238,238,238,.55)}
-.portion-tip{color:rgba(238,238,238,.5)}
-/* Similar items */
-.similar-item{background:rgba(255,255,255,.04);border-color:rgba(0,0,0,.06)}
-.similar-item:hover{background:rgba(255,255,255,.07)}
-.similar-emoji{background:rgba(255,255,255,.06)}
-.similar-name{color:#eeeeee}
-.similar-badge{background:rgba(90,166,255,.1);border-color:rgba(90,166,255,.25);color:#5aa6ff}
-/* Phase cards in food detail */
-.phase-card.ok{background:#5aa6ff;box-shadow:none}
-.phase-card.mod{background:#b36500;box-shadow:none}
-.phase-card.av{background:#c0392b;box-shadow:none}
-/* Log form */
-.log-q{color:#eeeeee}
-.check-q{color:#eeeeee}
-.check-opt{border-color:rgba(0,0,0,.1);color:rgba(238,238,238,.5)}
-.check-opt.sel{background:rgba(90,166,255,.13);border-color:rgba(90,166,255,.45);color:#5aa6ff}
-.btn-submit{background:#111111;color:#ffffff;border-radius:100px}
-.success .s-title{color:#eeeeee}
-.success .s-sub{color:rgba(238,238,238,.45)}
-
-
-
-/* ── Spacing & body fix ── */
-html,body{background:#2d2d2d !important}
-.app{background:#2d2d2d !important}
-.content,.page-content,.main-content{padding-left:20px !important;padding-right:20px !important}
-.section-title{margin-top:22px !important;margin-bottom:12px !important}
-.card,.breakdown-card,.stat-card{margin-bottom:12px}
-
-/* ── H1: SF Pro Text Thin ── */
-.hg-hi,.phase-name,.suivi-hero-title,.topbar-title,.ob-title,.fsh-title,.hero-score{
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-weight:100;
-  text-transform:none;
-  letter-spacing:-.02em;
-}
-.topbar-title{font-size:22px}
-.hg-hi{font-size:28px}
-.fsh-title{font-size:24px}
-
-/* ── Body: SF Pro Text Normal ── */
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
-  font-weight:400;
-}
+.logout-btn:active{background:rgba(255,60,60,.15)}
 </style>
   <link rel="manifest" href="/manifest.json"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Lomi"/>
   <link rel="apple-touch-icon" href="/icon-192.png"/>
-  <meta name="theme-color" content="#2d2d2d"/>
+  <meta name="theme-color" content="#0d1728"/>
 </head>
 <body>
 <div class="app">
   <div class="bk1"></div>
+  <div class="bk2"></div>
+
+  <!-- Status bar -->
+  <div class="sbar">
+    <span class="sbar-time" id="clock">9:41</span>
+    <div class="di"></div>
     <div class="sbar-icons">
       <div class="sig"><b></b><b></b><b></b><b></b></div>
       <div class="wifi-icon"><div class="wifi-dot"></div></div>
@@ -292,15 +235,17 @@ body{
     </div>
   </div>
 
+  <!-- Topbar -->
   <div class="topbar">
     <div class="back-btn" onclick="history.back()">‹</div>
-    <span class="topbar-title">Mon profil</span>
+    <span class="topbar-title">Mon parcours FODMAP</span>
   </div>
 
+  <!-- Content -->
   <div class="content">
 
     <!-- PROFIL MÉDICAL -->
-    <div class="section-label">Mon profil médical</div>
+    <div class="section-label">Profil médical</div>
 
     <div class="profile-hero">
       <div class="profile-top">
@@ -313,7 +258,7 @@ body{
         <button class="edit-btn">Modifier</button>
       </div>
       <div class="profile-doctor">
-        <div class="profile-doctor-icon"></div>
+        <div class="profile-doctor-icon">🩺</div>
         <div class="profile-doctor-info">
           <div class="profile-doctor-name">Dr Marie Dupont</div>
           <div class="profile-doctor-sub">CHU Bordeaux · Gastroentérologie</div>
@@ -325,7 +270,7 @@ body{
     <div class="section-label">Paramètres</div>
     <div class="card">
       <div class="row-item" style="cursor:default">
-        <div class="row-icon"></div>
+        <div class="row-icon">🔔</div>
         <div style="flex:1">
           <div class="row-label">Notifications</div>
           <div class="row-sub">Rappels et alertes</div>
@@ -336,7 +281,7 @@ body{
         </label>
       </div>
       <div class="row-item" style="cursor:default">
-        <div class="row-icon"></div>
+        <div class="row-icon">🍽️</div>
         <div style="flex:1">
           <div class="row-label">Rappels repas</div>
           <div class="row-sub">3× par jour</div>
@@ -347,7 +292,7 @@ body{
         </label>
       </div>
       <div class="row-item" style="cursor:default">
-        <div class="row-icon"></div>
+        <div class="row-icon">🌙</div>
         <div style="flex:1">
           <div class="row-label">Mode sombre</div>
           <div class="row-sub">Toujours actif</div>
@@ -358,7 +303,7 @@ body{
         </label>
       </div>
       <div class="row-item" style="cursor:default">
-        <div class="row-icon"></div>
+        <div class="row-icon">📐</div>
         <div style="flex:1">
           <div class="row-label">Unités</div>
           <div class="row-sub">Grammes, ml</div>
@@ -371,23 +316,23 @@ body{
     <div class="section-label">Aide &amp; Méthodologie</div>
     <div class="card">
       <div class="link-row">
-        <div class="row-icon"></div>
+        <div class="row-icon">📖</div>
         <div class="link-label">Protocole FODMAP</div>
         <span class="link-chip">Guide</span>
         <div class="link-ext">›</div>
       </div>
       <div class="link-row">
-        <div class="row-icon"></div>
+        <div class="row-icon">🎓</div>
         <div class="link-label">Monash University</div>
         <div class="link-ext">↗</div>
       </div>
       <div class="link-row">
-        <div class="row-icon"></div>
+        <div class="row-icon">🏥</div>
         <div class="link-label">CHU de Bordeaux</div>
         <div class="link-ext">↗</div>
       </div>
       <div class="link-row">
-        <div class="row-icon"></div>
+        <div class="row-icon">💬</div>
         <div class="link-label">FAQ</div>
         <div class="link-ext">›</div>
       </div>
@@ -397,29 +342,29 @@ body{
     <div class="section-label">Données &amp; Confidentialité</div>
     <div class="card">
       <div class="link-row" style="cursor:default">
-        <div class="row-icon"></div>
+        <div class="row-icon">🔒</div>
         <div style="flex:1">
           <div class="link-label">Hébergement HDS certifié</div>
-          <div class="row-sub" style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Données médicales sécurisées</div>
+          <div class="row-sub">Données médicales sécurisées</div>
         </div>
-        <span style="font-size:11px;font-weight:700;color:#5aa6ff">Actif</span>
+        <span style="font-size:11px;font-weight:700;color:#4ab0ff;font-family:'DM Mono',monospace">Actif</span>
       </div>
       <div class="link-row" style="cursor:default">
-        <div class="row-icon"></div>
+        <div class="row-icon">🇪🇺</div>
         <div style="flex:1">
           <div class="link-label">Conformité RGPD</div>
-          <div class="row-sub" style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Droits d'accès, rectification, suppression</div>
+          <div class="row-sub">Accès, rectification, suppression</div>
         </div>
-        <span style="font-size:11px;font-weight:700;color:#5aa6ff">✓</span>
+        <span style="font-size:13px;font-weight:700;color:#4ab0ff">✓</span>
       </div>
       <div class="link-row">
-        <div class="row-icon"></div>
+        <div class="row-icon">📤</div>
         <div class="link-label">Exporter mes données</div>
         <div class="link-ext">›</div>
       </div>
       <div class="link-row">
-        <div class="row-icon" style="background:rgba(255,60,60,.1);border-color:rgba(255,60,60,.15)"></div>
-        <div class="link-label" style="color:rgba(255,80,80,.9)">Supprimer mon compte</div>
+        <div class="row-icon" style="background:rgba(255,60,60,.1);border-color:rgba(255,60,60,.18)">🗑️</div>
+        <div class="link-label" style="color:rgba(255,90,90,.9)">Supprimer mon compte</div>
         <div class="link-ext">›</div>
       </div>
     </div>
@@ -431,7 +376,7 @@ body{
 </div>
 <script>
 (function tick(){
-  const d=new Date(),el=document.getElementById('clock');
+  var d=new Date(),el=document.getElementById('clock');
   if(el) el.textContent=d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
   setTimeout(tick,15000);
 })();
