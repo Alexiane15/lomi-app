@@ -954,15 +954,9 @@ body{
 .export-info{flex:1}
 .export-title{font-size:15px;font-weight:700;color:#f4f2ed;letter-spacing:-.2px}
 .export-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px}
-.export-btn{
-  width:100%;height:46px;
-  background:#5aa6ff;border:none;border-radius:12px;
-  font-size:14px;font-weight:800;color:#071510;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:opacity .2s;
-}
-.export-btn:active{opacity:.8}
-.export-btn:disabled{opacity:.6;cursor:default}
+/* ── Export btn ── */
+.export-btn{display:flex;align-items:center;gap:5px;padding:0 12px;height:36px;border-radius:10px;border:1px solid rgba(90,166,255,.35);background:rgba(90,166,255,.1);color:#5aa6ff;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.export-btn:active{background:rgba(90,166,255,.22)}
 
 /* ── SCREEN SUIVI ── */
 .s4-content{padding:14px 14px 32px;display:flex;flex-direction:column;gap:14px}
@@ -1502,7 +1496,6 @@ body{background:#2d2d2d;color:#eeeeee}
 .export-card{background:#383838;border-color:rgba(255,255,255,.08)}
 .export-title{color:#eeeeee}
 .export-sub{color:rgba(238,238,238,.4)}
-.export-btn{background:#eeeeee;color:#111111;border-radius:100px}
 
 /* 11. Section titles & scores */
 .section-title{color:#eeeeee}
@@ -1741,10 +1734,16 @@ body{
         </div>
 
         <!-- ── PERIOD SELECTOR ── -->
-        <div style="display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:4px;gap:0">
-          <div class="sv-period active" onclick="setSvPeriod(this)">7 jours</div>
-          <div class="sv-period" onclick="setSvPeriod(this)">30 jours</div>
-          <div class="sv-period" onclick="setSvPeriod(this)">Phase</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <div style="flex:1;display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:4px;gap:0">
+            <div class="sv-period active" onclick="setSvPeriod(this)">7 jours</div>
+            <div class="sv-period" onclick="setSvPeriod(this)">30 jours</div>
+            <div class="sv-period" onclick="setSvPeriod(this)">60 jours</div>
+          </div>
+          <div class="export-btn" onclick="exportSuivi()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M4 6l3 3 3-3M2 10v1.5A.5.5 0 0 0 2.5 12h9a.5.5 0 0 0 .5-.5V10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Exporter
+          </div>
         </div>
 
         <!-- ── SCORE CARD ── -->
@@ -2558,6 +2557,25 @@ if (overlay) {
   overlay.addEventListener('click', function(e) {
     if (e.target === overlay) FAB.close();
   });
+}
+
+function exportSuivi() {
+  const lines = [
+    'Export Suivi LOMI — ' + new Date().toLocaleDateString('fr-FR'),
+    '',
+    'Phase active : Élimination',
+    'Jours accomplis : 17',
+    'Jours restants : 39',
+    '',
+    'Bien-être moyen : 7.4/10',
+    'Entrées ce mois : 23',
+    'Symptômes tracés : 8',
+  ];
+  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'suivi-lomi-' + new Date().toISOString().slice(0,10) + '.txt';
+  a.click();
 }
 </script>
 <script src="./orbs.js?v=2"></script>
